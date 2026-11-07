@@ -45,6 +45,13 @@
   <div class="eq key"><span class="lab">Altura linealizada</span>\[S\,\Delta\dot h=\Delta f_i-\frac{K a_0}{2\sqrt{h_0}}\,\Delta h-K\sqrt{h_0}\,\Delta a\]</div>
   <p>Con las funciones de transferencia \(\dfrac{\Delta H}{\Delta F_i}=\dfrac{G_f}{\tau s+1}\) y \(\dfrac{\Delta H}{\Delta A}=\dfrac{G_a}{\tau s+1}\), donde</p>
   <div class="eq"><span class="lab">Parámetros</span>\[\tau=\frac{2S\sqrt{h_0}}{K a_0}=141\ \mathrm s,\qquad G_f=\frac{2\sqrt{h_0}}{K a_0}=2000\ \frac{\mathrm m}{\mathrm{m^3/s}},\qquad G_a=-\frac{2h_0}{a_0}=-1\ \mathrm m\]</div>
+  <figure>
+    <svg viewBox="0 0 640 305" role="img" aria-labelledby="tanquet"><title id="tanquet">Tanque con caudal de entrada y válvula de salida de apertura a, con la ecuación de la altura</title><rect x="210" y="70" width="150" height="190" class="s-box" style="fill:none"/><rect x="212" y="150" width="146" height="108" class="s-water"/><path d="M212 150 H358" class="s-acc"/><path d="M70 52 H200 Q232 52 232 92" class="s-thin" marker-end="url(#aha)"/><text x="70" y="42" text-anchor="start" class="s-tx">caudal de entrada fᵢ</text><text x="70" y="74" text-anchor="start" class="s-tx2">15 l/min</text><path d="M360 244 H430" class="s-ln"/><path d="M430 224 V244 M418 224 H442" class="s-ln"/><circle cx="430" cy="244" r="6" fill="var(--accent)"/><text x="452" y="212" text-anchor="start" class="s-tx">válvula, apertura a</text><text x="452" y="230" text-anchor="start" class="s-tx2">a₀ = 50 %</text><path d="M436 244 H520" class="s-thin" marker-end="url(#aha)"/><text x="526" y="249" text-anchor="start" class="s-tx">fₒ = K·a·√h</text><path d="M382 150 V258" class="s-thin" marker-end="url(#ah)" marker-start="url(#ah)"/><text x="390" y="205" text-anchor="start" class="s-it">h</text><text x="285" y="100" text-anchor="middle" class="s-it">S = πr²</text><text x="285" y="120" text-anchor="middle" class="s-tx2">r = 15 cm</text><text x="285" y="140" text-anchor="middle" class="s-tx2">h₀ = 25 cm</text><text x="285" y="288" text-anchor="middle" class="s-tx">S·dh/dt = fᵢ − K·a·√h</text></svg>
+    <figcaption>Esquema de la práctica 2. El caudal de entrada es una variable de entrada, la apertura \(a\) es la otra, y la altura \(h\) es la salida.</figcaption>
+  </figure>
+  <h3>Simulador: no lineal frente a lineal</h3>
+  <p>Mueve el caudal y la apertura. Con cambios pequeños los dos modelos coinciden; con cambios grandes se separan, antes con la apertura.</p>
+  <div class="sim" data-sim="tanque"></div>
   <h3>Comparación no lineal frente a lineal (régimen estacionario)</h3>
   <p>Suponiendo que «variación» significa aumento, las alturas finales son:</p>
   <div class="tbl-wrap"><table>
@@ -122,4 +129,4 @@ fin</pre>
   <a href="examenes.html"><small>Anterior</small>Qué se pregunta en el examen</a>
   <a class="next" href="index.html#plan"><small>Siguiente</small>Plan de la guía</a>
 </div>
-<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script></body></html>
+<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

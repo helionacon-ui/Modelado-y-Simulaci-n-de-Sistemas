@@ -24,6 +24,7 @@
   <h2><span class="dot"></span>Modelos paramétricos con escalón</h2>
   <h3>Primer orden con retardo</h3>
   <div class="eq key">\[\frac{Y(s)}{U(s)}=\frac{K}{\tau s+1}\,e^{-Ts}\;\Rightarrow\;y(t)=K\,\Delta u\Big(1-e^{-(t-T)/\tau}\Big)\ \ (t\ge T)\]</div>
+  <p><b>Qué significan los tres números.</b> \(K\) es cuánto sube la salida por cada unidad de escalón; \(T\) es lo que tarda en reaccionar (retardo puro); \(\tau\) es lo rápido que sube una vez que empieza: en \(t=T+\tau\) lleva el 63,2 % del camino.</p>
   <figure>
     {{svg:fopdt}}
     <figcaption>Respuesta de un primer orden con retardo \(T\). La ganancia es el cambio final de la salida entre el escalón aplicado.</figcaption>
@@ -53,6 +54,12 @@
   <p>Para identificar: se mide \(M_p\) y de ahí \(\xi=\dfrac{-\ln M_p}{\sqrt{\pi^2+\ln^2M_p}}\); se mide \(t_p\) y se obtiene \(\omega_d=\pi/t_p\) y \(\omega_n=\omega_d/\sqrt{1-\xi^2}\).</p>
 </section>
 
+<section class="sec" id="reto">
+  <h2><span class="dot"></span>Reto: identificar con los datos</h2>
+  <p>Los puntos son datos medidos de un sistema real con ruido. Ajusta a ojo los tres parámetros; activa las guías del 28 % y el 63 % para ver cómo se sacan \(T\) y \(\tau\) de la curva con las fórmulas de arriba. Cuando el RMSE baje del tamaño del ruido, ya lo tienes.</p>
+  <div class="sim" data-sim="ident"></div>
+</section>
+
 <section class="sec" id="impulso">
   <h2><span class="dot"></span>Respuesta al impulso y operador de retardo</h2>
   <p>Un modelo no paramétrico trata los experimentos como impulsos. Como el sistema es lineal, la salida es la suma de las respuestas a cada entrada:</p>
@@ -80,6 +87,10 @@
 
 <section class="sec" id="prediccion">
   <h2><span class="dot"></span>Predictor</h2>
+  <figure>
+    {{svg:arx-oe}}
+    <figcaption>El predictor ARX corrige con la salida medida en cada paso. El OE realimenta su propia predicción, así que el error se acumula pero el modelo no se contamina con el ruido de medida.</figcaption>
+  </figure>
   <p>Para estimar hay que predecir \(y(k)\) con lo medido hasta \(k-1\). El ruido pasado se recupera de los datos y la mejor predicción de \(e(k)\) es cero (media nula). Para que sea posible, \(H(q)\) debe ser <b>estable</b>, <b>invertible</b> y <b>mónico</b>.</p>
   <div class="eq key"><span class="lab">Predictor general</span>\[\hat y(k|k-1)=H^{-1}(q)\,G(q)\,u(k)+\big(1-H^{-1}(q)\big)\,y(k)\]</div>
   <p>Particularizando para cada modelo:</p>

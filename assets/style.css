@@ -267,3 +267,34 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
 
 /* pseudocódigo */
 pre.code { margin: 12px 0; padding: 14px 16px; background: var(--surface-2); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; overflow-x: auto; font: 500 .86rem/1.55 var(--font-mono); color: var(--fg); max-width: 100%; }
+
+/* simuladores interactivos */
+.sim { margin: 16px 0 22px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 12px; }
+.sim-t { margin: 0 0 12px; font-weight: 600; max-width: 70ch; }
+.sim-ctrl { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 18px; margin-bottom: 12px; align-items: end; }
+.sim-c { display: grid; gap: 4px; font-size: .9rem; min-width: 0; }
+.sim-c > span { color: var(--muted); font-weight: 600; }
+.sim-c .v { color: var(--fg); font-family: var(--font-mono); font-weight: 600; margin-left: 4px; }
+.sim-c input[type=range] { width: 100%; accent-color: var(--accent); }
+.sim-c select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); color: var(--fg); min-width: 0; max-width: 100%; }
+.sim-chk { display: flex; align-items: center; gap: 8px; }
+.sim-chk input { width: 18px; height: 18px; accent-color: var(--accent); }
+.sim .btn { font: inherit; font-weight: 600; padding: 9px 14px; border: 1px solid var(--accent); border-radius: 8px; background: var(--accent-soft); color: var(--fg); cursor: pointer; }
+.sim .btn:hover { background: var(--accent); color: var(--bg); }
+.sim-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.sim-out .ro { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; display: grid; gap: 2px; min-width: 0; }
+.sim-out .ro span { font-size: .78rem; color: var(--muted); }
+.sim-out .ro b { font-family: var(--font-mono); font-size: .95rem; overflow-wrap: anywhere; }
+.sim-out .ro.bad { border-color: var(--bad); } .sim-out .ro.bad b { color: var(--bad); }
+.sim-out .ro.ok { border-color: var(--ok); } .sim-out .ro.ok b { color: var(--ok); }
+.sim-msg { grid-column: 1 / -1; margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.sim-plots { display: grid; gap: 10px; }
+.sim-plot svg { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.sim-plot .gl { stroke: var(--line); stroke-width: 1; } .sim-plot .gf { fill: none; } .sim-plot .gb { fill: none; stroke: var(--muted); stroke-width: 1; }
+.sim-plot .gt { fill: var(--muted); font: 500 11px var(--font-body); } .sim-plot .gt.lg { fill: var(--fg); }
+.sim-plot .pl { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; } .sim-plot .pd { stroke: none; }
+.sim-plot .bar { stroke: none; }
+.sim-plot .p0 { stroke: var(--accent); fill: var(--accent); } .sim-plot .p1 { stroke: var(--c-mec); fill: var(--c-mec); } .sim-plot .p2 { stroke: var(--c-ter); fill: var(--c-ter); }
+.sim-plot .p3 { stroke: var(--c-ctl); fill: var(--c-ctl); } .sim-plot .pk { stroke: var(--fg); fill: var(--fg); }
+.sim-plot path.pl, .sim-plot line.pl { fill: none; } .sim-plot .bar { opacity: .75; }
+@media (prefers-reduced-motion: no-preference) { .sim .btn { transition: background .15s; } }

@@ -30,6 +30,10 @@
   <h2><span class="dot"></span>Método de Euler</h2>
   <p>Se queda con el término lineal del desarrollo de Taylor: \(y(t+h)\approx y(t)+h\,y'(t)\).</p>
   <div class="eq key"><span class="lab">Euler</span>\[w(0)=\alpha,\qquad w(k+1)=w(k)+h\,f\big(w(k),t(k)\big),\qquad t(k)=a+kh\]</div>
+  <figure>
+    {{svg:euler}}
+    <figcaption>Un paso de Euler: se parte del punto conocido, se avanza \(h\) siguiendo la tangente y se llega a \(w(k+1)\). Como la solución se curva, la tangente se separa de ella: esa distancia es el error local, proporcional a \(h\).</figcaption>
+  </figure>
   <h3>De una ecuación de segundo orden a un sistema</h3>
   <p>Masa, muelle y fricción con \(y(0)=1\) y sin velocidad inicial: \(M\ddot y=-Ky-B\dot y\). Se definen \(x_1=y\) y \(x_2=\dot y\):</p>
   <div class="eq"><span class="lab">Sistema de primer orden</span>\[\dot x_1=x_2,\qquad \dot x_2=\frac1M\,(-Kx_1-Bx_2),\qquad x_1(0)=1,\ x_2(0)=0\]</div>
@@ -49,6 +53,10 @@ para k = 0 hasta N-1:
   <div class="eq key"><span class="lab">RK2 (punto medio)</span>\[w(k+1)=w(k)+h\,f\Big(w(k)+\frac h2 f\big(w(k),t(k)\big),\ t(k)+\frac h2\Big)\]</div>
   <p>Es de orden 2 y no necesita derivadas, pero evalúa \(f\) dos veces por paso.</p>
   <h3>Runge-Kutta de orden 4</h3>
+  <figure>
+    {{svg:rk4}}
+    <figcaption>RK4 mira la pendiente cuatro veces dentro del paso: al principio (\(K_1\)), dos veces en el punto medio (\(K_2\) y \(K_3\)) y al final (\(K_4\)). La pendiente que usa es la media ponderada, con peso doble para las del medio.</figcaption>
+  </figure>
   <div class="eq key wide"><span class="lab">RK4</span>\[\begin{aligned}K_1&=h\,f(t,w), & K_2&=h\,f\big(t+\tfrac h2,\ w+\tfrac{K_1}{2}\big),\\ K_3&=h\,f\big(t+\tfrac h2,\ w+\tfrac{K_2}{2}\big), & K_4&=h\,f(t+h,\ w+K_3),\end{aligned}\qquad w\leftarrow w+\frac{K_1+2K_2+2K_3+K_4}{6}\]</div>
   <p>Para un sistema de \(m\) ecuaciones, cada \(K_i\) es un vector: se calculan los cuatro vectores con todas las variables a la vez y luego se actualiza todo el estado.</p>
   <h3>Cuánto mejora el orden</h3>
@@ -60,6 +68,9 @@ para k = 0 hasta N-1:
       <tr><td>0,05</td><td>1,6·10<sup>-2</sup></td><td>6,2·10<sup>-5</sup></td><td>1,2·10<sup>-7</sup></td><td>1,5·10<sup>-4</sup></td></tr>
       <tr><td>0,025</td><td>5,8·10<sup>-3</sup></td><td>1,8·10<sup>-5</sup></td><td>7,8·10<sup>-9</sup></td><td>3,6·10<sup>-5</sup></td></tr>
     </tbody></table></div>
+  <h3>Pruébalo tú</h3>
+  <p>Marca y desmarca métodos, mueve \(h\) y cambia la fricción. Con \(B=0\) el sistema oscila sin amortiguarse y Euler se dispara, porque en cada paso amplifica la amplitud. Fíjate en el error al final: al dividir \(h\) a la mitad, Euler baja a la mitad, RK2 a la cuarta parte y RK4 a la dieciseisava.</p>
+  <div class="sim" data-sim="num"></div>
   <p>Con Euler y \(h=0{,}1\) el error en \(t=10\) es unas diez veces mayor que la propia solución: hace falta un \(h\) muy pequeño. RK4 con \(h=0{,}1\) ya tiene un error del orden de \(10^{-6}\). A cambio, RK4 cuesta cuatro evaluaciones de \(f\) por paso.</p>
 </section>
 
@@ -102,6 +113,10 @@ para k = 1 hasta N-1:
       \[q\lt\Big(\frac{\varepsilon\,h}{|w^*(k)-w(k)|}\Big)^{1/n}\]</li>
     <li><b>Aceptar o rechazar.</b> Si \(|\tau|\lt\varepsilon\), se acepta y el paso siguiente es \(qh\) (con un máximo para \(q\), para que no crezca de golpe). Si no, se rechaza y se repite con \(qh\). Si \(qh\) baja de \(h_{min}\), el método falla con «paso mínimo excedido».</li>
   </ol>
+  <figure>
+    {{svg:paso-variable}}
+    <figcaption>Un método de paso variable usa pasos largos mientras la solución cambia poco y los acorta en la zona donde cambia deprisa. Así mantiene el error por debajo de la tolerancia con menos cálculo que un paso fijo pequeño.</figcaption>
+  </figure>
   <p><b>Runge-Kutta-Fehlberg</b> usa un RK de orden 4 y otro de orden 5 con las mismas evaluaciones. Es el método que Simulink usa por defecto con paso variable (<code>ode45</code>, Dormand-Prince).</p>
   <div class="card">
     <h3>Solvers de Simulink</h3>
@@ -116,6 +131,13 @@ para k = 1 hasta N-1:
   <div class="eq"><span class="lab">Euler sobre y' = λy</span>\[w(n)=\alpha\,(1+\lambda h)^n\]</div>
   <p>Para que \(w(n)\to0\) hace falta \(|1+\lambda h|\lt1\), es decir:</p>
   <div class="eq key"><span class="lab">Paso máximo estable con Euler</span>\[h\lt\frac{2}{|\lambda|}\]</div>
+  <figure>
+    {{svg:estabilidad}}
+    <figcaption>Según el paso, el factor \(1+\lambda h\) cae en una de tres zonas. Solo la solución numérica de las dos primeras tiende a 0 como la real.</figcaption>
+  </figure>
+  <h3>Pruébalo tú</h3>
+  <p>Sube \(h\) hasta que el factor pase de \(-1\): la solución numérica deja de decaer y empieza a crecer, mientras la exacta sigue cayendo a cero.</p>
+  <div class="sim" data-sim="stiff"></div>
   <div class="grid2">
     <div class="card"><h3>\(y'=-10y\), \(\alpha=1\)</h3><p>Límite \(h\lt2/10=0{,}2\). Con \(h=0{,}1\) la solución cae a 0 en un paso. Con \(h=0{,}19\) el factor es \(-0{,}9\): oscila pero decae. Con \(h=0{,}2\) vale \(-1\): oscila sin decaer. Con \(h=0{,}21\) el factor es \(-1{,}1\) y diverge (tras 50 pasos, \(|w|\approx117\)).</p></div>
     <div class="card"><h3>Ejemplo físico</h3><p>Un circuito o un sistema térmico con una constante de tiempo de milisegundos acoplada a otra de minutos, o una suspensión con una masa pequeña unida a otra muy grande (\(M_1=10\), \(M_2=1000\)). Hay que simular minutos con un paso que respete los milisegundos.</p></div>
@@ -131,6 +153,10 @@ para k = 1 hasta N-1:
     <li><b>Parámetros, entradas y condiciones iniciales.</b> Hay una condición inicial por variable de estado, y si falta alguna se dice cuál se supone.</li>
     <li><b>Bucle temporal</b> con el método elegido (Euler, RK2…), dejando claro qué es <code>k</code> y qué es <code>k+1</code>.</li>
   </ol>
+  <figure>
+    {{svg:pid-digital}}
+    <figcaption>En el control por computador, el controlador solo ve la salida cada \(T_c\) y mantiene la acción constante hasta la siguiente muestra. La planta sigue siendo continua, y por eso se integra con el paso \(h\), más pequeño.</figcaption>
+  </figure>
   <h3>Con controlador PID analógico</h3>
   <p>El controlador se simula a la vez que la planta: el error y su integral y derivada se calculan en cada paso de integración \(h\).</p>
   <pre class="code">// estado de la planta: x[0] = x0 ; integral = 0 ; e_ant = ref(a) - y(x0)
@@ -156,6 +182,9 @@ para k = 0 hasta N-1:
         e_ant = e
     // si no, u conserva el último valor
     x[k+1] = x[k] + h * f( x[k], u, t )</pre>
+  <h3>Pruébalo tú: efecto del periodo de control</h3>
+  <p>Ajusta un PID que funcione con \(T_c=0{,}1\) y después alarga \(T_c\) sin tocar nada más: el controlador reacciona tarde y acaba perdiendo la estabilidad.</p>
+  <div class="sim" data-sim="pid"></div>
   <div class="trap"><b class="t">Trampa</b><p>En el controlador discreto la integral y la derivada usan \(T_c\), no \(h\). Y si el enunciado da un actuador adicional «con \(G(s)=1\)», no añade dinámica: la salida del controlador entra directamente a la planta.</p></div>
   <p>Si el sistema tiene lógica todo-nada con histéresis (como la válvula de la práctica 3), se escribe como un <code>si</code> dentro del bucle: se abre cuando \(h\le h_{min}\), se cierra cuando \(h\ge h_{max}\) y en otro caso <b>conserva el estado anterior</b>.</p>
 </section>

@@ -58,7 +58,7 @@ DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true" 
 
 
 def inline_svgs(body):
-    return re.sub(r"\{\{svg:(\w+)\}\}", lambda m: (ROOT / "src" / "svg" / f"{m.group(1)}.svg").read_text(encoding="utf-8"), body)
+    return re.sub(r"\{\{svg:([\w-]+)\}\}", lambda m: (ROOT / "src" / "svg" / f"{m.group(1)}.svg").read_text(encoding="utf-8"), body)
 
 
 def shell_body(current, body):
@@ -75,12 +75,12 @@ def full_doc(title, content, assets_prefix=""):
     return ('<!doctype html><html lang="es"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
             f'<title>{title}</title>{FONTS}<link rel="stylesheet" href="{assets_prefix}assets/style.css">{THEME_INIT}{MATHJAX}</head>'
-            f'<body>{content}<script src="{assets_prefix}assets/app.js"></script></body></html>')
+            f'<body>{content}<script src="{assets_prefix}assets/app.js"></script><script src="{assets_prefix}assets/sims.js"></script></body></html>')
 
 
 def fragment(title, content):
     return (f'<title>{title}</title><meta name="claude:viewport-fit-sides" content="cover">{FONTS}'
-            f'<link rel="stylesheet" href="assets/style.css">{THEME_INIT}{MATHJAX}{content}<script src="assets/app.js"></script>')
+            f'<link rel="stylesheet" href="assets/style.css">{THEME_INIT}{MATHJAX}{content}<script src="assets/app.js"></script><script src="assets/sims.js"></script>')
 
 
 def main():

@@ -36,6 +36,10 @@
       <tr><td>ARMAX</td><td>Como ARX, más los errores de predicción pasados</td></tr>
       <tr><td>OE</td><td>Salidas <b>predichas</b> pasadas (el modelo se simula solo, sin ver la salida real)</td></tr>
     </tbody></table></div>
+  <figure>
+    {{svg:arx-oe}}
+    <figcaption>Misma entrada, dos formas de realimentar. Con ARX se vuelve a empezar desde la medida en cada muestra; con OE el modelo se simula solo.</figcaption>
+  </figure>
   <h3>ARX: dos formas de predecir</h3>
   <p>Un ARX con \(A=1-0{,}9951q^{-1}+0{,}0001816q^{-2}\) y \(B=0{,}003712q^{-1}+9{,}237\cdot10^{-5}q^{-2}\) (periodo de muestreo 0,01 s) da</p>
   <div class="eq"><span class="lab">Modelo de predicción</span>\[\hat y(k)=0{,}9951\,y(k-1)-0{,}0001816\,y(k-2)+0{,}003712\,u(k-1)+9{,}237\cdot10^{-5}\,u(k-2)\]</div>
@@ -77,6 +81,9 @@
       <tr><td>Autocorrelación</td><td>Relación entre el error ahora y dentro de \(r\) muestras</td><td>\(\hat R(0)=\mathrm{RMS}^2\) y \(\hat R(r)\approx0\) para \(r\ne0\)</td></tr>
       <tr><td>Espectro</td><td>En qué frecuencias está la energía del error</td><td>Casi plano (todas las frecuencias por igual)</td></tr>
     </tbody></table></div>
+  <h3>Pruébalo tú</h3>
+  <p>Elige un tipo de error y mira las tres vistas a la vez. Un error que parece bueno en la media puede delatarse en la autocorrelación: con el ruido sesgado, la correlación no se anula porque \(R(r)\) no resta la media; y con el ruido coloreado, la correlación decae despacio.</p>
+  <div class="sim" data-sim="error"></div>
   <p><b>Ejemplo de contraste.</b> Con \(\Delta t=0{,}001\), un ruido normal de media 0 y varianza 1 da media \(-0{,}004\), varianza \(0{,}999\), campana de Gauss, autocorrelación nula salvo en 0 y espectro plano. Una suma de senoides (de 1, 50 y 100 Hz) da media nula pero varianza 1,5, una distribución que no es campana, autocorrelación periódica y picos en el espectro justo en 1, 50 y 100 Hz. Un error con ese aspecto indica que <b>el modelo no captura parte de la dinámica</b>.</p>
   <div class="trap"><b class="t">Trampa: \(1/N\) o \(1/(N-1)\)</b><p>Los apuntes de teoría estiman la desviación típica con \(1/(N-1)\); la tabla de la práctica 4 define la varianza con \(1/N\). Para \(N\) pequeño los dos dan resultados distintos. Usa la fórmula que dé el enunciado y, si no la da, indica cuál usas.</p></div>
 </section>

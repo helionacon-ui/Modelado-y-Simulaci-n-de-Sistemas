@@ -45,6 +45,13 @@
   <div class="eq key"><span class="lab">Altura linealizada</span>\[S\,\Delta\dot h=\Delta f_i-\frac{K a_0}{2\sqrt{h_0}}\,\Delta h-K\sqrt{h_0}\,\Delta a\]</div>
   <p>Con las funciones de transferencia \(\dfrac{\Delta H}{\Delta F_i}=\dfrac{G_f}{\tau s+1}\) y \(\dfrac{\Delta H}{\Delta A}=\dfrac{G_a}{\tau s+1}\), donde</p>
   <div class="eq"><span class="lab">Parámetros</span>\[\tau=\frac{2S\sqrt{h_0}}{K a_0}=141\ \mathrm s,\qquad G_f=\frac{2\sqrt{h_0}}{K a_0}=2000\ \frac{\mathrm m}{\mathrm{m^3/s}},\qquad G_a=-\frac{2h_0}{a_0}=-1\ \mathrm m\]</div>
+  <figure>
+    {{svg:tanque}}
+    <figcaption>Esquema de la práctica 2. El caudal de entrada es una variable de entrada, la apertura \(a\) es la otra, y la altura \(h\) es la salida.</figcaption>
+  </figure>
+  <h3>Simulador: no lineal frente a lineal</h3>
+  <p>Mueve el caudal y la apertura. Con cambios pequeños los dos modelos coinciden; con cambios grandes se separan, antes con la apertura.</p>
+  <div class="sim" data-sim="tanque"></div>
   <h3>Comparación no lineal frente a lineal (régimen estacionario)</h3>
   <p>Suponiendo que «variación» significa aumento, las alturas finales son:</p>
   <div class="tbl-wrap"><table>
