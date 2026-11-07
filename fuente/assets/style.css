@@ -170,7 +170,7 @@ h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 800; margin-bottom: 14px;
 
 /* ilustraciones */
 figure { margin: 0 0 20px; }
-figure svg { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+figure > svg { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
 figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 8px; max-width: 68ch; }
 .s-ln { stroke: var(--fg); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .s-thin { stroke: var(--muted); stroke-width: 1.4; fill: none; stroke-linecap: round; }
