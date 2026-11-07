@@ -1,0 +1,385 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Tema 1 Modelado de sistemas</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Hub </span>GIEIA-UPCT</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><h4>Guía</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="tema-1.html" aria-current="page">Tema 1 · Modelado de sistemas</a></li><li><a href="identificacion.html">UD 2 · Identificación</a></li><li><a href="problemas.html">Problemas</a></li><li><a href="metodos-numericos.html">UD 4 · Métodos numéricos</a></li><li><a href="error.html">Predicción y análisis del error</a></li><li><a href="examenes.html">Qué se pregunta en el examen</a></li><li><a href="practicas.html">Prácticas</a></li></ul><h4>En esta página</h4><div class="toc"><a href="#esencial">Lo esencial</a><a href="#conservacion">Principios de conservación</a><a href="#mecanicos">Sistemas mecánicos</a><a href="#electricos">Sistemas eléctricos</a><a href="#motor">Electromecánico: motor de continua</a><a href="#fluidos">Sistemas de fluidos</a><a href="#termicos">Sistemas térmicos</a><a href="#linealizacion">Linealización</a><a href="#equivalencias">Equivalencias entre dominios</a><a href="#ordenes">Sistemas de primer y segundo orden</a><a href="#reguladores">Amplificadores operacionales: reguladores y filtros</a><a href="#trampas">Trampas típicas</a><a href="#autoeval">Autoevaluación</a></div><h4>Próximamente</h4><ul><li><span class="soon">Formulario</span></li><li><span class="soon">Glosario</span></li></ul></nav><main><header>
+  <div class="kicker">Tema 1 · Modelado de sistemas</div>
+  <h1>De la física a la función de transferencia</h1>
+  <p class="lead">Cómo pasar de un sistema real (un muelle, un circuito, un depósito, un motor) a ecuaciones, linealizarlas y llegar a \(G(s)\). Es la base del resto de la asignatura.</p>
+  <div class="tags">
+    <span class="tag">Apuntes de teoría · 33 folios</span>
+    <span class="tag mec">mecánico</span><span class="tag ele">eléctrico</span><span class="tag flu">fluidos</span><span class="tag ter">térmico</span><span class="tag ctl">amplificadores</span>
+  </div>
+  <p class="notice">Guía no oficial de la UPCT. Reescrita y reorganizada a partir de apuntes de clase, sin copiar el material. Los ejercicios de la parte final están recreados y sus cálculos comprobados con código.</p>
+</header>
+
+<figure>
+  <svg viewBox="0 0 640 235" role="img" aria-labelledby="f1t">
+    <title id="f1t">Esquema de trabajo de la asignatura: sistema, modelo, simulador y análisis</title>
+    <ellipse cx="78" cy="128" rx="62" ry="38" class="s-box"/>
+    <text x="78" y="133" text-anchor="middle" class="s-tx">SISTEMA</text>
+    <rect x="232" y="30" width="140" height="48" rx="8" class="s-box"/><text x="302" y="60" text-anchor="middle" class="s-tx">ANÁLISIS</text>
+    <rect x="232" y="132" width="140" height="48" rx="8" class="s-acc" style="fill:var(--accent-soft)"/><text x="302" y="162" text-anchor="middle" class="s-tx">MODELO</text>
+    <rect x="474" y="82" width="140" height="48" rx="8" class="s-box"/><text x="544" y="112" text-anchor="middle" class="s-tx">SIMULADOR</text>
+    <path d="M128 100 Q165 52 228 54" class="s-thin" marker-end="url(#ah)"/>
+    <text x="104" y="48" class="s-tx2">datos, observación</text>
+    <path d="M128 154 Q172 168 228 160" class="s-acc" marker-end="url(#aha)"/>
+    <text x="132" y="190" class="s-tx2" style="fill:var(--accent-strong)">modelado</text>
+    <path d="M374 158 Q450 158 490 134" class="s-thin" marker-end="url(#ah)"/>
+    <path d="M552 80 Q548 52 376 52" class="s-thin" marker-end="url(#ah)"/>
+    <text x="436" y="44" class="s-tx2">simulación</text>
+    <text x="232" y="202" class="s-tx2">identificación: se ajusta con un experimento</text>
+    <text x="232" y="221" class="s-tx2">conocimiento: se escriben las ecuaciones (el que se usa aquí)</text>
+  </svg>
+  <figcaption>El modelo se obtiene del sistema por dos vías. En esta asignatura se usa la segunda: plantear ecuaciones a partir de leyes físicas.</figcaption>
+</figure>
+
+<section class="sec" id="esencial">
+  <h2><span class="dot"></span>Lo esencial</h2>
+  <p>Si solo te queda una hora: cualquier ejercicio de modelado sigue la misma receta.</p>
+  <ol class="steps">
+    <li><b>Dibuja y nombra.</b> Marca entradas (lo que manipulas o te perturba) y salidas (lo que mides). Elige un sentido positivo para cada variable.</li>
+    <li><b>Escribe la ley de conservación</b> de cada elemento que almacena algo: masa, cantidad de movimiento, carga, energía.</li>
+    <li><b>Sustituye las leyes constitutivas</b> (muelle, resistencia, válvula, Fourier...) para que solo queden tus variables.</li>
+    <li><b>Linealiza</b> si hay raíces o productos, en torno a un punto de equilibrio.</li>
+    <li><b>Aplica Laplace</b> con condiciones iniciales nulas y despeja \(Y(s)/U(s)=G(s)\). Con varias salidas, queda en forma matricial \(\mathbf{X}(s)=[G(s)]\,U(s)\).</li>
+  </ol>
+  <div class="grid2">
+    <div class="card"><h3>Qué ecuaciones se usan</h3>
+      <p>Algebraicas (\(y=4x^2\)), en derivadas parciales (PDE) o ordinarias (ODE). <b>Aquí se trabaja con ODE</b>: \(\dfrac{dy}{dt}=\dfrac{3x-y}{10}\;\Rightarrow\;G(s)=\dfrac{3}{10s+1}\).</p></div>
+    <div class="card"><h3>Vocabulario mínimo</h3>
+      <p><b>Variable controlada</b>: la salida que mides. <b>Variable manipulada</b>: la entrada que ajusta el controlador. <b>Perturbación</b>: señal externa que empeora la salida. <b>Planta</b>: el objeto físico; <b>proceso</b>: la operación que se controla.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="conservacion">
+  <h2><span class="dot"></span>Principios de conservación</h2>
+  <p>Todo el tema sale de cinco balances. Para un sistema con \(N\) flujos de entrada o salida:</p>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Masa</span>\[\frac{dM}{dt}=\sum_{i=1}^{N}\dot m_i,\quad M=\rho V \;\Rightarrow\; V\dot\rho+\rho\dot V=\sum\dot m_i\]</div>
+    <div class="eq"><span class="lab">Cantidad de movimiento lineal</span>\[\frac{d}{dt}(M\vec v)=\sum\vec F_i\]</div>
+    <div class="eq"><span class="lab">Momento angular</span>\[\frac{d}{dt}(J\vec\omega)=\sum\vec M_i,\quad J=\text{tensor de inercia}\]</div>
+    <div class="eq"><span class="lab">Carga</span>\[\frac{dQ}{dt}=\sum i_k,\quad Q=Cu\]</div>
+  </div>
+  <div class="eq"><span class="lab">Energía</span>\[\frac{d}{dt}\Big[\big(u+\tfrac{v^2}{2}+gz\big)M\Big]=\sum\dot q_i-\dot W+\dot m_{\text{net}}\big(h+\tfrac{v^2}{2}+gz\big)\]</div>
+</section>
+
+<section class="sec mec" id="mecanicos">
+  <h2><span class="dot"></span>Sistemas mecánicos</h2>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Masa (traslación)</span>\[M\ddot x=F\]</div>
+    <div class="eq"><span class="lab">Inercia (giro, con fricción viscosa)</span>\[I\ddot\theta=T-B\dot\theta\]</div>
+    <div class="eq wide"><span class="lab">Muelle</span>\[F=-Kx\quad(\text{extremo fijo})\qquad F=-K(x_1-x_2)\quad(\text{extremo móvil})\qquad T=-K\theta\]</div>
+    <div class="eq wide"><span class="lab">Amortiguador (rozamiento)</span>\[F=-B(\dot x_1-\dot x_2)\qquad F=-B\dot x\qquad T=-B\dot\theta\]</div>
+  </div>
+  <p>Por defecto el muelle es lineal (\(Kx\)). Si el enunciado lo dice, puede ser no lineal (\(Kx^2\)).</p>
+  <h3>Ejemplo: suspensión de un coche (dos masas)</h3>
+  <p>Con \(x_0\) como entrada (perfil de la carretera) y \(x_1,x_2\) como salidas:</p>
+  <div class="eq">\[\begin{aligned}M_1\ddot x_1&=-K_1(x_1-x_0)-K_2(x_1-x_2)-B(\dot x_1-\dot x_2)\\ M_2\ddot x_2&=-K_2(x_2-x_1)-B(\dot x_2-\dot x_1)\end{aligned}\]</div>
+  <p>Tras Laplace se agrupa en una matriz \([A]\) y se invierte:</p>
+  <div class="eq">\[\underbrace{\begin{pmatrix}M_1s^2+K_1+K_2+Bs & -K_2-Bs\\ -K_2-Bs & M_2s^2+K_2+Bs\end{pmatrix}}_{[A]}\begin{pmatrix}X_1\\X_2\end{pmatrix}=\begin{pmatrix}K_1\\0\end{pmatrix}X_0\;\Rightarrow\;\begin{pmatrix}X_1\\X_2\end{pmatrix}=[A]^{-1}\begin{pmatrix}K_1\\0\end{pmatrix}X_0\]</div>
+</section>
+
+<section class="sec ele" id="electricos">
+  <h2><span class="dot"></span>Sistemas eléctricos</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Elemento</th><th>Ley</th><th>Impedancia (\(D=d/dt\))</th></tr></thead>
+    <tbody>
+      <tr><td>Resistencia</td><td>\(v_1-v_2=R\,i\)</td><td>\(Z=R\)</td></tr>
+      <tr><td>Condensador</td><td>\(i=C\dfrac{dv}{dt}\;\Leftrightarrow\;v=\dfrac1C\displaystyle\int i\,dt\)</td><td>\(Z=\dfrac{1}{CD}\to\dfrac{1}{Cs}\)</td></tr>
+      <tr><td>Bobina</td><td>\(v=L\dfrac{di}{dt}\;\Leftrightarrow\;i=\dfrac1L\displaystyle\int v\,dt\)</td><td>\(Z=LD\to Ls\)</td></tr>
+    </tbody></table></div>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Serie</span>\[Z_{eq}=Z_1+Z_2\]</div>
+    <div class="eq"><span class="lab">Paralelo</span>\[\frac1{Z_{eq}}=\frac1{Z_1}+\frac1{Z_2}\]</div>
+  </div>
+  <h3>Circuito pasivo RLC en serie (salida en el condensador)</h3>
+  <div class="eq">\[v=Ri+L\frac{di}{dt}+v_0,\quad i=C\frac{dv_0}{dt}\;\Rightarrow\;\frac{V_0(s)}{V(s)}=\frac{1}{LCs^2+RCs+1}\]</div>
+  <p>Es un filtro paso bajo de segundo orden.</p>
+  <h3>Circuito activo: amplificador operacional ideal</h3>
+  <p>Ganancia infinita e impedancia de entrada infinita. Consecuencias: \(i_+=i_-=0\) y, con realimentación negativa, \(v_+=v_-\).</p>
+  <div class="eq key"><span class="lab">Inversor</span>\[\frac{V_o}{V_i}=-\frac{Z_f}{Z_i}\]</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>\(Z_i\)</th><th>\(Z_f\)</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>\(R_1\)</td><td>\(R_2\)</td><td>\(v_o=-\dfrac{R_2}{R_1}v_i\) (amplificador)</td></tr>
+      <tr><td>\(R\)</td><td>\(C\)</td><td>\(v_o=-\dfrac{1}{RC}\displaystyle\int v_i\,dt\) (integrador)</td></tr>
+      <tr><td>\(C\)</td><td>\(R\)</td><td>\(v_o=-RC\,\dfrac{dv_i}{dt}\) (derivador)</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec mec" id="motor">
+  <h2><span class="dot"></span>Electromecánico: motor de continua</h2>
+  <p>Acopla el circuito del inducido (\(R,L\)) con la carga mecánica (\(I,B\)) mediante dos constantes.</p>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Acoplamiento</span>\[T=K_i\,i,\qquad V_b=K_b\,\dot\theta\]</div>
+    <div class="eq"><span class="lab">Carga mecánica</span>\[T-B\dot\theta=I\ddot\theta\]</div>
+  </div>
+  <p>Con inductancia despreciable (\(L\approx0\)) y carga, la tensión queda \(v=\frac{R}{K_i}I\ddot\theta+\big(\frac{BR}{K_i}+K_b\big)\dot\theta\). Aplicando Laplace:</p>
+  <div class="eq key">\[\frac{\Theta(s)}{V(s)}=\frac{K}{s(\tau s+1)},\qquad \frac{\Omega(s)}{V(s)}=\frac{K}{\tau s+1},\qquad K=\frac{K_i}{BR+K_iK_b},\quad \tau=\frac{IR}{BR+K_iK_b}\]</div>
+  <h3>Cómo se miden \(K_b\) y \(K_i\)</h3>
+  <div class="grid2">
+    <div class="card"><h3>Ensayo en vacío</h3><p>\(v=V_N\), par casi nulo. Se mide \(\dot\theta_N\) y, como \(V_b=V_N\):</p>\[K_b=\frac{V_N}{\dot\theta_N}\]</div>
+    <div class="card"><h3>Ensayo de parada</h3><p>\(v=V_N\), \(\dot\theta=0\) (sin fuerza contraelectromotriz). Se mide \(T_N\):</p>\[K_i=R\,\frac{T_N}{V_N}\]</div>
+  </div>
+</section>
+
+<section class="sec flu" id="fluidos">
+  <h2><span class="dot"></span>Sistemas de fluidos</h2>
+  <p>La densidad depende de presión y temperatura. Desarrollando en serie de Taylor alrededor del equilibrio \((p_0,T_0)\):</p>
+  <div class="eq">\[\rho=\rho_0\Big[1+\frac1\beta(p-p_0)-\alpha(T-T_0)\Big],\qquad \beta=\rho_0\frac{\partial p}{\partial\rho},\quad \alpha=-\frac1{\rho_0}\frac{\partial\rho}{\partial T}\]</div>
+  <p>Aquí \(\beta\) es el coeficiente de compresibilidad (en pascales) y \(\alpha\) el de dilatación.</p>
+
+  <h3>Depósitos: ecuación de continuidad</h3>
+  <p>Con \(\rho\) y \(T\) constantes en el depósito, la conservación de masa pasa a caudales volumétricos \(Q_i\) (m³/s):</p>
+  <div class="eq key">\[\frac{dV}{dt}+\frac V\beta\frac{dp}{dt}=\sum_i Q_i\]</div>
+  <figure>
+    <svg viewBox="0 0 460 250" role="img" aria-labelledby="f3t">
+      <title id="f3t">Depósito rectangular con entrada de caudal Qi, salida con válvula de apertura a y altura h</title>
+      <rect x="121" y="104" width="178" height="96" class="s-water"/>
+      <path d="M120 40 V200 H300 V40" class="s-ln"/>
+      <path d="M121 104 H299" class="s-thin" stroke-dasharray="5 4"/>
+      <path d="M40 24 H180 V86" class="s-acc" marker-end="url(#aha)"/>
+      <text x="44" y="16" class="s-it">Qᵢ</text>
+      <path d="M96 106 V198" class="s-thin" marker-start="url(#ah)" marker-end="url(#ah)"/>
+      <text x="76" y="156" class="s-it">h</text>
+      <text x="210" y="160" class="s-tx2" text-anchor="middle">área S</text>
+      <path d="M300 186 H334" class="s-ln"/>
+      <path d="M334 172 L362 200 V172 L334 200 Z" class="s-box"/>
+      <path d="M348 186 V160 M338 160 H358" class="s-ln"/>
+      <text x="348" y="150" text-anchor="middle" class="s-it">a</text>
+      <path d="M362 186 H420" class="s-acc" marker-end="url(#aha)"/>
+      <text x="400" y="176" class="s-it">Q₀</text>
+    </svg>
+    <figcaption>Depósito con válvula de apertura \(a\). La altura \(h\) es la salida y el caudal de entrada, la entrada.</figcaption>
+  </figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Caso</th><th>Ecuación</th></tr></thead>
+    <tbody>
+      <tr><td>Depósito rectangular (\(V=Sh\))</td><td>\(S\dfrac{dh}{dt}=Q_i-Q_o\)</td></tr>
+      <tr><td>Depósito cónico (\(V=\tfrac13\pi\tfrac{R^2}{H^2}h^3\))</td><td>\(\pi\dfrac{R^2}{H^2}h^2\dfrac{dh}{dt}=Q_i-Q_o\)</td></tr>
+      <tr><td>Tanque de aire comprimido</td><td>\(\dfrac V\beta\dfrac{dp}{dt}=Q_i-Q_o\)</td></tr>
+      <tr><td>Amortiguador neumático (\(V=V_0+Sx\))</td><td>\(S\dot x+\dfrac{V_0+Sx}{\beta}\dot p=Q_i\)</td></tr>
+      <tr><td>Pistón con masa</td><td>\(-F+pS-B\dot x=M\ddot x\) (con \(M\approx0\): \(pS=F+Kx+B\dot x\))</td></tr>
+    </tbody></table></div>
+
+  <h3>Tuberías, cambios de sección y válvulas</h3>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Tubería (inercia del fluido)</span>\[\delta p=p_1-p_2=\frac{\rho\ell}{A}\frac{dQ}{dt}\]</div>
+    <div class="eq wide"><span class="lab">Resistencia fluídica</span>\[\delta p=R\,Q,\quad R=\frac{32\,\mu\,\ell}{A\,d_h^{2}},\quad d_h=\frac{4A}{\text{perímetro}}\]</div>
+    <div class="eq wide"><span class="lab">Cambio de sección (Bernoulli, \(v_2\gg v_1\))</span>\[Q=C_dA_2\sqrt{\frac2\rho}\sqrt{p_1-p_2},\quad 0\lt C_d\lt1\]</div>
+    <div class="eq key"><span class="lab">Válvula con apertura \(a\)</span>\[Q=K\,a\sqrt{p_1-p_2},\qquad Q=K\,a\sqrt p\ \text{(salida a la atmósfera)}\]</div>
+  </div>
+  <p>Entre dos depósitos contiguos las presiones relativas son \(\rho g h_1\) y \(\rho g h_2\), de modo que \(Q=Ka\sqrt{h_1-h_2}\) con \(K\) absorbiendo \(\sqrt{\rho g}\). El caudal puede ir en cualquier sentido:</p>
+  <div class="eq">\[Q=Ka\sqrt{|h_1-h_2|}\;\operatorname{sign}(h_1-h_2)\]</div>
+  <h3>Ejemplo: dos depósitos en serie</h3>
+  <p>Una válvula \(a_0\) alimenta el primero desde una presión \(p\); \(a_1\) los comunica; \(a_2\) vacía el segundo a la atmósfera.</p>
+  <div class="eq">\[\begin{aligned}S_1\dot h_1&=K_0a_0\sqrt p-K_1a_1\sqrt{|h_1-h_2|}\,\operatorname{sign}(h_1-h_2)\\ S_2\dot h_2&=K_1a_1\sqrt{|h_1-h_2|}\,\operatorname{sign}(h_1-h_2)-K_2a_2\sqrt{h_2}\end{aligned}\]</div>
+  <p>Se separa en dos casos, \(h_1>h_2\) y \(h_1\lt h_2\), y después se linealiza (siguiente bloque grande).</p>
+</section>
+
+<section class="sec ter" id="termicos">
+  <h2><span class="dot"></span>Sistemas térmicos</h2>
+  <p>A presión constante, la energía almacenada es \(Mc_pT\). El calor se transmite con un modelo de resistencias, como en un circuito:</p>
+  <div class="grid2">
+    <div class="eq key"><span class="lab">Balance</span>\[\sum q_i=M\,c_p\frac{dT}{dt}\quad[\mathrm W]\]</div>
+    <div class="eq key"><span class="lab">Resistencia térmica</span>\[q=\frac{\Delta T}{R}=U\,\Delta T,\qquad U=\frac1R\]</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Mecanismo</th><th>Ley</th><th>Resistencia \(R\)</th></tr></thead>
+    <tbody>
+      <tr><td>Conducción, pared plana</td><td>\(q=-K_tA\dfrac{dT}{dx}\) (Fourier)</td><td>\(\dfrac{L}{K_tA}\)</td></tr>
+      <tr><td>Conducción, cilindro axial</td><td>igual, con \(A=\pi r^2\)</td><td>\(\dfrac{L}{K_t\pi r^2}\)</td></tr>
+      <tr><td>Conducción, cilindro radial</td><td>\(A=2\pi rL\)</td><td>\(\dfrac{\ln(r_2/r_1)}{2\pi L K_t}\)</td></tr>
+      <tr><td>Convección</td><td>\(q=hA(T_s-T_\infty)\) (Newton)</td><td>\(\dfrac{1}{hA}\)</td></tr>
+      <tr><td>Radiación</td><td>\(q=A\sigma T^4,\ \sigma=5{,}67\cdot10^{-8}\) W/(m²K⁴)</td><td>marcada en los apuntes como fuera de temario</td></tr>
+    </tbody></table></div>
+  <p>Las resistencias en serie se suman, igual que las impedancias. Una pared con convección a ambos lados:</p>
+  <figure>
+    <svg viewBox="0 0 640 240" role="img" aria-labelledby="f4t">
+      <title id="f4t">Pared plana con convección a ambos lados y cadena de tres resistencias térmicas en serie</title>
+      <rect x="40" y="26" width="200" height="110" class="s-hot"/>
+      <rect x="240" y="26" width="90" height="110" class="s-box"/>
+      <rect x="330" y="26" width="270" height="110" class="s-water"/>
+      <text x="140" y="60" text-anchor="middle" class="s-tx2">fluido 1</text><text x="140" y="80" text-anchor="middle" class="s-it">T∞₁ , h₁</text>
+      <text x="285" y="86" text-anchor="middle" class="s-it">Kₜ</text>
+      <text x="465" y="60" text-anchor="middle" class="s-tx2">fluido 2</text><text x="465" y="80" text-anchor="middle" class="s-it">T∞₂ , h₂</text>
+      <path d="M100 112 H560" class="s-acc" marker-end="url(#aha)"/>
+      <text x="580" y="116" class="s-it">q</text>
+      <path d="M240 150 H330" class="s-thin" marker-start="url(#ah)" marker-end="url(#ah)"/>
+      <text x="285" y="168" text-anchor="middle" class="s-it">L</text>
+      <path d="M50 206 h28 l8 -14 l14 28 l14 -28 l14 28 l8 -14 H230 M230 206 h28 l8 -14 l14 28 l14 -28 l14 28 l8 -14 H410 M410 206 h28 l8 -14 l14 28 l14 -28 l14 28 l8 -14 H590" class="s-ln"/>
+      <circle cx="50" cy="206" r="4" class="s-head"/><circle cx="230" cy="206" r="4" class="s-head"/><circle cx="410" cy="206" r="4" class="s-head"/><circle cx="590" cy="206" r="4" class="s-head"/>
+      <text x="50" y="236" text-anchor="middle" class="s-tx2">T∞₁</text><text x="230" y="236" text-anchor="middle" class="s-tx2">Tₛ₁</text><text x="410" y="236" text-anchor="middle" class="s-tx2">Tₛ₂</text><text x="590" y="236" text-anchor="middle" class="s-tx2">T∞₂</text>
+      <text x="140" y="186" text-anchor="middle" class="s-tx2">R₁ = 1/(h₁A)</text><text x="320" y="186" text-anchor="middle" class="s-tx2">R₂ = L/(KₜA)</text><text x="500" y="186" text-anchor="middle" class="s-tx2">R₃ = 1/(h₂A)</text>
+    </svg>
+    <figcaption>El flujo de calor es la diferencia de temperaturas extremas dividida entre la suma de resistencias.</figcaption>
+  </figure>
+  <div class="eq key">\[q=\frac{T_{\infty1}-T_{\infty2}}{R_1+R_2+R_3}\]</div>
+  <h3>Tanque con calefactor y caudal</h3>
+  <div class="eq">\[\rho Vc_p\frac{dT_0}{dt}=\rho c_pF_iT_i-\rho c_pF_oT_0-UA\,(T_0-T_\infty)+q_h\]</div>
+  <p>Si además cambia el nivel, el miembro izquierdo pasa a \(\rho c_pS\big(T_0\dot h+h\dot T_0\big)\). Si hay reacción química, se suma \(q_r=r\,V\,\Delta H\) con \(r=Ke^{-E/RT}C_A\) y \(\dot C_A=-r\). Si el calentador lo gobierna un PID, \(q_h=K_{q}V_h\) con \(V_h=K_pe+K_i\!\int e\,dt+K_d\dot e\) y \(e=T_{ref}-T_0\).</p>
+</section>
+
+<section class="sec" id="linealizacion">
+  <h2><span class="dot"></span>Linealización</h2>
+  <p>Las raíces, productos y senos no se pueden pasar a Laplace tal cual. Dada cada ecuación \(F(x_1,\dots,x_n)=0\) y un punto de equilibrio \(\vec x_0\):</p>
+  <ol class="steps">
+    <li><b>Equilibrio.</b> Impón \(F(\vec x_0)=0\) con derivadas nulas y calcula los valores de equilibrio de las salidas.</li>
+    <li><b>Taylor de primer orden.</b> Cada derivada parcial se evalúa en \(\vec x_0\) y multiplica a la variable incremental.</li>
+    <li><b>Variables incrementales.</b> \(h\to\Delta h\to\Delta H(s)\) y \(\dfrac{dh}{dt}\to\Delta\!\left(\dfrac{dh}{dt}\right)\to s\,\Delta H(s)\).</li>
+  </ol>
+  <div class="eq key">\[\frac{\partial F}{\partial x_1}\Big|_{\vec x_0}\Delta x_1+\cdots+\frac{\partial F}{\partial x_n}\Big|_{\vec x_0}\Delta x_n=0\]</div>
+  <h3>Aplicado a los dos depósitos (caso \(h_1>h_2\))</h3>
+  <div class="grid2">
+    <div class="eq wide"><span class="lab">Equilibrio</span>\[h_{20}=\Big(\frac{K_0a_{00}}{K_2a_{20}}\Big)^2p,\quad h_{10}=(K_0a_{00})^2p\Big[\frac1{(K_1a_{10})^2}+\frac1{(K_2a_{20})^2}\Big]\]</div>
+    <div class="eq wide"><span class="lab">Primera ecuación linealizada</span>\[S_1\Delta\dot h_1+\frac{K_1a_{10}}{2\sqrt{h_{10}-h_{20}}}(\Delta h_1-\Delta h_2)-K_0\sqrt p\,\Delta a_0+K_1\sqrt{h_{10}-h_{20}}\,\Delta a_1=0\]</div>
+  </div>
+  <p>Con Laplace y las dos ecuaciones agrupadas queda \([L]\,\Delta H(s)=[J]\,\Delta A(s)\), de donde \(\Delta H(s)=[L]^{-1}[J]\,\Delta A(s)=[G(s)]\,\Delta A(s)\).</p>
+</section>
+
+<section class="sec" id="equivalencias">
+  <h2><span class="dot"></span>Equivalencias entre dominios</h2>
+  <p>Los cuatro dominios dan las mismas ecuaciones con otros nombres. Si dominas el circuito RLC, dominas los demás.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Dominio</th><th>Esfuerzo</th><th>Flujo</th><th>Disipación</th><th>Inercia</th><th>Rigidez</th><th>Carga</th></tr></thead>
+    <tbody>
+      <tr><td>Eléctrico</td><td>\(V\)</td><td>\(i\)</td><td>\(R\)</td><td>\(L\)</td><td>\(1/C\)</td><td>\(q\)</td></tr>
+      <tr><td>Mecánico</td><td>\(F,\,T\)</td><td>\(\dot x\)</td><td>\(B\)</td><td>\(m,\,I\)</td><td>\(K\)</td><td>\(x,\,\theta\)</td></tr>
+      <tr><td>Fluidos</td><td>\(p\)</td><td>\(Q\)</td><td>\(R_f\)</td><td>\(\rho\ell/A\)</td><td>\(\beta/V\)</td><td>-</td></tr>
+      <tr><td>Térmico</td><td>\(T\)</td><td>\(q\)</td><td>\(R_T\)</td><td>-</td><td>\(1/(mc_p)\)</td><td>-</td></tr>
+    </tbody></table></div>
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-labelledby="f2t">
+      <title id="f2t">Sistema masa, muelle y amortiguador junto a su circuito RLC equivalente</title>
+      <path d="M22 40 V190" class="s-ln"/>
+      <path d="M22 60 l-10 10 M22 80 l-10 10 M22 100 l-10 10 M22 120 l-10 10 M22 140 l-10 10 M22 160 l-10 10 M22 180 l-10 10" class="s-thin"/>
+      <path d="M22 80 H44 L52 66 L66 94 L80 66 L94 94 L108 66 L116 80 H132" class="s-ln"/>
+      <path d="M22 150 H62 M62 138 V162 M62 138 H100 M62 162 H100 M82 144 V156 M82 150 H132" class="s-ln"/>
+      <rect x="132" y="62" width="70" height="98" rx="4" class="s-box"/>
+      <text x="167" y="116" text-anchor="middle" class="s-it">m</text>
+      <text x="72" y="58" text-anchor="middle" class="s-it">K</text><text x="82" y="182" text-anchor="middle" class="s-it">B</text>
+      <path d="M204 111 H262" class="s-acc" marker-end="url(#aha)"/><text x="232" y="102" text-anchor="middle" class="s-it">F</text>
+      <path d="M140 200 H196" class="s-thin" marker-end="url(#ah)"/><text x="168" y="218" text-anchor="middle" class="s-it">x</text>
+      <text x="112" y="244" text-anchor="middle" class="s-tx2">m ẍ = F − K x − B ẋ</text>
+      <text x="300" y="116" text-anchor="middle" class="s-tx" style="font-size:22px">≙</text>
+      <path d="M392 108 V62 H430" class="s-ln"/>
+      <path d="M430 62 L438 62 L444 48 L456 76 L468 48 L480 76 L486 62 H500" class="s-ln"/>
+      <path d="M500 62 H516 a9 9 0 0 1 18 0 a9 9 0 0 1 18 0 a9 9 0 0 1 18 0 H606 V110" class="s-ln"/>
+      <path d="M594 110 H618 M594 124 H618" class="s-ln"/><path d="M606 124 V190 H392 V142" class="s-ln"/>
+      <circle cx="392" cy="125" r="17" class="s-box"/><text x="392" y="130" text-anchor="middle" class="s-tx">V</text>
+      <text x="468" y="38" text-anchor="middle" class="s-it">R</text><text x="552" y="46" text-anchor="middle" class="s-it">L</text><text x="632" y="122" text-anchor="end" class="s-it">C</text>
+      <path d="M440 170 H520" class="s-acc" marker-end="url(#aha)"/><text x="480" y="162" text-anchor="middle" class="s-it">i</text>
+      <text x="496" y="244" text-anchor="middle" class="s-tx2">L q̈ = V − q/C − R q̇</text>
+    </svg>
+    <figcaption>\(F\leftrightarrow V,\ B\leftrightarrow R,\ m\leftrightarrow L,\ K\leftrightarrow 1/C,\ x\leftrightarrow q\). La masa hace de bobina y el muelle de condensador.</figcaption>
+  </figure>
+</section>
+
+<section class="sec" id="ordenes">
+  <h2><span class="dot"></span>Sistemas de primer y segundo orden</h2>
+  <div class="grid2">
+    <div class="eq key"><span class="lab">Primer orden</span>\[\tau\dot y+y=Ku\;\Rightarrow\;G(s)=\frac{K}{\tau s+1}\]</div>
+    <div class="eq key"><span class="lab">Segundo orden</span>\[\tau^2\ddot y+2\xi\tau\dot y+y=Ku\;\Rightarrow\;G(s)=\frac{K}{\tau^2s^2+2\xi\tau s+1}\]</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Función de transferencia</th><th>Identificación</th></tr></thead>
+    <tbody>
+      <tr><td>Masa con rozamiento \(m\dot v=F-Bv\)</td><td>\(\dfrac{V}{F}=\dfrac{1/B}{(m/B)s+1}\)</td><td>\(K=\dfrac1B,\ \tau=\dfrac mB\)</td></tr>
+      <tr><td>RC (salida en el condensador)</td><td>\(\dfrac{V_c}{V}=\dfrac1{RCs+1}\)</td><td>\(K=1,\ \tau=RC\)</td></tr>
+      <tr><td>Masa, muelle, amortiguador</td><td>\(\dfrac XF=\dfrac1{ms^2+Bs+K}\)</td><td>\(\tau=\sqrt{\dfrac mK},\ \xi=\dfrac{B}{2\sqrt{Km}}\)</td></tr>
+      <tr><td>RLC (salida en el condensador)</td><td>\(\dfrac{V_c}{V}=\dfrac1{LCs^2+RCs+1}\)</td><td>\(\tau=\sqrt{LC},\ \xi=\dfrac R2\sqrt{\dfrac CL}\)</td></tr>
+    </tbody></table></div>
+  <p>Los casos hidráulico (\(S\dot h=F_i-Ka\sqrt h\)) y térmico (\(\rho c_pV\dot T_0=\rho c_pF(T_i-T_0)\)) parecen de primer orden pero el primero no es lineal: hay que linealizarlo antes de hablar de \(\tau\).</p>
+</section>
+
+<section class="sec ctl" id="reguladores">
+  <h2><span class="dot"></span>Amplificadores operacionales: reguladores y filtros</h2>
+  <p>Cada regulador es una etapa inversora con \(Z_i\) y \(Z_f\) más un inversor final \(R_4/R_3\) que devuelve el signo positivo. Definiendo \(G(s)=U_s(s)/U_e(s)\):</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Regulador</th><th>\(G(s)\)</th><th>Forma estándar</th></tr></thead>
+    <tbody>
+      <tr><td>P</td><td>\(\dfrac{R_4}{R_3}\dfrac{R_2}{R_1}\)</td><td>\(K_p\)</td></tr>
+      <tr><td>I</td><td>\(\dfrac{R_4}{R_3}\dfrac{1}{RCs}\)</td><td>\(\dfrac{K_p}{T_is}\)</td></tr>
+      <tr><td>D</td><td>\(\dfrac{R_4}{R_3}RCs\)</td><td>\(K_pT_ds\)</td></tr>
+      <tr><td>PD</td><td>\(\dfrac{R_4}{R_3}\dfrac{R_2}{R_1}(1+R_1Cs)\)</td><td>\(K_p(1+T_ds)\)</td></tr>
+      <tr><td>PI</td><td>\(\dfrac{R_4}{R_3}\dfrac{R_2}{R_1}\Big(1+\dfrac{1}{R_2Cs}\Big)\)</td><td>\(K_p\big(1+\tfrac1{T_is}\big)\)</td></tr>
+      <tr><td>PID</td><td colspan="2">\(K_p\big(1+\tfrac1{T_is}+T_ds\big)\) con \(K_p=\dfrac{R_4}{R_3}\dfrac{R_1C_1+R_2C_2}{R_1C_2},\ T_i=R_1C_1+R_2C_2,\ T_d=\dfrac{R_1R_2C_1C_2}{R_1C_1+R_2C_2}\)</td></tr>
+      <tr><td>Adelanto / atraso</td><td>\(\dfrac{R_4}{R_3}\dfrac{R_2}{R_1}\dfrac{1+R_1C_1s}{1+R_2C_2s}\)</td><td>\(K\dfrac{1+Ts}{1+\alpha Ts}\)</td></tr>
+      <tr><td>Adelanto-retardo</td><td colspan="2">\(K\,\dfrac{1+T_1s}{1+\alpha T_1s}\cdot\dfrac{1+T_2s}{1+\beta T_2s}\)</td></tr>
+    </tbody></table></div>
+  <p>En el compensador, \(\alpha\lt1\) da adelanto de fase y \(\alpha\gt1\) da atraso.</p>
+  <h3>Filtros</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Filtro</th><th>\(G(s)\)</th></tr></thead>
+    <tbody>
+      <tr><td>Paso bajo, 1.er orden (no inversor)</td><td>\(\Big(1+\dfrac{R_2}{R_1}\Big)\dfrac{1}{1+RCs}\)</td></tr>
+      <tr><td>Paso alto, 1.er orden (no inversor)</td><td>\(\Big(1+\dfrac{R_2}{R_1}\Big)\dfrac{RCs}{1+RCs}\)</td></tr>
+      <tr><td>Paso bajo, 2.º orden (Sallen-Key)</td><td>\(\dfrac{K\omega_n^2}{s^2+2\xi\omega_ns+\omega_n^2},\ \omega_n=\dfrac1{RC},\ \xi=\dfrac{3-K}{2}\)</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec" id="trampas">
+  <h2><span class="dot"></span>Trampas típicas</h2>
+  <p>Lo que cambia de un enunciado a otro para confundirte.</p>
+  <div class="trap"><b class="t">Signos</b><p>En muelles y amortiguadores entre dos masas la fuerza depende de la diferencia \((x_1-x_2)\), no de una posición suelta. Un signo mal puesto convierte el amortiguamiento en inestabilidad.</p></div>
+  <div class="trap"><b class="t">Volumen</b><p>En el depósito cónico \(V\) crece con \(h^3\), por eso aparece \(h^2\dot h\). En el rectangular es \(Sh\) y queda \(S\dot h\).</p></div>
+  <div class="trap"><b class="t">Sentido del caudal</b><p>Entre dos depósitos escribe \(|h_1-h_2|\) y el signo, o separa dos casos. Una raíz de un número negativo no existe.</p></div>
+  <div class="trap"><b class="t">Masa despreciable</b><p>Si un pistón tiene \(M\approx0\) la ecuación pasa a ser de equilibrio de fuerzas: \(pS=F+Kx+B\dot x\). Se puede derivar y sustituir en la ecuación de continuidad.</p></div>
+  <div class="trap"><b class="t">Linealizar</b><p>Los valores de equilibrio salen de poner las derivadas a cero. Y al aplicar Laplace trabajas con incrementos: \(\Delta H(s)\), no \(H(s)\).</p></div>
+  <div class="trap"><b class="t">Motor de continua</b><p>El ensayo en vacío da \(K_b\) (par casi nulo) y el de parada da \(K_i\) (sin fuerza contraelectromotriz). Si los intercambias, \(K\) y \(\tau\) salen mal.</p></div>
+  <div class="trap"><b class="t">Operacional</b><p>Un solo inversor invierte el signo; dos en cascada lo recuperan. Con \(Z_i=C\) y \(Z_f=R\) es un derivador, y al revés un integrador. Se suele confundir.</p></div>
+  <div class="trap"><b class="t">Resistencia radial</b><p>Para un tubo que conduce hacia fuera la resistencia lleva \(\ln(r_2/r_1)\), no \(L/(K_tA)\).</p></div>
+</section>
+
+<section class="sec" id="autoeval">
+  <h2><span class="dot"></span>Autoevaluación</h2>
+  <p>Seis ejercicios recreados con el estilo del tema. Resuelve primero y luego pulsa una opción.</p>
+  <div class="score" id="score" aria-live="polite"></div>
+
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Motor de continua</em></div>
+    <p>Un motor con inductancia despreciable tiene \(R=2\ \Omega\), \(I=0{,}01\ \mathrm{kg\,m^2}\), \(B=0{,}002\ \mathrm{N\,m\,s/rad}\). En vacío a \(V_N=24\) V gira a \(300\) rad/s y con el rotor parado da \(T_N=1{,}2\) N·m. ¿Cuánto vale \(\tau\) de \(\Omega/V\)?</p>
+    <div class="opts"><button class="opt" data-k="a">5,0 s</button><button class="opt" data-k="b">1,67 s</button><button class="opt" data-k="c">0,83 s</button><button class="opt" data-k="d">0,012 s</button></div>
+    <div class="expl" hidden><p>\(K_b=24/300=0{,}08\), \(K_i=R\,T_N/V_N=2\cdot1{,}2/24=0{,}1\). Luego \(BR+K_iK_b=0{,}004+0{,}008=0{,}012\) y \(\tau=IR/0{,}012=0{,}02/0{,}012=1{,}67\) s. La ganancia es \(K=0{,}1/0{,}012=8{,}33\) rad/(s·V). Los 5 s salen de olvidar \(K_iK_b\).</p></div>
+  </div>
+
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Linealización</em></div>
+    <p>Un depósito de \(S=0{,}5\ \mathrm{m^2}\) cumple \(S\dot h=Q_i-Ka\sqrt h\) con \(Ka=0{,}02\ \mathrm{m^{5/2}/s}\). Se linealiza en torno a \(Q_{i0}=0{,}04\ \mathrm{m^3/s}\). ¿Constante de tiempo del modelo lineal?</p>
+    <div class="opts"><button class="opt" data-k="a">25 s</button><button class="opt" data-k="b">50 s</button><button class="opt" data-k="c">100 s</button><button class="opt" data-k="d">200 s</button></div>
+    <div class="expl" hidden><p>Equilibrio: \(h_0=(Q_{i0}/Ka)^2=4\) m. La derivada de \(Ka\sqrt h\) es \(Ka/(2\sqrt{h_0})=0{,}005\ \mathrm{m^2/s}\). Entonces \(G=\dfrac{200}{100s+1}\): \(\tau=S/0{,}005=100\) s y la ganancia es 200 s/m². Los 50 s aparecen si se olvida el 2 de la derivada.</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Segundo orden eléctrico</em></div>
+    <p>Un RLC en serie con salida en el condensador tiene \(R=100\ \Omega\), \(L=100\) mH y \(C=10\ \mu\)F. ¿Cuánto valen \(\xi\) y \(\omega_n\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(\xi=0{,}5\), \(\omega_n=1000\) rad/s</button><button class="opt" data-k="b">\(\xi=2\), \(\omega_n=1000\) rad/s</button><button class="opt" data-k="c">\(\xi=0{,}5\), \(\omega_n=31{,}6\) rad/s</button><button class="opt" data-k="d">\(\xi=0{,}05\), \(\omega_n=1000\) rad/s</button></div>
+    <div class="expl" hidden><p>\(\omega_n=1/\sqrt{LC}=1/\sqrt{0{,}1\cdot10^{-5}}=1000\) rad/s y \(\xi=\frac R2\sqrt{C/L}=50\cdot0{,}01=0{,}5\): subamortiguado.</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Resistencias térmicas</em></div>
+    <p>Pared de \(L=0{,}2\) m, \(K_t=0{,}8\ \mathrm{W/(m\,K)}\), \(A=1\ \mathrm{m^2}\). Convección \(h_1=10\) y \(h_2=25\ \mathrm{W/(m^2K)}\), con fluidos a \(20\,^\circ\)C y \(-5\,^\circ\)C. ¿Calor transmitido?</p>
+    <div class="opts"><button class="opt" data-k="a">64 W</button><button class="opt" data-k="b">71 W</button><button class="opt" data-k="c">100 W</button><button class="opt" data-k="d">250 W</button></div>
+    <div class="expl" hidden><p>\(R_1=0{,}1\), \(R_2=0{,}25\), \(R_3=0{,}04\) K/W, suman \(0{,}39\). \(q=25/0{,}39=64{,}1\) W. Con 71 W olvidas \(R_3\), con 100 W solo cuentas la conducción y con 250 W solo \(R_1\).</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Operacional</em></div>
+    <p>Un amplificador inversor ideal lleva \(Z_i=R\) y \(Z_f=C\). ¿Qué relación cumple?</p>
+    <div class="opts"><button class="opt" data-k="a">\(v_o=-\dfrac1{RC}\displaystyle\int v_i\,dt\)</button><button class="opt" data-k="b">\(v_o=-RC\,\dfrac{dv_i}{dt}\)</button><button class="opt" data-k="c">\(v_o=+\dfrac1{RC}\displaystyle\int v_i\,dt\)</button><button class="opt" data-k="d">\(v_o=-\dfrac RC\,v_i\)</button></div>
+    <div class="expl" hidden><p>\(V_o/V_i=-Z_f/Z_i=-\dfrac{1/(Cs)}{R}=-\dfrac{1}{RCs}\): integrador con signo menos. El derivador es el caso contrario, \(Z_i=C\) y \(Z_f=R\).</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Segundo orden mecánico</em></div>
+    <p>Un sistema masa-muelle-amortiguador con \(m=2\) kg, \(B=8\) N·s/m y \(K=50\) N/m. ¿Valor de \(\xi\)?</p>
+    <div class="opts"><button class="opt" data-k="a">0,4</button><button class="opt" data-k="b">0,8</button><button class="opt" data-k="c">1,25</button><button class="opt" data-k="d">0,16</button></div>
+    <div class="expl" hidden><p>\(\xi=\dfrac{B}{2\sqrt{Km}}=\dfrac8{2\cdot10}=0{,}4\), con \(\omega_n=\sqrt{K/m}=5\) rad/s. El 0,8 sale de olvidar el 2.</p></div>
+  </div>
+
+  <button class="reset" id="reset-q" type="button">Reiniciar</button>
+</section>
+
+<div class="pager">
+  <a href="index.html"><small>Anterior</small>Inicio</a>
+  <a class="next" href="identificacion.html"><small>Siguiente</small>UD 2 · Identificación</a>
+</div>
+<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script></body></html>

@@ -1,0 +1,120 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Problemas de modelado e identificación</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Hub </span>GIEIA-UPCT</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><h4>Guía</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="tema-1.html">Tema 1 · Modelado de sistemas</a></li><li><a href="identificacion.html">UD 2 · Identificación</a></li><li><a href="problemas.html" aria-current="page">Problemas</a></li><li><a href="metodos-numericos.html">UD 4 · Métodos numéricos</a></li><li><a href="error.html">Predicción y análisis del error</a></li><li><a href="examenes.html">Qué se pregunta en el examen</a></li><li><a href="practicas.html">Prácticas</a></li></ul><h4>En esta página</h4><div class="toc"><a href="#metodo">Método</a><a href="#p1">Problema 1 · Acelerómetro</a><a href="#p2">Problema 2 · Dos depósitos con válvula</a><a href="#p3">Problema 3 · Depósito cónico</a><a href="#p4">Problema 4 · Identificar un ARX</a><a href="#siguientes">Siguientes pasos</a></div><h4>Próximamente</h4><ul><li><span class="soon">Formulario</span></li><li><span class="soon">Glosario</span></li></ul></nav><main><header>
+  <div class="kicker">Problemas · modelado e identificación</div>
+  <h1>Problemas con método fijo</h1>
+  <p class="lead">El examen es de problemas, así que aquí se practica el proceso entero: de los datos a la función de transferencia, con la comprobación del resultado.</p>
+  <div class="tags"><span class="tag">4 problemas</span><span class="tag mec">mecánico</span><span class="tag flu">fluidos</span><span class="tag ctl">identificación</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Los enunciados están recreados con el estilo de los problemas de clase y los resultados numéricos se han comprobado con código. Intenta cada problema antes de abrir la resolución.</p>
+</header>
+
+<section class="sec" id="metodo">
+  <h2><span class="dot"></span>Método</h2>
+  <ol class="steps">
+    <li><b>Entradas y salidas.</b> La entrada es lo que define el sistema y no controlas (una fuerza, una aceleración, un caudal). Las salidas son lo que quieres saber.</li>
+    <li><b>Sistema de referencia.</b> Elige uno inercial y fija el sentido positivo. Todo se mide respecto a él, aunque una pieza se mueva.</li>
+    <li><b>Grados de libertad.</b> Un sólido libre tiene 6; cada restricción quita uno. Quedan tantas incógnitas como grados de libertad.</li>
+    <li><b>Despiece.</b> Aísla cada elemento y dibuja fuerzas con acción y reacción. En muelles y amortiguadores cuenta la deformación entre sus dos extremos.</li>
+    <li><b>Ecuaciones.</b> Una por grado de libertad, con las leyes de conservación y las leyes de cada elemento.</li>
+    <li><b>Linealizar y pasar a Laplace</b> si hay raíces o productos, hasta llegar a \(G(s)\) o a una matriz \([G(s)]\).</li>
+    <li><b>Comprobar.</b> Unidades de cada término, signo de la ganancia estática y comportamiento esperado al límite (\(s\to0\)).</li>
+  </ol>
+  <h3>Tres formas de dar el mismo modelo</h3>
+  <p>Para un sistema masa, muelle y amortiguador con fuerza \(F\):</p>
+  <div class="grid2">
+    <div class="eq"><span class="lab">1 · Ecuación diferencial</span>\[M\ddot x=F-Kx-B\dot x\]</div>
+    <div class="eq"><span class="lab">2 · Función de transferencia</span>\[G(s)=\frac{X(s)}{F(s)}=\frac{1}{Ms^2+Bs+K}\]</div>
+  </div>
+  <div class="eq"><span class="lab">3 · Espacio de estados (con \(x_1=x\), \(x_2=\dot x\))</span>\[\begin{pmatrix}\dot x_1\\\dot x_2\end{pmatrix}=\begin{pmatrix}0&1\\-K/M&-B/M\end{pmatrix}\begin{pmatrix}x_1\\x_2\end{pmatrix}+\begin{pmatrix}0\\1/M\end{pmatrix}F\]</div>
+  <p>La función de transferencia solo existe si el modelo es lineal; si no lo es, hay que linealizar antes.</p>
+</section>
+
+<section class="sec mec" id="p1">
+  <h2><span class="dot"></span>Problema 1 · Acelerómetro</h2>
+  <p>Una caja se mueve con aceleración \(\ddot x\) respecto al suelo. Dentro, una masa \(M=0{,}05\) kg está unida a la caja con un muelle \(K=200\) N/m y un amortiguador \(B=2\) N·s/m. Una regla mide el desplazamiento \(y\) de la masa respecto de la caja. Halla \(G(s)=Y(s)/\ddot X(s)\), la frecuencia natural, el amortiguamiento y la ganancia estática.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <ol class="steps">
+      <li><b>Entrada y salida.</b> Entrada: la aceleración de la caja. Salida: el desplazamiento relativo \(y\).</li>
+      <li><b>Referencia.</b> La caja no es inercial, así que se toma como referencia el suelo. La masa se mueve en \(x_m=x-y\): lo que avanza la caja menos lo que retrocede la masa respecto a ella.</li>
+      <li><b>Despiece.</b> Sobre la masa actúan \(F_K=Ky\) y \(F_B=B\dot y\), que la arrastran con la caja.</li>
+      <li><b>Ecuación.</b> \(M\ddot x_m=F_K+F_B\), es decir, \(M(\ddot x-\ddot y)=Ky+B\dot y\).</li>
+      <li><b>Laplace.</b> \(Ms^2X-Ms^2Y=KY+BsY\), de donde \(Y\,(Ms^2+Bs+K)=M\,s^2X\).</li>
+    </ol>
+    <div class="eq key">\[G(s)=\frac{Y(s)}{\ddot X(s)}=\frac{M}{Ms^2+Bs+K}=\frac{1}{s^2+\frac BM s+\frac KM}\]</div>
+    <p>Con los datos: \(\omega_n=\sqrt{K/M}=63{,}2\) rad/s, \(\xi=\dfrac{B}{2\sqrt{KM}}=0{,}316\) y ganancia estática \(M/K=2{,}5\cdot10^{-4}\) m por m/s², es decir, 0,25 mm por cada m/s².</p>
+    <div class="trap"><b class="t">Trampa</b><p>El \(M\) de \(M\ddot y\) también multiplica a \(s^2\). Si se pierde, el denominador queda \(s^2+Bs+K\) y las unidades dejan de cuadrar.</p></div>
+    <p><b>Comprobación.</b> En régimen estacionario con aceleración \(a\) constante, el muelle equilibra la fuerza de inercia: \(Ky=Ma\), luego \(y=Ma/K\). Coincide con \(G(0)=M/K\). Se verificó además integrando la ecuación en el ordenador.</p>
+  </details>
+</section>
+
+<section class="sec flu" id="p2">
+  <h2><span class="dot"></span>Problema 2 · Dos depósitos con válvula</h2>
+  <p>Un depósito de sección \(S_1=1\ \mathrm{m^2}\) recibe un caudal \(Q_i\). Una válvula de apertura \(a\) lo comunica con un segundo depósito de \(S_2=2\ \mathrm{m^2}\), que descarga a la atmósfera con \(Q_o=K_2\sqrt{h_2}\). Datos: \(Q=a\,K_1\sqrt{h_1-h_2}\) con \(K_1=0{,}02\) y \(K_2=0{,}03\) (en \(\mathrm{m^{5/2}/s}\)). Punto de trabajo: \(a_0=0{,}5\), \(Q_{i0}=0{,}06\ \mathrm{m^3/s}\). Obtén el modelo, el equilibrio, el modelo lineal y \(\Delta H_2/\Delta Q_i\).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <ol class="steps">
+      <li><b>Modelo.</b> Suponiendo \(h_1>h_2\):
+        \[S_1\dot h_1=Q_i-aK_1\sqrt{h_1-h_2},\qquad S_2\dot h_2=aK_1\sqrt{h_1-h_2}-K_2\sqrt{h_2}\]
+        Entradas: \(Q_i\) y \(a\). Salidas: \(h_1\) y \(h_2\).</li>
+      <li><b>Equilibrio</b> (derivadas nulas). De la segunda: \(Q_{i0}=K_2\sqrt{h_{20}}\), luego \(h_{20}=(0{,}06/0{,}03)^2=4\) m. De la primera: \(a_0K_1\sqrt{h_{10}-h_{20}}=Q_{i0}\), luego \(h_{10}-h_{20}=(0{,}06/0{,}01)^2=36\) y \(h_{10}=40\) m.</li>
+      <li><b>Linealización.</b> Los coeficientes de las raíces:
+        \[c_1=\frac{a_0K_1}{2\sqrt{h_{10}-h_{20}}}=\frac{0{,}01}{12}=8{,}33\cdot10^{-4},\qquad c_2=\frac{K_2}{2\sqrt{h_{20}}}=0{,}0075\]
+        \[S_1s\,\Delta H_1=\Delta Q_i-c_1(\Delta H_1-\Delta H_2)-0{,}12\,\Delta a,\qquad S_2s\,\Delta H_2=c_1(\Delta H_1-\Delta H_2)-c_2\Delta H_2+0{,}12\,\Delta a\]
+        donde \(0{,}12=K_1\sqrt{h_{10}-h_{20}}\).</li>
+      <li><b>Función de transferencia</b> (con \(\Delta a=0\)). Despejando \(\Delta H_1\) de la segunda y sustituyendo en la primera:</li>
+    </ol>
+    <div class="eq key">\[\frac{\Delta H_2}{\Delta Q_i}=\frac{\dfrac{c_1}{S_1S_2}}{s^2+\Big(\dfrac{c_1}{S_1}+\dfrac{c_1+c_2}{S_2}\Big)s+\dfrac{c_1c_2}{S_1S_2}}=\frac{4{,}17\cdot10^{-4}}{s^2+0{,}005\,s+3{,}125\cdot10^{-6}}\]</div>
+    <p>La ganancia estática es \(1/c_2=133\) s/m². Los polos están en \(-7{,}3\cdot10^{-4}\) y \(-4{,}27\cdot10^{-3}\), con constantes de tiempo de unos 1366 s y 234 s: el sistema es lento y sobreamortiguado.</p>
+    <div class="trap"><b class="t">Trampa</b><p>Si \(h_1\lt h_2\) la ecuación cambia de signo y el modelo es otro. Comprueba que en el punto de trabajo se cumple \(h_{10}>h_{20}\) antes de linealizar.</p></div>
+    <p><b>Comprobación.</b> La matriz de coeficientes calculada a mano coincide con el jacobiano numérico del modelo no lineal, y la ganancia estática \(1/c_2\) coincide con la de la función de transferencia obtenida por ordenador.</p>
+  </details>
+</section>
+
+<section class="sec flu" id="p3">
+  <h2><span class="dot"></span>Problema 3 · Depósito cónico</h2>
+  <p>Un depósito en forma de cono invertido tiene radio superior \(R=1\) m y altura \(L=2\) m. Entra un caudal \(Q_i\) y sale \(Q_o=K_a\sqrt h\) con \(K_a=0{,}05\ \mathrm{m^{5/2}/s}\). Obtén el modelo no lineal y, para \(h_0=1\) m, la función de transferencia \(\Delta H/\Delta Q_i\) y su constante de tiempo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <ol class="steps">
+      <li><b>Volumen.</b> \(V=\tfrac13\pi r^2h\) con \(r=\dfrac RL\,h\) (semejanza de triángulos), luego \(V=\dfrac{\pi R^2}{3L^2}h^3\).</li>
+      <li><b>Conservación.</b> \(\dfrac{dV}{dt}=Q_i-Q_o\) lleva a
+        \[\frac{\pi R^2h^2}{L^2}\,\dot h=Q_i-K_a\sqrt h\]</li>
+      <li><b>Equilibrio.</b> \(Q_{i0}=K_a\sqrt{h_0}=0{,}05\ \mathrm{m^3/s}\).</li>
+      <li><b>Linealización.</b> El coeficiente de \(\dot h\) se evalúa en \(h_0\): \(\pi R^2h_0^2/L^2=0{,}785\ \mathrm{m^2}\), que es el área de la superficie del líquido a ese nivel. La derivada de la salida es \(K_a/(2\sqrt{h_0})=0{,}025\ \mathrm{m^2/s}\).</li>
+    </ol>
+    <div class="eq key">\[0{,}785\,s\,\Delta H=\Delta Q_i-0{,}025\,\Delta H\;\Rightarrow\;\frac{\Delta H}{\Delta Q_i}=\frac{40}{31{,}4\,s+1}\]</div>
+    <p>La constante de tiempo es \(\tau=31{,}4\) s y la ganancia, 40 s/m².</p>
+    <p><b>Comprobación.</b> Integrando el modelo no lineal con un escalón del 0,1 % en \(Q_i\), el nivel llega al 63 % de su cambio a los 31,5 s y el cambio final es de 2,0 mm, ambos casi idénticos a lo que predice el modelo lineal.</p>
+  </details>
+</section>
+
+<section class="sec ctl" id="p4">
+  <h2><span class="dot"></span>Problema 4 · Identificar un ARX</h2>
+  <p>Se cree que un sistema sigue \(A(q)\,y(k)=B(q)\,u(k)+e(k)\) con \(n_a=n_b=1\). Se miden estos datos:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>\(k\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+    <tbody>
+      <tr><td>\(u(k)\)</td><td>1</td><td>2</td><td>-1</td><td>3</td><td>1</td><td>-2</td></tr>
+      <tr><td>\(y(k)\)</td><td>1</td><td>1</td><td>1,4</td><td>0,44</td><td>1,464</td><td>1,2784</td></tr>
+    </tbody></table></div>
+  <p>Además, \(y(6)=-0{,}033\). Estima \(a_1\) y \(b_1\) por mínimos cuadrados con los seis datos de \(k=1\) a \(6\) y calcula la ganancia estática del modelo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <ol class="steps">
+      <li><b>Regresor.</b> \(\varphi(k)=(-y(k-1),\,u(k-1))^T\) y \(\theta=(a_1,b_1)^T\), porque \(\hat y=-a_1y(k-1)+b_1u(k-1)\).</li>
+      <li><b>Matrices</b> (una fila por \(k=1,\dots,6\)):
+        \[\Phi=\begin{pmatrix}-1&1\\-1&2\\-1{,}4&-1\\-0{,}44&3\\-1{,}464&1\\-1{,}2784&-2\end{pmatrix},\qquad \mathbf Y=\begin{pmatrix}1\\1{,}4\\0{,}44\\1{,}464\\1{,}2784\\-0{,}033\end{pmatrix}\]</li>
+      <li><b>Productos.</b> \(\Phi^T\Phi=\begin{pmatrix}7{,}9312&-1{,}8272\\-1{,}8272&20\end{pmatrix}\), \(\Phi^T\mathbf Y=\begin{pmatrix}-5{,}4896\\9{,}0964\end{pmatrix}\).</li>
+      <li><b>Resolver.</b> \(\hat\theta=(\Phi^T\Phi)^{-1}\Phi^T\mathbf Y\approx\begin{pmatrix}-0{,}6000\\0{,}4000\end{pmatrix}\).</li>
+    </ol>
+    <p>El modelo es \(y(k)=0{,}6\,y(k-1)+0{,}4\,u(k-1)\). Su ganancia estática (con \(q=1\)) es \(G(1)=\dfrac{b_1}{1+a_1}=\dfrac{0{,}4}{0{,}4}=1\) y su polo está en \(q=0{,}6\), estable.</p>
+    <div class="trap"><b class="t">Trampa</b><p>El regresor lleva \(-y(k-1)\), así que el parámetro que sale es \(a_1=-0{,}6\) y no \(+0{,}6\). Si pones \(+y(k-1)\) en \(\Phi\), el signo de \(a_1\) cambia.</p></div>
+    <p><b>Comprobación.</b> Estos datos se generaron sin ruido a partir de ese modelo exacto, de modo que el ajuste recupera los parámetros casi exactamente (los datos de la tabla van redondeados). Con datos reales aparecería un residuo y los parámetros solo serían aproximados.</p>
+  </details>
+</section>
+
+<section class="sec" id="siguientes">
+  <h2><span class="dot"></span>Siguientes pasos</h2>
+  <p>Con el modelado resuelto, los problemas de simulación están en la <a href="metodos-numericos.html#plantilla">plantilla de pseudocódigo</a>, y la lista de lo que se pregunta cada año en la <a href="examenes.html">página de examen</a>.</p>
+</section>
+
+<div class="pager">
+  <a href="identificacion.html"><small>Anterior</small>UD 2 · Identificación</a>
+  <a class="next" href="metodos-numericos.html"><small>Siguiente</small>UD 4 · Métodos numéricos</a>
+</div>
+<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script></body></html>

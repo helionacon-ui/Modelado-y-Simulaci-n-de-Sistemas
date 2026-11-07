@@ -1,0 +1,92 @@
+<header>
+  <div class="kicker">Examen · qué se pregunta</div>
+  <h1>Qué se pregunta en el examen</h1>
+  <p class="lead">Un repaso de los enunciados de las convocatorias de 2023 a 2026: la estructura, los tipos de pregunta que se repiten y dónde está cada uno en la guía.</p>
+  <div class="tags"><span class="tag">2023 · 2026</span><span class="tag">problemas + cuestiones</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Resumen propio de los enunciados publicados en el aula virtual. No se copian los enunciados ni se inventan las soluciones oficiales; cuando algo no se conoce, se dice.</p>
+</header>
+
+<section class="sec" id="estructura">
+  <h2><span class="dot"></span>Estructura de un examen</h2>
+  <p>Los exámenes de los últimos años se organizan en dos problemas y cuatro cuestiones, repartidos en dos parciales:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Parte</th><th>Contenido</th><th>Puntos</th></tr></thead>
+    <tbody>
+      <tr><td>Parcial 1</td><td>Problema 1 (modelado y función de transferencia) + Cuestión 1 + Cuestión 2</td><td>3 + 1 + 1</td></tr>
+      <tr><td>Parcial 2</td><td>Problema 2 (pseudocódigo de simulación) + Cuestión 3 + Cuestión 4</td><td>3 + 1 + 1</td></tr>
+      <tr><td>Examen global</td><td>Apartado a) de cada problema + las cuatro cuestiones</td><td>según el enunciado</td></tr>
+    </tbody></table></div>
+  <ul>
+    <li>El <b>Problema 1</b> es normalmente de modelado: ecuaciones dinámicas y, después, modelo en función de transferencia (a menudo en lazo cerrado).</li>
+    <li>El <b>Problema 2</b> pide pseudocódigo para simular el sistema, normalmente con un controlador, primero analógico y luego por computador.</li>
+    <li>Las convocatorias de 2026 reparten el problema en apartados: por ejemplo, 2 puntos para el diagrama y las ecuaciones (3 en el examen global) y 1 punto para el modelo en lazo cerrado.</li>
+  </ul>
+  <div class="trap"><b class="t">Qué no se sabe</b><p>El formato exacto del examen de este curso, si habrá parciales o solo examen final, y los criterios de corrección. La guía docente da un 80 % de examen y un 20 % de prácticas, pero el reparto interno lo fija el profesorado. Contrasta con lo que digan en clase.</p></div>
+</section>
+
+<section class="sec mec" id="problema-1">
+  <h2><span class="dot"></span>Problema 1: modelar un sistema</h2>
+  <p>Los sistemas que han salido, agrupados:</p>
+  <ul>
+    <li><b>Motor de continua con carga mecánica y controlador:</b> puente grúa con dos poleas y masa variable, motor con polea y masa colgada de una barra elástica, balancín con motor en el eje y PID.</li>
+    <li><b>Depósitos:</b> fuente con tres depósitos cónicos (relación altura/radio \(H/R\)) con función de transferencia para \(N\) depósitos; tanque cónico con válvulas de entrada y salida; fuente con bomba movida por un motor de continua y control PI de caudal.</li>
+    <li><b>Mecánico con fluido:</b> modelo de amortiguación dinámica en el que un caudal modifica el elemento \(K\), con un controlador PD sobre la aceleración.</li>
+  </ul>
+  <p>El método es el de la <a href="problemas.html#metodo">página de problemas</a>: entradas y salidas, sistema de referencia, despiece, ecuaciones, linealizar y Laplace. Si cada depósito se linealiza como un sistema de primer orden que descarga en el siguiente, con \(N\) depósitos iguales la función de transferencia entre caudal de salida y de entrada es el producto de \(N\) factores iguales: una potencia \(N\) del mismo denominador. Comprueba que tu linealización lo cumple.</p>
+  <p>Con un controlador, el lazo cerrado sale de \(G_{lc}=\dfrac{G_cG_p}{1+G_cG_pH}\); si el actuador es «\(G(s)=1\)», no añade dinámica.</p>
+  <ul class="plan">
+    <li><a href="tema-1.html">Tema 1 · Modelado de sistemas</a><span class="pill ok">teoría</span><p>Leyes de conservación, motor, depósitos, linealización, equivalencias.</p></li>
+    <li><a href="problemas.html">Problemas</a><span class="pill ok">práctica</span><p>Cuatro problemas resueltos con método fijo.</p></li>
+  </ul>
+</section>
+
+<section class="sec ctl" id="problema-2">
+  <h2><span class="dot"></span>Problema 2: pseudocódigo de simulación</h2>
+  <p>Sistemas que han salido, con lo que se pide:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Sistema</th><th>Se pide</th></tr></thead>
+    <tbody>
+      <tr><td>Cohete (masa de combustible \(3M\) y nave \(M\)), empuje proporcional al consumo, fricción cuadrática</td><td>Pseudocódigo del lanzamiento y otro con Runge-Kutta de orden 2</td></tr>
+      <tr><td>Tanques acoplados con temperatura (válvulas \(a_1,a_2\), caudal y resistencia \(W\))</td><td>Pseudocódigo con cambios de \(a_1,a_2\) a lo largo del tiempo; controlador digital de temperatura</td></tr>
+      <tr><td>Péndulo invertido sobre carrito</td><td>PID con \(h=0{,}1\) y control en tiempo discreto con periodo 0,5</td></tr>
+      <tr><td>Dos péndulos con una fuerza aplicada a \(L/2\)</td><td>Fuerza senoidal; PID digital sobre el ángulo \(\theta_2\)</td></tr>
+      <tr><td>\(N\) depósitos cónicos con válvula y PID de caudal</td><td>Lazo cerrado; periodo de control igual a 5 pasos de simulación</td></tr>
+      <tr><td>Sistema propulsado con motor de reacción y acelerómetro mecánico</td><td>Diagrama de bloques y pseudocódigo; PID por computador con actuador \(G(s)=1\)</td></tr>
+      <tr><td>Globo aerostático con calentamiento por resistencia y pérdidas de calor</td><td>PID analógico y control por computador</td></tr>
+    </tbody></table></div>
+  <p>La plantilla para todos está en la <a href="metodos-numericos.html#plantilla">página de métodos numéricos</a>: ecuaciones con variables de estado, condiciones iniciales, bucle temporal, y el control analógico (en cada paso) o discreto (cada \(T_c=nh\)).</p>
+  <div class="trap"><b class="t">Qué hay que dejar escrito</b><p>Cada variable de estado con su condición inicial, qué es \(h\), cómo se calcula cada derivada, y dónde actúa el controlador. Si hay cambios de consigna o de apertura a lo largo del tiempo, se escriben con un <code>si</code> sobre \(t\).</p></div>
+</section>
+
+<section class="sec" id="cuestiones">
+  <h2><span class="dot"></span>Cuestiones que se repiten</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Tipo de cuestión</th><th>Qué hay que saber hacer</th><th>Dónde</th></tr></thead>
+    <tbody>
+      <tr><td>Proponer un modelo a partir de un step-test o de una gráfica entrada-salida</td><td>Decidir el orden (primer orden, segundo orden, integrador, retardo), leer ganancia y constante de tiempo y justificar la elección</td><td><a href="identificacion.html">Identificación</a></td></tr>
+      <tr><td>Circuito eléctrico equivalente de un sistema mecánico o de un péndulo</td><td>Aplicar la analogía entre variables y elementos</td><td><a href="tema-1.html">Tema 1</a></td></tr>
+      <tr><td>Estimar la salida de un modelo (ARX, ARMAX, OE) con unos datos</td><td>Usar el modelo de predicción con los valores correctos realimentados</td><td><a href="error.html#prediccion">Predicción</a></td></tr>
+      <tr><td>Probabilidad de \(|e-\mu_e|\le\sigma_e\), o de \(e>0\), o primeros términos de la autocorrelación del error</td><td>Calcular la predicción, el error y contar o promediar</td><td><a href="error.html#ejemplo-oe">Ejemplos resueltos</a></td></tr>
+      <tr><td>Deducir Adams-Bashforth de dos pasos y aplicarlo a masa-muelle-fricción con fuerza externa</td><td>Interpolar \(f\) con una recta, integrar y escribir el pseudocódigo</td><td><a href="metodos-numericos.html#multipaso">Multipaso</a></td></tr>
+      <tr><td>Runge-Kutta: principios y ejemplo; pseudocódigo RK2 de un péndulo con fricción</td><td>Explicar la idea y escribir RK2 para un sistema de dos ecuaciones</td><td><a href="metodos-numericos.html#rk">Runge-Kutta</a></td></tr>
+      <tr><td>Ecuaciones rígidas: ejemplo físico, o paso máximo para \(y'=-10y\)</td><td>Explicar la rigidez y calcular \(h\lt2/|\lambda|\)</td><td><a href="metodos-numericos.html#rigidez">Rigidez</a></td></tr>
+      <tr><td>Herramientas para analizar el resultado de una simulación</td><td>Enumerar media, varianza, densidad, autocorrelación y espectro, y lo esperado con un modelo fiel</td><td><a href="error.html#estimadores">Análisis del error</a></td></tr>
+      <tr><td>Condiciones iniciales necesarias para simular</td><td>Una por cada variable de estado</td><td><a href="metodos-numericos.html#trampas">Trampas</a></td></tr>
+    </tbody></table></div>
+  <p>Las convocatorias más antiguas del material (con otro formato) añaden: calcular las tres primeras aproximaciones de Euler con \(h=0{,}1\) y comentar la elección del método; control del error en métodos de un paso y estimación del tamaño de paso óptimo; y deducir un método de integración a partir de un polinomio interpolador.</p>
+</section>
+
+<section class="sec" id="como-estudiar">
+  <h2><span class="dot"></span>Cómo preparar el examen con esta guía</h2>
+  <ol class="steps">
+    <li><b>Modelado.</b> Haz los cuatro problemas de la guía sin mirar la resolución y compara. Practica sobre todo depósitos en cascada y motor con carga.</li>
+    <li><b>Pseudocódigo.</b> Escribe a mano, sin consultar, el esqueleto de simulación con PID analógico y con PID discreto. Después aplícalo a un sistema de la tabla anterior.</li>
+    <li><b>Cuestiones con datos.</b> Repite los dos ejemplos de la página de error con una calculadora, hasta que el proceso sea mecánico.</li>
+    <li><b>Teoría.</b> Sabe deducir Adams-Bashforth de dos pasos y la fórmula de RK2, y explica la rigidez con \(h\lt2/|\lambda|\).</li>
+  </ol>
+</section>
+
+<div class="pager">
+  <a href="error.html"><small>Anterior</small>Análisis del error y predicción</a>
+  <a class="next" href="practicas.html"><small>Siguiente</small>Prácticas</a>
+</div>

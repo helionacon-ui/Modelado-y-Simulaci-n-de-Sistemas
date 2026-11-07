@@ -1,0 +1,18 @@
+<svg viewBox="0 0 640 290" role="img" aria-labelledby="g2t">
+  <title id="g2t">Respuesta al escalón de un sistema de segundo orden subamortiguado con sobreoscilación, tiempo de pico y tiempo de establecimiento</title>
+  <path d="M70 28 V236 H620" class="s-ln"/>
+  <path d="M70 96.0 H610" class="s-thin" stroke-dasharray="6 4"/>
+  <path d="M70 93.2 H610 M70 98.8 H610" class="s-thin" stroke-dasharray="2 4"/>
+  <path d="M70.0 236.0 L74.4 235.4 L78.8 233.8 L83.2 231.3 L87.7 227.9 L92.1 223.8 L96.5 219.0 L100.9 213.7 L105.3 207.9 L109.8 201.7 L114.2 195.2 L118.6 188.5 L123.0 181.7 L127.4 174.8 L131.8 167.9 L136.2 161.0 L140.7 154.2 L145.1 147.5 L149.5 141.0 L153.9 134.7 L158.3 128.6 L162.8 122.9 L167.2 117.4 L171.6 112.2 L176.0 107.3 L180.4 102.8 L184.8 98.6 L189.3 94.8 L193.7 91.3 L198.1 88.1 L202.5 85.3 L206.9 82.8 L211.3 80.6 L215.8 78.7 L220.2 77.2 L224.6 75.9 L229.0 74.9 L233.4 74.1 L237.8 73.6 L242.3 73.3 L246.7 73.2 L251.1 73.3 L255.5 73.5 L259.9 73.9 L264.3 74.5 L268.8 75.2 L273.2 75.9 L277.6 76.8 L282.0 77.8 L286.4 78.8 L290.8 79.8 L295.3 80.9 L299.7 82.0 L304.1 83.2 L308.5 84.3 L312.9 85.4 L317.3 86.5 L321.8 87.6 L326.2 88.7 L330.6 89.7 L335.0 90.7 L339.4 91.6 L343.8 92.5 L348.3 93.4 L352.7 94.2 L357.1 94.9 L361.5 95.6 L365.9 96.2 L370.3 96.8 L374.8 97.3 L379.2 97.8 L383.6 98.2 L388.0 98.5 L392.4 98.8 L396.8 99.1 L401.3 99.3 L405.7 99.4 L410.1 99.6 L414.5 99.7 L418.9 99.7 L423.3 99.7 L427.8 99.7 L432.2 99.7 L436.6 99.6 L441.0 99.5 L445.4 99.4 L449.8 99.3 L454.3 99.1 L458.7 99.0 L463.1 98.8 L467.5 98.6 L471.9 98.5 L476.3 98.3 L480.8 98.1 L485.2 97.9 L489.6 97.7 L494.0 97.5 L498.4 97.4 L502.8 97.2 L507.3 97.0 L511.7 96.9 L516.1 96.7 L520.5 96.6 L524.9 96.4 L529.3 96.3 L533.8 96.2 L538.2 96.1 L542.6 96.0 L547.0 95.9 L551.4 95.8 L555.8 95.7 L560.3 95.6 L564.7 95.6 L569.1 95.5 L573.5 95.5 L577.9 95.5 L582.3 95.4 L586.8 95.4 L591.2 95.4 L595.6 95.4 L600.0 95.4" class="s-acc"/>
+  <path d="M246.7 73.2 V236" class="s-thin" stroke-dasharray="3 4"/>
+  <path d="M459.6 96.0 V236" class="s-thin" stroke-dasharray="3 4"/>
+  <path d="M272.7 96.0 V73.2" class="s-ln" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <circle cx="246.7" cy="73.2" r="4" class="s-head-a"/>
+  <text x="280.7" y="88.6" class="s-tx">Mp</text>
+  <text x="246.7" y="258" text-anchor="middle" class="s-tx2">tp = π/ωd</text>
+  <text x="459.6" y="258" text-anchor="middle" class="s-tx2">ts ≈ 4/σ</text>
+  <text x="62" y="100.0" text-anchor="end" class="s-tx2">1</text>
+  <text x="612" y="87.2" text-anchor="end" class="s-tx2">banda ±2 %</text>
+  <text x="614" y="228" text-anchor="end" class="s-tx2">t</text>
+  <text x="78" y="42" class="s-tx2">y(t), con K = 1</text>
+</svg>

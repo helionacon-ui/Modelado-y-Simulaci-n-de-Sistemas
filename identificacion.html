@@ -1,0 +1,216 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Identificación de sistemas</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Hub </span>GIEIA-UPCT</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><h4>Guía</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="tema-1.html">Tema 1 · Modelado de sistemas</a></li><li><a href="identificacion.html" aria-current="page">UD 2 · Identificación</a></li><li><a href="problemas.html">Problemas</a></li><li><a href="metodos-numericos.html">UD 4 · Métodos numéricos</a></li><li><a href="error.html">Predicción y análisis del error</a></li><li><a href="examenes.html">Qué se pregunta en el examen</a></li><li><a href="practicas.html">Prácticas</a></li></ul><h4>En esta página</h4><div class="toc"><a href="#esencial">Lo esencial</a><a href="#escalon">Modelos paramétricos con escalón</a><a href="#impulso">Respuesta al impulso y operador de retardo</a><a href="#perturbaciones">Modelo con perturbaciones</a><a href="#prediccion">Predictor</a><a href="#minimos">Estimación por mínimos cuadrados</a><a href="#trampas">Trampas típicas</a><a href="#autoeval">Autoevaluación</a></div><h4>Próximamente</h4><ul><li><span class="soon">Formulario</span></li><li><span class="soon">Glosario</span></li></ul></nav><main><header>
+  <div class="kicker">UD 2 · Identificación</div>
+  <h1>De los datos al modelo</h1>
+  <p class="lead">Cuando no se conocen las ecuaciones del sistema, se hace un experimento y se ajusta un modelo a los datos. Esta página cubre los modelos de escalón, los modelos de respuesta al impulso, la familia FIR, ARX, ARMAX y OE, y la estimación por mínimos cuadrados.</p>
+  <div class="tags">
+    <span class="tag">Apuntes de clase · 2025</span>
+    <span class="tag ctl">caja gris</span><span class="tag">caja negra</span><span class="tag">mínimos cuadrados</span>
+  </div>
+  <p class="notice">Guía no oficial de la UPCT. Reescrita a partir de apuntes de un curso anterior, sin copiar el material. Los ejercicios son recreados y sus cálculos están comprobados con código. El temario de este curso puede diferir.</p>
+</header>
+
+<section class="sec" id="esencial">
+  <h2><span class="dot"></span>Lo esencial</h2>
+  <p>Hay dos formas de obtener un modelo. Se pueden combinar y se distinguen por cuánto conoces del sistema.</p>
+  <div class="grid2">
+    <div class="card"><h3>Modelo de conocimiento</h3><p>Escribes las leyes físicas (tema 1). No necesitas datos, pero sí saber cómo funciona el sistema.</p></div>
+    <div class="card"><h3>Modelo de identificación</h3><p>Excitas el sistema, mides entradas y salidas y ajustas el modelo a esos datos. El grado de conocimiento previo decide cuál de estos dos tipos usas:</p>
+      <ul><li><b>Paramétrico (caja gris)</b>: la estructura se fija a priori (primer orden, segundo orden) y solo se estiman sus parámetros.</li><li><b>No paramétrico (caja negra)</b>: solo se ajustan los datos, sin estructura física.</li></ul></div>
+  </div>
+  <p>El esquema de trabajo es siempre el mismo: modelo, simulador, simulación y comparación con los datos reales. El error se define como \(e=y-\hat y\).</p>
+</section>
+
+<section class="sec" id="escalon">
+  <h2><span class="dot"></span>Modelos paramétricos con escalón</h2>
+  <h3>Primer orden con retardo</h3>
+  <div class="eq key">\[\frac{Y(s)}{U(s)}=\frac{K}{\tau s+1}\,e^{-Ts}\;\Rightarrow\;y(t)=K\,\Delta u\Big(1-e^{-(t-T)/\tau}\Big)\ \ (t\ge T)\]</div>
+  <figure>
+    <svg viewBox="0 0 640 280" role="img" aria-labelledby="g1t">
+  <title id="g1t">Respuesta al escalón de un sistema de primer orden con retardo y los puntos del 28,3 % y el 63,2 %</title>
+  <path d="M96 24 V226 H620" class="s-ln"/>
+  <path d="M96 56.0 H610" class="s-thin" stroke-dasharray="6 4"/>
+  <path d="M96.0 226.0 L99.6 226.0 L103.3 226.0 L106.9 226.0 L110.6 226.0 L114.2 226.0 L117.9 226.0 L121.5 226.0 L125.1 226.0 L128.8 226.0 L132.4 226.0 L136.1 221.8 L139.7 217.7 L143.4 213.7 L147.0 209.8 L150.6 206.0 L154.3 202.3 L157.9 198.7 L161.6 195.2 L165.2 191.7 L168.9 188.4 L172.5 185.1 L176.1 181.9 L179.8 178.8 L183.4 175.8 L187.1 172.8 L190.7 170.0 L194.4 167.1 L198.0 164.4 L201.6 161.7 L205.3 159.1 L208.9 156.6 L212.6 154.1 L216.2 151.7 L219.9 149.3 L223.5 147.0 L227.1 144.7 L230.8 142.6 L234.4 140.4 L238.1 138.3 L241.7 136.3 L245.4 134.3 L249.0 132.4 L252.6 130.5 L256.3 128.7 L259.9 126.9 L263.6 125.1 L267.2 123.4 L270.9 121.7 L274.5 120.1 L278.1 118.5 L281.8 117.0 L285.4 115.5 L289.1 114.0 L292.7 112.6 L296.4 111.2 L300.0 109.8 L303.6 108.5 L307.3 107.2 L310.9 105.9 L314.6 104.7 L318.2 103.5 L321.9 102.3 L325.5 101.2 L329.1 100.1 L332.8 99.0 L336.4 97.9 L340.1 96.9 L343.7 95.9 L347.4 94.9 L351.0 93.9 L354.6 93.0 L358.3 92.1 L361.9 91.2 L365.6 90.3 L369.2 89.5 L372.9 88.6 L376.5 87.8 L380.1 87.1 L383.8 86.3 L387.4 85.5 L391.1 84.8 L394.7 84.1 L398.4 83.4 L402.0 82.7 L405.6 82.1 L409.3 81.4 L412.9 80.8 L416.6 80.2 L420.2 79.6 L423.9 79.0 L427.5 78.4 L431.1 77.9 L434.8 77.3 L438.4 76.8 L442.1 76.3 L445.7 75.8 L449.4 75.3 L453.0 74.8 L456.6 74.4 L460.3 73.9 L463.9 73.5 L467.6 73.0 L471.2 72.6 L474.9 72.2 L478.5 71.8 L482.1 71.4 L485.8 71.0 L489.4 70.7 L493.1 70.3 L496.7 70.0 L500.4 69.6 L504.0 69.3 L507.6 68.9 L511.3 68.6 L514.9 68.3 L518.6 68.0 L522.2 67.7 L525.9 67.4 L529.5 67.1 L533.1 66.9 L536.8 66.6 L540.4 66.3 L544.1 66.1 L547.7 65.8 L551.4 65.6 L555.0 65.4 L558.6 65.1 L562.3 64.9 L565.9 64.7 L569.6 64.5 L573.2 64.3 L576.9 64.1 L580.5 63.9 L584.1 63.7 L587.8 63.5 L591.4 63.3 L595.1 63.1 L598.7 62.9 L602.4 62.8 L606.0 62.6" class="s-acc"/>
+  <path d="M96 177.9 H181.0 V226" class="s-thin" stroke-dasharray="3 4"/>
+  <path d="M96 118.6 H278.1 V226" class="s-thin" stroke-dasharray="3 4"/>
+  <path d="M132.4 226 V234" class="s-ln"/>
+  <circle cx="181.0" cy="177.9" r="4" class="s-head-a"/><circle cx="278.1" cy="118.6" r="4" class="s-head-a"/>
+  <text x="88" y="60.0" text-anchor="end" class="s-tx2">KΔu</text>
+  <text x="88" y="122.6" text-anchor="end" class="s-tx2">0,632 KΔu</text>
+  <text x="88" y="181.9" text-anchor="end" class="s-tx2">0,283 KΔu</text>
+  <text x="132.4" y="250" text-anchor="middle" class="s-tx2">T</text>
+  <text x="181.0" y="250" text-anchor="middle" class="s-tx2">t₂₈ = T + τ/3</text>
+  <text x="278.1" y="250" text-anchor="middle" class="s-tx2">t₆₃ = T + τ</text>
+  <text x="614" y="218" text-anchor="end" class="s-tx2">t</text>
+  <text x="104" y="40" class="s-tx2">y(t)</text>
+  <text x="423.9" y="141.0" class="s-tx">K = Δy / Δu</text>
+</svg>
+    <figcaption>Respuesta de un primer orden con retardo \(T\). La ganancia es el cambio final de la salida entre el escalón aplicado.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div class="eq key"><span class="lab">Ganancia</span>\[K=\frac{\Delta y}{\Delta u}\quad(\text{valor final})\]</div>
+    <div class="eq key wide"><span class="lab">Dos puntos (28 % y 63 %)</span>\[t_{63}=T+\tau,\quad t_{28}=T+\frac\tau3\;\Rightarrow\;\tau=\tfrac32\,(t_{63}-t_{28}),\ \ T=t_{63}-\tau\]</div>
+  </div>
+  <p>De dónde sale el 63,2 %: en \(t=T+\tau\) la exponencial vale \(1-e^{-1}=0{,}632\). El 28,3 % sale de \(1-e^{-1/3}=0{,}283\). Si el sistema no es de primer orden pero la salida tiene forma de «S» (un segundo orden sobreamortiguado), se aproxima con este modelo leyendo \(t_{28}\) y \(t_{63}\) sobre la gráfica.</p>
+
+  <h3>Segundo orden subamortiguado</h3>
+  <div class="eq key">\[G(s)=\frac{K\omega_n^2}{s^2+2\xi\omega_ns+\omega_n^2}\]</div>
+  <figure>
+    <svg viewBox="0 0 640 290" role="img" aria-labelledby="g2t">
+  <title id="g2t">Respuesta al escalón de un sistema de segundo orden subamortiguado con sobreoscilación, tiempo de pico y tiempo de establecimiento</title>
+  <path d="M70 28 V236 H620" class="s-ln"/>
+  <path d="M70 96.0 H610" class="s-thin" stroke-dasharray="6 4"/>
+  <path d="M70 93.2 H610 M70 98.8 H610" class="s-thin" stroke-dasharray="2 4"/>
+  <path d="M70.0 236.0 L74.4 235.4 L78.8 233.8 L83.2 231.3 L87.7 227.9 L92.1 223.8 L96.5 219.0 L100.9 213.7 L105.3 207.9 L109.8 201.7 L114.2 195.2 L118.6 188.5 L123.0 181.7 L127.4 174.8 L131.8 167.9 L136.2 161.0 L140.7 154.2 L145.1 147.5 L149.5 141.0 L153.9 134.7 L158.3 128.6 L162.8 122.9 L167.2 117.4 L171.6 112.2 L176.0 107.3 L180.4 102.8 L184.8 98.6 L189.3 94.8 L193.7 91.3 L198.1 88.1 L202.5 85.3 L206.9 82.8 L211.3 80.6 L215.8 78.7 L220.2 77.2 L224.6 75.9 L229.0 74.9 L233.4 74.1 L237.8 73.6 L242.3 73.3 L246.7 73.2 L251.1 73.3 L255.5 73.5 L259.9 73.9 L264.3 74.5 L268.8 75.2 L273.2 75.9 L277.6 76.8 L282.0 77.8 L286.4 78.8 L290.8 79.8 L295.3 80.9 L299.7 82.0 L304.1 83.2 L308.5 84.3 L312.9 85.4 L317.3 86.5 L321.8 87.6 L326.2 88.7 L330.6 89.7 L335.0 90.7 L339.4 91.6 L343.8 92.5 L348.3 93.4 L352.7 94.2 L357.1 94.9 L361.5 95.6 L365.9 96.2 L370.3 96.8 L374.8 97.3 L379.2 97.8 L383.6 98.2 L388.0 98.5 L392.4 98.8 L396.8 99.1 L401.3 99.3 L405.7 99.4 L410.1 99.6 L414.5 99.7 L418.9 99.7 L423.3 99.7 L427.8 99.7 L432.2 99.7 L436.6 99.6 L441.0 99.5 L445.4 99.4 L449.8 99.3 L454.3 99.1 L458.7 99.0 L463.1 98.8 L467.5 98.6 L471.9 98.5 L476.3 98.3 L480.8 98.1 L485.2 97.9 L489.6 97.7 L494.0 97.5 L498.4 97.4 L502.8 97.2 L507.3 97.0 L511.7 96.9 L516.1 96.7 L520.5 96.6 L524.9 96.4 L529.3 96.3 L533.8 96.2 L538.2 96.1 L542.6 96.0 L547.0 95.9 L551.4 95.8 L555.8 95.7 L560.3 95.6 L564.7 95.6 L569.1 95.5 L573.5 95.5 L577.9 95.5 L582.3 95.4 L586.8 95.4 L591.2 95.4 L595.6 95.4 L600.0 95.4" class="s-acc"/>
+  <path d="M246.7 73.2 V236" class="s-thin" stroke-dasharray="3 4"/>
+  <path d="M459.6 96.0 V236" class="s-thin" stroke-dasharray="3 4"/>
+  <path d="M272.7 96.0 V73.2" class="s-ln" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <circle cx="246.7" cy="73.2" r="4" class="s-head-a"/>
+  <text x="280.7" y="88.6" class="s-tx">Mp</text>
+  <text x="246.7" y="258" text-anchor="middle" class="s-tx2">tp = π/ωd</text>
+  <text x="459.6" y="258" text-anchor="middle" class="s-tx2">ts ≈ 4/σ</text>
+  <text x="62" y="100.0" text-anchor="end" class="s-tx2">1</text>
+  <text x="612" y="87.2" text-anchor="end" class="s-tx2">banda ±2 %</text>
+  <text x="614" y="228" text-anchor="end" class="s-tx2">t</text>
+  <text x="78" y="42" class="s-tx2">y(t), con K = 1</text>
+</svg>
+    <figcaption>Con \(K=1\) se leen directamente la sobreoscilación, el tiempo de pico y el de establecimiento.</figcaption>
+  </figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Magnitud</th><th>Fórmula</th></tr></thead>
+    <tbody>
+      <tr><td>Frecuencia amortiguada</td><td>\(\omega_d=\omega_n\sqrt{1-\xi^2}\)</td></tr>
+      <tr><td>Atenuación</td><td>\(\sigma=\xi\omega_n\)</td></tr>
+      <tr><td>Tiempo de pico</td><td>\(t_p=\dfrac{\pi}{\omega_d}\)</td></tr>
+      <tr><td>Sobreoscilación</td><td>\(M_p=e^{-\pi\xi/\sqrt{1-\xi^2}}=\dfrac{y(t_p)-y(\infty)}{y(\infty)}\)</td></tr>
+      <tr><td>Establecimiento (5 % / 2 %)</td><td>\(t_s\approx\dfrac3\sigma\ /\ \dfrac4\sigma\)</td></tr>
+      <tr><td>Tiempo de subida</td><td>\(t_r=\dfrac{1}{\omega_d}\arctan\!\Big(\dfrac{\omega_d}{-\sigma}\Big)=\dfrac{\pi-\arccos\xi}{\omega_d}\) (con el arco en el cuadrante correcto)</td></tr>
+    </tbody></table></div>
+  <p>Para identificar: se mide \(M_p\) y de ahí \(\xi=\dfrac{-\ln M_p}{\sqrt{\pi^2+\ln^2M_p}}\); se mide \(t_p\) y se obtiene \(\omega_d=\pi/t_p\) y \(\omega_n=\omega_d/\sqrt{1-\xi^2}\).</p>
+</section>
+
+<section class="sec" id="impulso">
+  <h2><span class="dot"></span>Respuesta al impulso y operador de retardo</h2>
+  <p>Un modelo no paramétrico trata los experimentos como impulsos. Como el sistema es lineal, la salida es la suma de las respuestas a cada entrada:</p>
+  <div class="eq key">\[y(k)=\sum_{\ell=0}^{\infty}g(\ell)\,u(k-\ell)\]</div>
+  <p>El operador de retardo \(q\) desplaza la serie: \(q\,x(k)=x(k+1)\) y \(q^{-1}x(k)=x(k-1)\). Es lineal. Con él, el modelo se escribe como función de transferencia en \(q\):</p>
+  <div class="eq">\[G(q)=\sum_{\ell=1}^{\infty}g(\ell)\,q^{-\ell},\qquad y(k)=G(q)\,u(k)\]</div>
+</section>
+
+<section class="sec" id="perturbaciones">
+  <h2><span class="dot"></span>Modelo con perturbaciones</h2>
+  <p>Los datos reales llevan ruido. Se modela como ruido blanco \(e(k)\) (depende solo de sí mismo en cada instante) filtrado por \(H(q)\):</p>
+  <div class="eq key">\[y(k)=G(q)\,u(k)+H(q)\,e(k)\]</div>
+  <p>Con polinomios en \(q^{-1}\) (\(A,B,C,D,F\); los de \(C,D,F\) empiezan en 1, son «mónicos»):</p>
+  <div class="eq">\[G(q)=\frac{B(q)}{F(q)A(q)},\quad H(q)=\frac{C(q)}{D(q)A(q)}\;\Rightarrow\;A(q)\,y(k)=\frac{B(q)}{F(q)}\,u(k)+\frac{C(q)}{D(q)}\,e(k)\]</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Ecuación</th><th>\(G(q)\)</th><th>\(H(q)\)</th></tr></thead>
+    <tbody>
+      <tr><td><b>FIR</b>, respuesta al impulso finita</td><td>\(y=B\,u+e\)</td><td>\(B\)</td><td>\(1\)</td></tr>
+      <tr><td><b>ARX</b>, autorregresivo con entrada exógena</td><td>\(A\,y=B\,u+e\)</td><td>\(B/A\)</td><td>\(1/A\)</td></tr>
+      <tr><td><b>ARMAX</b>, con media móvil</td><td>\(A\,y=B\,u+C\,e\)</td><td>\(B/A\)</td><td>\(C/A\)</td></tr>
+      <tr><td><b>OE</b>, error de salida</td><td>\(y=\dfrac BF\,u+e\)</td><td>\(B/F\)</td><td>\(1\)</td></tr>
+      <tr><td><b>Box-Jenkins</b></td><td>\(y=\dfrac BF\,u+\dfrac CD\,e\)</td><td>\(B/F\)</td><td>\(C/D\)</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec" id="prediccion">
+  <h2><span class="dot"></span>Predictor</h2>
+  <p>Para estimar hay que predecir \(y(k)\) con lo medido hasta \(k-1\). El ruido pasado se recupera de los datos y la mejor predicción de \(e(k)\) es cero (media nula). Para que sea posible, \(H(q)\) debe ser <b>estable</b>, <b>invertible</b> y <b>mónico</b>.</p>
+  <div class="eq key"><span class="lab">Predictor general</span>\[\hat y(k|k-1)=H^{-1}(q)\,G(q)\,u(k)+\big(1-H^{-1}(q)\big)\,y(k)\]</div>
+  <p>Particularizando para cada modelo:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Predictor</th><th>Regresor \(\varphi\), parámetros \(\theta\)</th></tr></thead>
+    <tbody>
+      <tr><td>FIR</td><td>\(\hat y=B(q)\,u(k)\)</td><td>\(\varphi=\big(u(k-1),\dots,u(k-n_b)\big)^T\), \(\theta=(b_1,\dots,b_{n_b})^T\)</td></tr>
+      <tr><td>ARX</td><td>\(\hat y=B\,u+\big(1-A\big)\,y\)</td><td>\(\varphi=\big(-y(k-1),\dots,-y(k-n_a),\,u(k-1),\dots,u(k-n_b)\big)^T\), \(\theta=(a_1,\dots,a_{n_a},b_1,\dots,b_{n_b})^T\)</td></tr>
+      <tr><td>ARMAX</td><td>\(C\,\hat y=B\,u+(C-A)\,y\)</td><td>como ARX, más \(\varepsilon(k-1),\dots,\varepsilon(k-n_c)\) y los \(c_i\); \(\varepsilon=y-\hat y\)</td></tr>
+      <tr><td>OE</td><td>\(F\,\hat y=B\,u\)</td><td>\(\varphi=\big(u(k-1),\dots,u(k-n_b),\,-\hat y(k-1),\dots,-\hat y(k-n_f)\big)^T\)</td></tr>
+    </tbody></table></div>
+  <p>FIR y ARX dan <b>regresión lineal</b>: \(\hat y=\theta^T\varphi(k)\). ARMAX y OE dan <b>regresión pseudolineal</b>, porque el regresor depende de las estimaciones (\(\varepsilon\) o \(\hat y\) pasados), es decir, de \(\theta\).</p>
+</section>
+
+<section class="sec" id="minimos">
+  <h2><span class="dot"></span>Estimación por mínimos cuadrados</h2>
+  <p>Se eligen los parámetros que minimizan la suma de los cuadrados de los errores sobre los \(N\) datos:</p>
+  <div class="eq">\[J(\theta)=\frac1N\sum_{k=1}^{N}\big(y(k)-\theta^T\varphi(k)\big)^2\]</div>
+  <p>Si se apilan los regresores por filas en \(\Phi\) y las salidas en \(\mathbf Y\), anular la derivada da las ecuaciones normales y su solución:</p>
+  <div class="eq key">\[\big[\Phi^T\Phi\big]\hat\theta=\Phi^T\mathbf Y\;\Rightarrow\;\hat\theta_N=\big[\Phi^T\Phi\big]^{-1}\Phi^T\mathbf Y\]</div>
+  <p>Solo se aplica a los modelos de regresión lineal (FIR y ARX).</p>
+  <h3>Ejemplo resuelto: modelo FIR con \(n_b=2\)</h3>
+  <p>Se excita el sistema y se miden estos datos (con \(u=0\) antes de empezar, es decir, sistema causal con condiciones iniciales nulas):</p>
+  <div class="tbl-wrap" style="max-width:320px"><table>
+    <thead><tr><th>\(k\)</th><th>\(u(k)\)</th><th>\(y(k)\)</th></tr></thead>
+    <tbody><tr><td>1</td><td>1</td><td>2</td></tr><tr><td>2</td><td>1</td><td>3</td></tr><tr><td>3</td><td>2</td><td>4</td></tr><tr><td>4</td><td>3</td><td>5</td></tr></tbody></table></div>
+  <ol class="steps">
+    <li><b>Regresor.</b> \(\varphi(k)=(u(k-1),\,u(k-2))^T\). Para \(k=1\) hace falta \(u(0)\) y \(u(-1)\), que valen 0.</li>
+    <li><b>Matrices.</b> \(\Phi=\begin{pmatrix}0&0\\1&0\\1&1\\2&1\end{pmatrix}\), \(\mathbf Y=\begin{pmatrix}2\\3\\4\\5\end{pmatrix}\).</li>
+    <li><b>Productos.</b> \(\Phi^T\Phi=\begin{pmatrix}6&3\\3&2\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}17\\9\end{pmatrix}\).</li>
+    <li><b>Resolver.</b> El determinante es \(6\cdot2-3\cdot3=3\), de donde \(\hat\theta=\begin{pmatrix}7/3\\1\end{pmatrix}\approx\begin{pmatrix}2{,}33\\1\end{pmatrix}\).</li>
+  </ol>
+</section>
+
+<section class="sec" id="trampas">
+  <h2><span class="dot"></span>Trampas típicas</h2>
+  <div class="trap"><b class="t">Signo en ARX</b><p>El regresor lleva \(-y(k-1),-y(k-2),\dots\) porque \(A(q)=1+a_1q^{-1}+\cdots\). Con \(A=1-0{,}5q^{-1}\), \(a_1=-0{,}5\) y el término \(-a_1y(k-1)\) suma.</p></div>
+  <div class="trap"><b class="t">Retardo</b><p>El regresor empieza en \(u(k-1)\), no en \(u(k)\). Un FIR con \(B=3q^{-1}+5q^{-2}\) usa \(3u(k-1)+5u(k-2)\).</p></div>
+  <div class="trap"><b class="t">Primeras filas</b><p>Para \(k\) pequeño los datos previos no existen y se toman como cero. La primera fila de \(\Phi\) puede ser toda de ceros y no aporta información.</p></div>
+  <div class="trap"><b class="t">Qué modelos se resuelven así</b><p>Las ecuaciones normales valen para FIR y ARX. ARMAX y OE son pseudolineales: el regresor contiene estimaciones y la solución no es esta fórmula directa.</p></div>
+  <div class="trap"><b class="t">Retardo puro</b><p>En el método de los dos puntos se mide \(t\) desde que se aplica el escalón. \(T\) se obtiene restando: \(T=t_{63}-\tau\), no leyendo \(t_{63}\).</p></div>
+  <div class="trap"><b class="t">Establecimiento</b><p>\(t_s\approx4/\sigma\) es una aproximación. La curva real puede entrar en la banda del 2 % un poco después.</p></div>
+</section>
+
+<section class="sec" id="autoeval">
+  <h2><span class="dot"></span>Autoevaluación</h2>
+  <p>Seis ejercicios recreados. Resuelve primero y luego pulsa una opción.</p>
+  <div class="score" id="score" aria-live="polite"></div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Primer orden con retardo</em></div>
+    <p>Al aplicar un escalón \(\Delta u=2\) en \(t=0\), la salida pasa de 0 a 6. Se lee \(t_{28}=2{,}33\) s y \(t_{63}=5{,}00\) s. ¿Valores de \(K\), \(\tau\) y \(T\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(K=3\), \(\tau=4\) s, \(T=1\) s</button><button class="opt" data-k="b">\(K=6\), \(\tau=4\) s, \(T=1\) s</button><button class="opt" data-k="c">\(K=3\), \(\tau=5\) s, \(T=0\)</button><button class="opt" data-k="d">\(K=3\), \(\tau=2{,}67\) s, \(T=2{,}33\) s</button></div>
+    <div class="expl" hidden><p>\(K=\Delta y/\Delta u=6/2=3\). Luego \(\tau=1{,}5\,(5-2{,}33)=4\) s y \(T=t_{63}-\tau=1\) s. El 6 olvida dividir entre \(\Delta u\); el 5 y el 0 confunden \(t_{63}\) con \(\tau\).</p></div>
+  </div>
+
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Segundo orden</em></div>
+    <p>Una respuesta al escalón unitario tiene \(M_p=16{,}3\,\%\) y \(t_p=0{,}8\) s. ¿Cuánto valen \(\xi\) y \(\omega_n\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(\xi=0{,}16\), \(\omega_n=3{,}93\) rad/s</button><button class="opt" data-k="b">\(\xi=0{,}5\), \(\omega_n=4{,}53\) rad/s</button><button class="opt" data-k="c">\(\xi=0{,}5\), \(\omega_n=3{,}93\) rad/s</button><button class="opt" data-k="d">\(\xi=0{,}8\), \(\omega_n=4{,}53\) rad/s</button></div>
+    <div class="expl" hidden><p>\(\xi=-\ln0{,}163/\sqrt{\pi^2+\ln^20{,}163}=0{,}5\). \(\omega_d=\pi/0{,}8=3{,}93\) rad/s y \(\omega_n=\omega_d/\sqrt{1-0{,}25}=4{,}53\) rad/s. El 3,93 de la opción c es \(\omega_d\), no \(\omega_n\).</p></div>
+  </div>
+
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Predicción FIR</em></div>
+    <p>Un FIR es \(y(k)=(3q^{-1}+5q^{-2})\,u(k)+e(k)\) con sistema causal. Entradas \(u(0),u(1),u(2),u(3)=1,3,5,7\). ¿Cuánto vale \(\hat y(3)\)?</p>
+    <div class="opts"><button class="opt" data-k="a">46</button><button class="opt" data-k="b">14</button><button class="opt" data-k="c">30</button><button class="opt" data-k="d">15</button></div>
+    <div class="expl" hidden><p>\(\hat y(3)=3u(2)+5u(1)=3\cdot5+5\cdot3=30\). Los valores previos son \(\hat y(0)=0\), \(\hat y(1)=3\), \(\hat y(2)=14\). El 46 usa \(u(3)\) y \(u(2)\), sin retardo.</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Mínimos cuadrados</em></div>
+    <p>Para un FIR con \(n_b=2\) salen \(\Phi^T\Phi=\begin{pmatrix}6&3\\3&2\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}17\\9\end{pmatrix}\). ¿Cuánto vale \(\hat\theta=(b_1,b_2)^T\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\((7/3,\ 1)\)</button><button class="opt" data-k="b">\((1,\ 7/3)\)</button><button class="opt" data-k="c">\((17/6,\ 9/2)\)</button><button class="opt" data-k="d">\((3,\ 1)\)</button></div>
+    <div class="expl" hidden><p>\(\det=12-9=3\). \(\hat\theta=\tfrac13\begin{pmatrix}2&-3\\-3&6\end{pmatrix}\begin{pmatrix}17\\9\end{pmatrix}=\tfrac13\begin{pmatrix}7\\3\end{pmatrix}\). El orden de \(b_1,b_2\) sigue el del regresor.</p></div>
+  </div>
+
+  <div class="q" data-correct="d">
+    <div class="qh">Recreada · <em>Qué modelo se resuelve directamente</em></div>
+    <p>¿En cuál de estos modelos <b>no</b> se puede aplicar la fórmula \(\hat\theta=[\Phi^T\Phi]^{-1}\Phi^T\mathbf Y\)?</p>
+    <div class="opts"><button class="opt" data-k="a">FIR</button><button class="opt" data-k="b">ARX</button><button class="opt" data-k="c">Una recta \(y=ax+b\) ajustada a puntos</button><button class="opt" data-k="d">OE</button></div>
+    <div class="expl" hidden><p>En OE el regresor contiene \(-\hat y(k-1),\dots\), que dependen de \(\theta\): regresión pseudolineal. FIR, ARX y la recta son lineales en los parámetros.</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Predictor ARX</em></div>
+    <p>Un ARX tiene \(A(q)=1-0{,}5q^{-1}\) y \(B(q)=2q^{-1}\). Se mide \(y(0)=1\) y \(u(0)=3\). ¿Cuánto vale \(\hat y(1|0)\)?</p>
+    <div class="opts"><button class="opt" data-k="a">6,5</button><button class="opt" data-k="b">5,5</button><button class="opt" data-k="c">7</button><button class="opt" data-k="d">3,5</button></div>
+    <div class="expl" hidden><p>\(\hat y=B\,u+(1-A)\,y=2u(0)+0{,}5\,y(0)=6+0{,}5=6{,}5\). Con \(a_1=-0{,}5\) el término \(-a_1y(0)\) suma. Un 5,5 viene de equivocar el signo.</p></div>
+  </div>
+
+  <button class="reset" id="reset-q" type="button">Reiniciar</button>
+</section>
+
+<div class="pager">
+  <a href="tema-1.html"><small>Anterior</small>Tema 1 · Modelado de sistemas</a>
+  <a class="next" href="problemas.html"><small>Siguiente</small>Problemas</a>
+</div>
+<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script></body></html>

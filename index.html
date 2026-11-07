@@ -1,0 +1,55 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Modelado y Simulación de Sistemas</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Hub </span>GIEIA-UPCT</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><h4>Guía</h4><ul><li><a href="index.html" aria-current="page">Inicio</a></li><li><a href="tema-1.html">Tema 1 · Modelado de sistemas</a></li><li><a href="identificacion.html">UD 2 · Identificación</a></li><li><a href="problemas.html">Problemas</a></li><li><a href="metodos-numericos.html">UD 4 · Métodos numéricos</a></li><li><a href="error.html">Predicción y análisis del error</a></li><li><a href="examenes.html">Qué se pregunta en el examen</a></li><li><a href="practicas.html">Prácticas</a></li></ul><h4>En esta página</h4><div class="toc"><a href="#evaluacion">Cómo se evalúa</a><a href="#plan">Plan de la guía</a></div><h4>Próximamente</h4><ul><li><span class="soon">Formulario</span></li><li><span class="soon">Glosario</span></li></ul></nav><main><header>
+  <div class="kicker">Guía no oficial de la UPCT · Grado en Ingeniería Electrónica Industrial y Automática</div>
+  <h1>Modelado y Simulación de Sistemas</h1>
+  <p class="lead">Una guía para aprobar la asignatura: un tema por página, fórmulas aparte de la explicación, trampas de examen y ejercicios con corrección.</p>
+  <div class="tags">
+    <span class="tag">3.º curso · 2.º cuatrimestre</span><span class="tag">6 ECTS</span><span class="tag">obligatoria</span><span class="tag">castellano</span>
+  </div>
+  <p class="notice">Versión ampliada con el material del aula virtual del curso 2025-2026 (apuntes, prácticas y exámenes de 2023 a 2026). Falta el formulario resumen y el glosario.</p>
+</header>
+
+<section class="sec" id="evaluacion">
+  <h2><span class="dot"></span>Cómo se evalúa</h2>
+  <p>No hay test: el examen escrito mezcla problemas y cuestiones teórico-prácticas. Por eso esta guía trae problemas con método fijo en lugar de banco de preguntas y simulador de test.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Parte</th><th>Qué se evalúa</th><th>Peso</th></tr></thead>
+    <tbody>
+      <tr><td>Examen escrito</td><td>Resolución de problemas y cuestiones teórico-prácticas</td><td>80 %</td></tr>
+      <tr><td>Prácticas</td><td>Memoria de las prácticas propuestas</td><td>20 %</td></tr>
+    </tbody></table></div>
+  <ul>
+    <li>Hay que sacar al menos el <b>50 %</b> de la nota máxima del examen.</li>
+    <li>El informe de prácticas tiene que tener evaluación positiva.</li>
+  </ul>
+  <div class="card" style="max-width:560px">
+    <h3>Calculadora de nota</h3>
+    <p>Pon tus notas sobre 10. Se asume que «positiva» en prácticas significa 5 o más.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px">
+      <label for="n-exam" style="display:grid;gap:4px;font-weight:600">Examen<input id="n-exam" type="number" min="0" max="10" step="0.1" value="5.5" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--fg)"></label>
+      <label for="n-prac" style="display:grid;gap:4px;font-weight:600">Prácticas<input id="n-prac" type="number" min="0" max="10" step="0.1" value="8" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--fg)"></label>
+    </div>
+    <p id="calc-out" aria-live="polite" style="margin:0;font-weight:600"></p>
+  </div>
+</section>
+
+<section class="sec" id="plan">
+  <h2><span class="dot"></span>Plan de la guía</h2>
+  <p>El programa oficial son 13 temas en cinco unidades. Esto es lo que hay y lo que falta.</p>
+  <ul class="plan">
+    <li><a href="tema-1.html">UD 1 · Modelado de sistemas</a><span class="pill ok">disponible</span><p>Leyes de conservación, sistemas mecánicos, eléctricos, de fluidos y térmicos, motor de continua, linealización, equivalencias, primer y segundo orden, amplificadores operacionales.</p></li>
+    <li><a href="identificacion.html">UD 2 · Identificación (temas 3 a 5)</a><span class="pill ok">disponible</span><p>Modelos de escalón y de respuesta al impulso, FIR, ARX, ARMAX y OE, predictor y mínimos cuadrados, con ejemplos resueltos.</p></li>
+    <li><a href="error.html">Predicción y análisis del error</a><span class="pill ok">disponible</span><p>Cómo predecir con cada modelo, estimadores del error, probabilidad dentro de una desviación y autocorrelación, con dos ejemplos de examen resueltos.</p></li>
+    <li><a href="metodos-numericos.html">UD 4 · Métodos numéricos (temas 9 a 11)</a><span class="pill ok">disponible</span><p>Euler, Runge-Kutta, Adams-Bashforth, paso variable, rigidez y plantilla de pseudocódigo con PID analógico y digital.</p></li>
+    <li><a href="problemas.html">Problemas</a><span class="pill ok">disponible</span><p>Cuatro problemas con método fijo y resolución comprobada: acelerómetro, depósitos, cono e identificación ARX.</p></li>
+    <li><a href="examenes.html">Qué se pregunta en el examen</a><span class="pill ok">disponible</span><p>Estructura de los exámenes de 2023 a 2026, tipos de problema y de cuestión que se repiten y dónde está cada uno.</p></li>
+    <li><a href="practicas.html">UD 3 · Prácticas</a><span class="pill ok">disponible</span><p>Las cuatro prácticas del curso: motor de primer orden, tanque linealizado, fluido caliente con PID y modelos no paramétricos.</p></li>
+    <li><span style="font:700 1.05rem var(--font-display)">UD 5 · Análisis de resultados (temas 12 y 13)</span><span class="pill">parcial</span><p>Los estimadores del error están en la página de predicción. Falta material sobre la parte estadística más avanzada: no se inventa contenido.</p></li>
+  </ul>
+  <div class="trap"><b class="t">Aviso</b><p>Se ha usado el material del curso 2025-2026 y apuntes de cursos anteriores para el modelado. El formato exacto del examen de este curso no se conoce: contrasta con lo que diga el profesorado.</p></div>
+</section>
+
+<div class="pager">
+  <span></span>
+  <a class="next" href="tema-1.html"><small>Siguiente</small>Tema 1 · Modelado de sistemas</a>
+</div>
+<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script></body></html>

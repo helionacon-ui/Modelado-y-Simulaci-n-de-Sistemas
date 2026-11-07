@@ -1,0 +1,154 @@
+<header>
+  <div class="kicker">UD 2 y 5 · Caja negra, predicción y análisis del error</div>
+  <h1>Predicción y análisis del error</h1>
+  <p class="lead">Cómo comprobar si un modelo identificado es bueno: calcular lo que predice, restar a lo medido y estudiar el error. En el examen sale en una cuestión casi todos los años.</p>
+  <div class="tags"><span class="tag ctl">identificación</span><span class="tag">cálculo con datos</span><span class="tag">examen: todos los años</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Los dos ejemplos resueltos usan datos de enunciados de convocatorias anteriores y se han comprobado con código.</p>
+</header>
+
+<section class="sec" id="esencial">
+  <h2><span class="dot"></span>Lo esencial</h2>
+  <ul>
+    <li>Un modelo de <b>caja negra</b> se construye solo con datos de entrada y salida, sin usar la estructura interna del sistema.</li>
+    <li>Se valida con el <b>error de predicción</b>: \(e(k)=y(k)-\hat y(k)\), salida real menos salida del modelo.</li>
+    <li>Si el modelo es bueno, \(e(k)\) debe parecer <b>ruido blanco</b>: media cercana a cero, valores en campana de Gauss, sin relación entre una muestra y otra y energía repartida por todas las frecuencias.</li>
+    <li>Con datos muestreados no se usan las integrales teóricas: se usan <b>estimadores</b> con sumas finitas.</li>
+  </ul>
+</section>
+
+<section class="sec ctl" id="prediccion">
+  <h2><span class="dot"></span>Calcular la predicción</h2>
+  <p>La estructura general, con operador desplazamiento \(q\) (\(q^{-1}y(k)=y(k-1)\)), es</p>
+  <div class="eq"><span class="lab">Modelo general</span>\[A(q)\,y(k)=\frac{B(q)}{F(q)}\,u(k)+\frac{C(q)}{D(q)}\,e(k)\]</div>
+  <p>Los modelos FIR, ARX, ARMAX, OE y Box-Jenkins son casos particulares; están explicados en la <a href="identificacion.html">página de identificación</a>. Aquí se usa el <b>modelo de predicción</b>, que da \(\hat y(k)\) con valores anteriores:</p>
+  <div class="grid2">
+    <div class="eq"><span class="lab">FIR</span>\[\hat y(k)=b_1u(k-1)+\dots+b_{nb}u(k-nb)\]</div>
+    <div class="eq"><span class="lab">ARX</span>\[\hat y(k)=-a_1y(k-1)-\dots+b_1u(k-1)+\dots\]</div>
+    <div class="eq wide"><span class="lab">ARMAX</span>\[\hat y(k)=-\sum a_iy(k-i)+\sum b_iu(k-i)+\sum c_i\,\varepsilon(k-i),\qquad \varepsilon(k-i)=y(k-i)-\hat y(k-i)\]</div>
+    <div class="eq wide"><span class="lab">OE: \(y=\tfrac BF u+e\)</span>\[\hat y(k)=-f_1\hat y(k-1)-\dots-f_{nf}\hat y(k-nf)+b_1u(k-1)+\dots+b_{nb}u(k-nb)\]</div>
+  </div>
+  <p>Lo que hay que fijarse es <b>qué valores se realimentan</b>:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Usa en la predicción</th></tr></thead>
+    <tbody>
+      <tr><td>FIR</td><td>Solo entradas pasadas</td></tr>
+      <tr><td>ARX</td><td>Salidas <b>reales</b> pasadas y entradas pasadas</td></tr>
+      <tr><td>ARMAX</td><td>Como ARX, más los errores de predicción pasados</td></tr>
+      <tr><td>OE</td><td>Salidas <b>predichas</b> pasadas (el modelo se simula solo, sin ver la salida real)</td></tr>
+    </tbody></table></div>
+  <h3>ARX: dos formas de predecir</h3>
+  <p>Un ARX con \(A=1-0{,}9951q^{-1}+0{,}0001816q^{-2}\) y \(B=0{,}003712q^{-1}+9{,}237\cdot10^{-5}q^{-2}\) (periodo de muestreo 0,01 s) da</p>
+  <div class="eq"><span class="lab">Modelo de predicción</span>\[\hat y(k)=0{,}9951\,y(k-1)-0{,}0001816\,y(k-2)+0{,}003712\,u(k-1)+9{,}237\cdot10^{-5}\,u(k-2)\]</div>
+  <ul>
+    <li><b>Caso 1: se conoce la salida real anterior.</b> Se usan \(y(k-1)\), \(y(k-2)\) medidos. Es la predicción a un paso.</li>
+    <li><b>Caso 2: solo se conoce la entrada.</b> En lugar de \(y\) se usan las propias predicciones \(\hat y^*(k-1)\), \(\hat y^*(k-2)\). Es la simulación libre del modelo.</li>
+  </ul>
+  <p>Con \(u(k)=0{,}01k\) y valores anteriores a \(k=0\) iguales a cero, la simulación libre (caso 2) da:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>\(k\)</th><th>\(u(k)\)</th><th>\(\hat y^*(k)\)</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>1</td><td>0,01</td><td>0</td></tr>
+      <tr><td>2</td><td>0,02</td><td>0,0000371</td></tr>
+      <tr><td>3</td><td>0,03</td><td>0,0001121</td></tr>
+      <tr><td>4</td><td>0,04</td><td>0,0002247</td></tr>
+    </tbody></table></div>
+  <div class="trap"><b class="t">Trampa</b><p>El signo de \(a_i\): el modelo de predicción lleva \(-a_1y(k-1)\). Con \(a_1=-0{,}9951\) queda \(+0{,}9951\,y(k-1)\). Y la predicción de \(\hat y(k)\) usa \(u(k-1)\), no \(u(k)\): el primer término de \(B(q)\) lleva \(q^{-1}\).</p></div>
+</section>
+
+<section class="sec" id="estimadores">
+  <h2><span class="dot"></span>Herramientas para analizar el error</h2>
+  <p>Sobre \(e(k)\), \(k=1,\dots,N\), muestreada cada \(\Delta t\):</p>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Media</span>\[\bar e=\frac1N\sum_{k=1}^{N}e(k)\]</div>
+    <div class="eq"><span class="lab">Valor medio cuadrático</span>\[\mathrm{RMS}^2=\frac1N\sum_{k=1}^{N}e^2(k)\]</div>
+    <div class="eq"><span class="lab">Varianza (apuntes)</span>\[\sigma_e^2=\frac1{N-1}\sum_{k=1}^{N}\big(e(k)-\bar e\big)^2\]</div>
+    <div class="eq"><span class="lab">Autocorrelación</span>\[\hat R_e(r)=\frac1{N-r}\sum_{k=1}^{N-r}e(k)\,e(k+r)\]</div>
+    <div class="eq wide"><span class="lab">Densidad de probabilidad (histograma con \(D\) intervalos)</span>\[\hat p\big(e(i)\big)=\frac{N_e}{N},\qquad \Delta e=\frac{\max e-\min e}{D}\]</div>
+    <div class="eq wide"><span class="lab">Espectro de energía</span>\[\hat G_e(f)=\text{transformada de Fourier discreta de }\hat R_e(r)\]</div>
+  </div>
+  <p>Cada una mira el error desde un ángulo distinto:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Herramienta</th><th>Qué dice</th><th>Si el modelo es bueno</th></tr></thead>
+    <tbody>
+      <tr><td>Media</td><td>Si el error tiene tendencia (sesgo)</td><td>Cerca de 0</td></tr>
+      <tr><td>RMS / varianza</td><td>Tamaño y dispersión del error</td><td>Pequeños</td></tr>
+      <tr><td>Densidad de probabilidad</td><td>Con qué frecuencia aparece cada valor</td><td>Campana de Gauss centrada</td></tr>
+      <tr><td>Autocorrelación</td><td>Relación entre el error ahora y dentro de \(r\) muestras</td><td>\(\hat R(0)=\mathrm{RMS}^2\) y \(\hat R(r)\approx0\) para \(r\ne0\)</td></tr>
+      <tr><td>Espectro</td><td>En qué frecuencias está la energía del error</td><td>Casi plano (todas las frecuencias por igual)</td></tr>
+    </tbody></table></div>
+  <p><b>Ejemplo de contraste.</b> Con \(\Delta t=0{,}001\), un ruido normal de media 0 y varianza 1 da media \(-0{,}004\), varianza \(0{,}999\), campana de Gauss, autocorrelación nula salvo en 0 y espectro plano. Una suma de senoides (de 1, 50 y 100 Hz) da media nula pero varianza 1,5, una distribución que no es campana, autocorrelación periódica y picos en el espectro justo en 1, 50 y 100 Hz. Un error con ese aspecto indica que <b>el modelo no captura parte de la dinámica</b>.</p>
+  <div class="trap"><b class="t">Trampa: \(1/N\) o \(1/(N-1)\)</b><p>Los apuntes de teoría estiman la desviación típica con \(1/(N-1)\); la tabla de la práctica 4 define la varianza con \(1/N\). Para \(N\) pequeño los dos dan resultados distintos. Usa la fórmula que dé el enunciado y, si no la da, indica cuál usas.</p></div>
+</section>
+
+<section class="sec" id="ejemplo-oe">
+  <h2><span class="dot"></span>Ejemplo resuelto: modelo OE y probabilidad dentro de una desviación</h2>
+  <p>Un sistema se ha identificado con un modelo OE: \(B(q)=0{,}0001096\,q^{-1}\), \(F(q)=1-1{,}999\,q^{-1}+0{,}999\,q^{-2}\). Con la entrada \(u(k)=2,3,\dots,10\) la salida real es</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>\(k\)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>
+    <tbody>
+      <tr><td>\(u(k)\)</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+      <tr><td>\(y(k)\)</td><td>−0,0107</td><td>−0,0040</td><td>0,0075</td><td>−0,0036</td><td>0,0081</td><td>0,0061</td><td>0,0156</td><td>0,0025</td><td>0,0161</td></tr>
+    </tbody></table></div>
+  <p>Calcula la probabilidad de que \(|e-\bar e|\le\sigma_e\) y los tres primeros términos de la autocorrelación del error.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <ol class="steps">
+      <li><b>Predicción.</b> En un OE: \(\hat y(k)=1{,}999\,\hat y(k-1)-0{,}999\,\hat y(k-2)+0{,}0001096\,u(k-1)\), con las predicciones anteriores a \(k=1\) y las entradas anteriores a \(k=1\) iguales a cero.
+        <br>\(\hat y(1)=0\); \(\hat y(2)=0{,}0001096\cdot2=0{,}000219\); \(\hat y(3)=1{,}999\cdot0{,}000219-0+0{,}0001096\cdot3=0{,}000767\); y así sucesivamente.</li>
+      <li><b>Error</b> \(e=y-\hat y\):
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>\(k\)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>
+          <tbody>
+            <tr><td>\(\hat y(k)\)</td><td>0</td><td>0,00022</td><td>0,00077</td><td>0,00175</td><td>0,00329</td><td>0,00547</td><td>0,00843</td><td>0,01226</td><td>0,01707</td></tr>
+            <tr><td>\(e(k)\)</td><td>−0,0107</td><td>−0,0042</td><td>0,0067</td><td>−0,0054</td><td>0,0048</td><td>0,0006</td><td>0,0072</td><td>−0,0098</td><td>−0,0010</td></tr>
+          </tbody></table></div></li>
+      <li><b>Media y desviación.</b> \(\bar e=-0{,}00129\). Con \(1/(N-1)\): \(\sigma_e=0{,}00673\); con \(1/N\): \(\sigma_e=0{,}00634\).</li>
+      <li><b>Probabilidad empírica.</b> Se cuentan las muestras con \(|e-\bar e|\le\sigma_e\): son 5 de 9 con cualquiera de las dos desviaciones, es decir
+        \[P\big(|e-\bar e|\le\sigma_e\big)\approx\frac59=0{,}56\]</li>
+      <li><b>Autocorrelación</b> con \(\hat R(r)=\frac1{N-r}\sum e(k)e(k+r)\):
+        \[\hat R(0)=4{,}19\cdot10^{-5},\qquad \hat R(1)=-1{,}23\cdot10^{-5},\qquad \hat R(2)=1{,}6\cdot10^{-7}\]</li>
+    </ol>
+    <p><b>Lectura.</b> Para un error gaussiano la probabilidad esperada dentro de una desviación es del 68 %. Con solo 9 muestras, 56 % no permite rechazar el modelo. La autocorrelación en \(r=2\) es prácticamente nula, y en \(r=1\) es un 29 % de \(\hat R(0)\), con signo negativo: no hay una dependencia fuerte entre muestras seguidas.</p>
+    <div class="trap"><b class="t">Trampa</b><p>El enunciado da 9 valores de entrada y 10 de salida. Se han usado los 9 primeros pares; con la salida sobrante no se puede predecir sin conocer \(u(10)\). Si te pasa en el examen, indica qué muestras usas.</p></div>
+    <p><b>Comprobación.</b> Todo el cálculo se ha repetido con código: predicción, media, desviación con ambas fórmulas, conteo de muestras y autocorrelación.</p>
+  </details>
+</section>
+
+<section class="sec" id="ejemplo-gs">
+  <h2><span class="dot"></span>Ejemplo resuelto: modelo en función de transferencia</h2>
+  <p>Un sistema se identifica como \(G(s)=\dfrac{10}{0{,}2s+1}\). Se conocen \(u(k)\), \(t(k)\) (paso 0,1) y \(y(k)\), con \(y(0)\) como condición inicial:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>\(k\)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+    <tbody>
+      <tr><td>\(u\)</td><td>0</td><td>8,09</td><td>3,09</td><td>−3,09</td><td>−8,09</td><td>−10</td><td>−8,09</td><td>−3,09</td><td>3,09</td><td>8,09</td><td>10</td></tr>
+      <tr><td>\(y\)</td><td>−0,25</td><td>0,86</td><td>41,24</td><td>13,08</td><td>−10,55</td><td>−27,72</td><td>−34,26</td><td>−23,81</td><td>−5,85</td><td>11,78</td><td>24,55</td></tr>
+    </tbody></table></div>
+  <p>Estima la probabilidad de que el error de modelado sea positivo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <ol class="steps">
+      <li><b>Pasar el modelo al tiempo.</b> \(0{,}2\,\dot y+y=10\,u\), es decir \(\dot y=\dfrac{10u-y}{0{,}2}\).</li>
+      <li><b>Simular con Euler</b> desde \(\hat y(0)=y(0)\) con \(h=0{,}1\):
+        \[\hat y(k+1)=\hat y(k)+\frac{h}{0{,}2}\big(10\,u(k)-\hat y(k)\big)\]
+        Es estable porque \(h/\tau=0{,}5\lt2\).</li>
+      <li><b>Error</b> \(e=y-\hat y\) y recuento de los positivos.</li>
+    </ol>
+    <p>Salen 7 errores positivos de 11 muestras (el de \(k=0\) vale cero y no cuenta). Por tanto \(P(e>0)\approx7/11\approx0{,}64\).</p>
+    <p><b>Comprobación.</b> Con una discretización exacta (retenedor de orden cero, \(\hat y(k+1)=e^{-h/\tau}\hat y(k)+K(1-e^{-h/\tau})u(k)\)) el reparto de signos es el mismo, 7 de 11. El resultado no depende de la discretización elegida.</p>
+    <div class="trap"><b class="t">Trampa</b><p>Al pedir «la probabilidad de que el error sea positivo» no se calcula una integral de la gaussiana: se cuenta la fracción de muestras con \(e>0\). La media del error (\(\approx11\)) está lejos de cero: este modelo tiene un sesgo grande y no es bueno.</p></div>
+  </details>
+</section>
+
+<section class="sec" id="autoevaluacion">
+  <h2><span class="dot"></span>Autoevaluación</h2>
+  <details class="sol"><summary>1 · ¿Qué debe cumplir el error de un modelo correcto?</summary>
+    <p>Ser ruido blanco: media cercana a cero, histograma en campana, autocorrelación nula salvo en \(r=0\) (donde vale el valor medio cuadrático) y espectro plano.</p></details>
+  <details class="sol"><summary>2 · ¿Qué diferencia hay entre predecir con ARX y con OE?</summary>
+    <p>El ARX usa las salidas reales pasadas, así que corrige en cada paso con lo medido. El OE realimenta sus propias predicciones: el modelo corre solo con la entrada y acumula su error.</p></details>
+  <details class="sol"><summary>3 · El histograma del error tiene dos picos y el espectro tiene un pico a 50 Hz. ¿Qué indica?</summary>
+    <p>Que el error contiene una componente determinista a esa frecuencia: el modelo no reproduce parte de la dinámica (o hay una perturbación periódica no modelada), y conviene aumentar el orden o añadir esa dinámica.</p></details>
+</section>
+
+<div class="pager">
+  <a href="metodos-numericos.html"><small>Anterior</small>Métodos numéricos</a>
+  <a class="next" href="examenes.html"><small>Siguiente</small>Qué se pregunta en el examen</a>
+</div>

@@ -1,0 +1,124 @@
+<header>
+  <div class="kicker">UD 3 · Simulación y prácticas</div>
+  <h1>Prácticas</h1>
+  <p class="lead">Qué se hace en cada una de las cuatro prácticas, las ideas que hay que llevar claras y cómo se calcula en Matlab. La memoria de prácticas pesa un 20 % de la nota.</p>
+  <div class="tags"><span class="tag">4 prácticas</span><span class="tag">Matlab · Simulink</span><span class="tag">20 % de la nota</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Resume los guiones del curso 2025-2026 con palabras propias. Las cifras de la práctica 2 se han calculado con código a partir de los datos del guion.</p>
+</header>
+
+<section class="sec" id="resumen">
+  <h2><span class="dot"></span>Las cuatro de un vistazo</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Práctica</th><th>Sistema</th><th>Qué se hace</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Motor de continua (primer orden)</td><td>Identificar ganancia y constante de tiempo con escalones; regresión; comparar modelo y datos</td></tr>
+      <tr><td>2</td><td>Tanque con válvula, temperatura y calor</td><td>Modelo no lineal, modelo lineal, simulador de ambos y comparación</td></tr>
+      <tr><td>3</td><td>Generación de fluido caliente con control</td><td>Modelo por bloques, simulador en Simulink, ajuste de PID y simulador programado</td></tr>
+      <tr><td>4</td><td>Motor de continua (modelos no paramétricos)</td><td>Predicciones con G(s), FIR, ARX, ARMAX y OE; tabla de errores</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec ctl" id="p1">
+  <h2><span class="dot"></span>Práctica 1 · Identificar un motor de primer orden</h2>
+  <ol class="steps">
+    <li><b>Experimentos.</b> Escalones de entrada de 10 a 100 en saltos de 10, con dos repeticiones de cada uno.</li>
+    <li><b>Parámetros.</b> En cada experimento se mide la ganancia \(K\) y la constante de tiempo \(\tau\) (ver el método del 63 % en la <a href="identificacion.html">página de identificación</a>).</li>
+    <li><b>Regresión.</b> Se representan \(K\) y \(\tau\) en función del escalón, con su recta de regresión. Si el motor fuera lineal, serían constantes y la recta saldría plana; la pendiente mide cuánto se desvía.</li>
+    <li><b>Modelo medio.</b> Se toman los valores medios y se simula la función de transferencia con una entrada por tramos (25, −95, 90, 45 y −45 durante 20 s cada tramo), comparando en una misma gráfica el motor y el modelo.</li>
+    <li><b>Error de predicción.</b> Se representa el error en función de la tensión de entrada y se ajusta con una recta.</li>
+  </ol>
+  <p>La función de Matlab para las rectas de regresión es <code>polyfit(u,k,1)</code>, que devuelve [pendiente, ordenada]; <code>polyval(p,u)</code> evalúa la recta. Con los datos de ejemplo del guion (escalones 20, 30 y 50) sale una pendiente de 0,0022 y una ordenada de 0,656.</p>
+  <div class="trap"><b class="t">Qué contar en la memoria</b><p>Que la ganancia depende del nivel del escalón significa que hay una no linealidad (zona muerta, fricción, saturación). El error de predicción en función de la tensión muestra justo ese efecto. Esa es la conclusión que se espera.</p></div>
+</section>
+
+<section class="sec flu" id="p2">
+  <h2><span class="dot"></span>Práctica 2 · Tanque con válvula y calentador</h2>
+  <p>Tanque de radio 15 cm con una válvula de salida. Con un caudal de 15 l/min y la válvula al 50 %, la altura estacionaria es 25 cm. El agua entra a 15 °C. Se piden el modelo, su función de transferencia, un simulador de ambos y la comparación al variar el caudal, la apertura y el calor.</p>
+  <h3>Modelo y puntos de trabajo</h3>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Altura</span>\[S\,\dot h=f_i-K\,a\sqrt h\]</div>
+    <div class="eq"><span class="lab">Temperatura</span>\[\rho C_p S h\,\dot T=\rho C_p f_i\,(T_i-T)+q\]</div>
+  </div>
+  <p>La ecuación de temperatura sale de un balance de energía \(\tfrac{d}{dt}(\rho C_pShT)=\rho C_p(f_iT_i-f_oT)+q\) al restar el término de la variación de volumen, \(\rho C_p T\,S\dot h=\rho C_pT(f_i-f_o)\).</p>
+  <p>Con los datos: \(S=\pi\,0{,}15^2=0{,}0707\ \mathrm{m^2}\), \(f_{i0}=15\ \mathrm{l/min}=2{,}5\cdot10^{-4}\ \mathrm{m^3/s}\), \(a_0=0{,}5\) y \(h_0=0{,}25\) m. En equilibrio \(f_{i0}=K a_0\sqrt{h_0}\), de donde \(K=10^{-3}\).</p>
+  <h3>Linealización</h3>
+  <div class="eq key"><span class="lab">Altura linealizada</span>\[S\,\Delta\dot h=\Delta f_i-\frac{K a_0}{2\sqrt{h_0}}\,\Delta h-K\sqrt{h_0}\,\Delta a\]</div>
+  <p>Con las funciones de transferencia \(\dfrac{\Delta H}{\Delta F_i}=\dfrac{G_f}{\tau s+1}\) y \(\dfrac{\Delta H}{\Delta A}=\dfrac{G_a}{\tau s+1}\), donde</p>
+  <div class="eq"><span class="lab">Parámetros</span>\[\tau=\frac{2S\sqrt{h_0}}{K a_0}=141\ \mathrm s,\qquad G_f=\frac{2\sqrt{h_0}}{K a_0}=2000\ \frac{\mathrm m}{\mathrm{m^3/s}},\qquad G_a=-\frac{2h_0}{a_0}=-1\ \mathrm m\]</div>
+  <h3>Comparación no lineal frente a lineal (régimen estacionario)</h3>
+  <p>Suponiendo que «variación» significa aumento, las alturas finales son:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Cambio</th><th>Modelo no lineal</th><th>Modelo lineal</th></tr></thead>
+    <tbody>
+      <tr><td>Caudal +45 %</td><td>0,526 m</td><td>0,475 m</td></tr>
+      <tr><td>Caudal +75 %</td><td>0,766 m</td><td>0,625 m</td></tr>
+      <tr><td>Apertura +45 %</td><td>0,119 m</td><td>0,025 m</td></tr>
+      <tr><td>Apertura +75 %</td><td>0,082 m</td><td>−0,125 m</td></tr>
+    </tbody></table></div>
+  <p><b>Explicación.</b> La no linealidad es la raíz \(\sqrt h\). El caudal entra de forma lineal, así que la diferencia crece despacio (de 0,05 a 0,14 m). La apertura multiplica a \(\sqrt h\): el efecto real de abrir más sigue una curva (la altura baja como \(1/a^2\)) mientras el modelo lineal es una recta, y para +75 % predice una altura negativa, que es físicamente imposible. Por eso el modelo lineal solo sirve cerca del punto de trabajo, y falla antes con la apertura que con el caudal.</p>
+  <p><b>Calor.</b> Con \(q=2000\) W, \(T-T_i=\dfrac{q}{\rho C_pf_i}=\dfrac{2000}{1000\cdot4186\cdot2{,}5\cdot10^{-4}}=1{,}9\ ^\circ\mathrm C\) en estacionario (con \(C_p=4186\) J/kg·K). La ecuación de temperatura es lineal en \(q\) si la altura no cambia; la no linealidad viene del factor \(1/h\) y del producto \(f_i\,T\). Al cambiar solo el calor la altura no se mueve, así que el estudio de la diferencia entre ambos modelos debe separar este caso de los de caudal y apertura.</p>
+  <div class="trap"><b class="t">Trampa</b><p>Para simular el lineal hay que sumar el punto de trabajo: \(h=h_0+\Delta h\). Si se representa \(\Delta h\) directamente, no es comparable con el no lineal. Además el simulador no lineal parte de \(h_0\), no de 0, o aparece un transitorio falso.</p></div>
+</section>
+
+<section class="sec ter" id="p3">
+  <h2><span class="dot"></span>Práctica 3 · Generación de fluido caliente</h2>
+  <p>Un tanque con resistencia sumergida y un calentador en línea alimentan la camisa de un reactor, con una bomba a la salida. El sistema se descompone en <b>bloques</b>, cada uno con entradas, salidas, ecuaciones, condiciones iniciales y parámetros.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Bloque</th><th>Idea</th></tr></thead>
+    <tbody>
+      <tr><td>Referencias</td><td>Caudal con una senoide y temperatura por tramos (20, 35, 30 y 55 °C)</td></tr>
+      <tr><td>Válvula de altura</td><td>Todo/nada con histéresis: abre al bajar de un nivel, cierra al alcanzar otro y, entre medias, mantiene su estado</td></tr>
+      <tr><td>PID</td><td>\(u=K\big(e+\tfrac1{T_i}\!\int e\,dt+T_d\,\dot e\big)\), con \(e(0)=0\)</td></tr>
+      <tr><td>Bomba</td><td>Primer orden con saturación de la señal de mando entre 0 y 10</td></tr>
+      <tr><td>Tanque calentado</td><td>Altura y temperatura, con la potencia de la resistencia (saturada entre 0 y 1)</td></tr>
+      <tr><td>Calentador en línea</td><td>Temperatura de salida como un primer orden que depende del caudal</td></tr>
+    </tbody></table></div>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Tanque</span>\[S\dot h=F_i-F_o\]</div>
+    <div class="eq"><span class="lab">Bomba</span>\[\dot F_o=\frac1{\tau_b}\big(K_b u_3-F_o\big)\]</div>
+    <div class="eq wide"><span class="lab">Temperatura del tanque</span>\[\dot T=\frac{\rho C_p\,(F_iT_{red}-F_oT)+q_h-S\rho C_pT\,\dot h}{\rho C_p S h}\]</div>
+    <div class="eq wide"><span class="lab">Calentador en línea (volumen \(V\))</span>\[\dot T_o=\frac{F_o\,\rho C_p\,(T-T_o)+q_h}{\rho C_pV}\]</div>
+  </div>
+  <p>Lo que se pide: modelar, plantear el esquema por subsistemas en Simulink, <b>ajustar los PID con el simulador</b> y programar el método numérico propio (por ejemplo Euler) para comparar con Simulink.</p>
+  <div class="trap"><b class="t">Trampa</b><p>Las saturaciones (potencia entre 0 y 1, mando entre 0 y 10) son parte del modelo. Sin ellas el PID pide valores imposibles y el ajuste de los parámetros no vale. Y con la histéresis, el estado de la válvula es una <b>variable con memoria</b>: debe guardarse de un paso al siguiente.</p></div>
+</section>
+
+<section class="sec ctl" id="p4">
+  <h2><span class="dot"></span>Práctica 4 · Modelos no paramétricos del motor</h2>
+  <p>Se hace un experimento con el motor (tensión 55, −95, 75, 45 y −55 en tramos de 30 s) y se calcula la predicción con cinco modelos: función de transferencia \(G(s)=0{,}9/(3s+1)\), FIR (30 coeficientes), ARX, ARMAX y OE, todos ya identificados en el guion. Después se rellena una tabla con el error medio, la varianza del error y el RMSE de cada uno.</p>
+  <div class="grid2">
+    <div class="eq"><span class="lab">Error medio</span>\[\bar e=\frac1N\sum e(i)\]</div>
+    <div class="eq"><span class="lab">Varianza</span>\[\mathrm{Var}(e)=\frac1N\sum\big(e(i)-\bar e\big)^2\]</div>
+    <div class="eq wide"><span class="lab">RMSE</span>\[\mathrm{RMSE}=\sqrt{\frac1N\sum e(i)^2}\]</div>
+  </div>
+  <p>El código de predicción es siempre el mismo: se arma el vector de regresión con las salidas y entradas anteriores y se multiplica por los parámetros. Con un ARX de segundo orden:</p>
+  <pre class="code">theta = [ a1 ; a2 ; b1 ];           % parámetros, con el signo de A(z)
+yest(1) = 0;
+yest(2) = theta' * [ -y(1) ; 0    ; u(1) ];
+para k = 3 : length(y)
+    psi = [ -y(k-1) ; -y(k-2) ; u(k-1) ];   % vector de regresión
+    yest(k) = theta' * psi;
+fin</pre>
+  <p>Para ARMAX hay que añadir al regresor los errores anteriores \(\varepsilon(k-i)=y(k-i)-\hat y(k-i)\), y para OE las predicciones anteriores en lugar de las salidas medidas. Todo está explicado en la página de <a href="error.html#prediccion">predicción y análisis del error</a>.</p>
+  <div class="trap"><b class="t">Trampa</b><p>Al armar el regresor ARX los términos de salida llevan <b>signo menos</b> y los parámetros son los de \(A(z)\) tal como salen de Matlab. Si copias \(A(z)=1-1{,}852z^{-1}+0{,}8519z^{-2}\), \(\theta=(-1{,}852,\ 0{,}8519,\ b_1)\): el signo ya está dentro del parámetro.</p></div>
+</section>
+
+<section class="sec" id="herramientas">
+  <h2><span class="dot"></span>Matlab y Simulink: lo que se usa</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Para</th><th>Herramienta</th></tr></thead>
+    <tbody>
+      <tr><td>Guardar señales de una simulación</td><td>Bloque <code>To Workspace</code> (formato array) con el periodo de muestreo ajustado; el reloj de la simulación da los tiempos</td></tr>
+      <tr><td>Crear el conjunto de datos de identificación</td><td><code>dato = iddata(y,u,0.01)</code></td></tr>
+      <tr><td>Estimar un ARX</td><td><code>arx(dato,[na nb nk])</code>, con <code>nk=1</code> si hay un retardo de una muestra; Matlab llama \(z\) al operador \(q\)</td></tr>
+      <tr><td>Recta de regresión</td><td><code>polyfit</code> y <code>polyval</code></td></tr>
+      <tr><td>Solver en Simulink</td><td>Configuración del modelo → Solver: variable (<code>ode45</code>) o fijo (<code>ode1</code> es Euler)</td></tr>
+      <tr><td>Paso usado por el solver</td><td><code>plot(diff(tout))</code></td></tr>
+    </tbody></table></div>
+  <div class="trap"><b class="t">Trampa de índices</b><p>En Matlab los vectores empiezan en 1 y no existe <code>y(0)</code>, <code>y(-1)</code>. El término \(w(0)\) de la teoría es <code>w(1)</code>; los valores anteriores a ese se tratan aparte, con ceros, o se empieza el bucle más tarde.</p></div>
+</section>
+
+<div class="pager">
+  <a href="examenes.html"><small>Anterior</small>Qué se pregunta en el examen</a>
+  <a class="next" href="index.html#plan"><small>Siguiente</small>Plan de la guía</a>
+</div>

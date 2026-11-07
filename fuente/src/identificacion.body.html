@@ -1,0 +1,180 @@
+<header>
+  <div class="kicker">UD 2 · Identificación</div>
+  <h1>De los datos al modelo</h1>
+  <p class="lead">Cuando no se conocen las ecuaciones del sistema, se hace un experimento y se ajusta un modelo a los datos. Esta página cubre los modelos de escalón, los modelos de respuesta al impulso, la familia FIR, ARX, ARMAX y OE, y la estimación por mínimos cuadrados.</p>
+  <div class="tags">
+    <span class="tag">Apuntes de clase · 2025</span>
+    <span class="tag ctl">caja gris</span><span class="tag">caja negra</span><span class="tag">mínimos cuadrados</span>
+  </div>
+  <p class="notice">Guía no oficial de la UPCT. Reescrita a partir de apuntes de un curso anterior, sin copiar el material. Los ejercicios son recreados y sus cálculos están comprobados con código. El temario de este curso puede diferir.</p>
+</header>
+
+<section class="sec" id="esencial">
+  <h2><span class="dot"></span>Lo esencial</h2>
+  <p>Hay dos formas de obtener un modelo. Se pueden combinar y se distinguen por cuánto conoces del sistema.</p>
+  <div class="grid2">
+    <div class="card"><h3>Modelo de conocimiento</h3><p>Escribes las leyes físicas (tema 1). No necesitas datos, pero sí saber cómo funciona el sistema.</p></div>
+    <div class="card"><h3>Modelo de identificación</h3><p>Excitas el sistema, mides entradas y salidas y ajustas el modelo a esos datos. El grado de conocimiento previo decide cuál de estos dos tipos usas:</p>
+      <ul><li><b>Paramétrico (caja gris)</b>: la estructura se fija a priori (primer orden, segundo orden) y solo se estiman sus parámetros.</li><li><b>No paramétrico (caja negra)</b>: solo se ajustan los datos, sin estructura física.</li></ul></div>
+  </div>
+  <p>El esquema de trabajo es siempre el mismo: modelo, simulador, simulación y comparación con los datos reales. El error se define como \(e=y-\hat y\).</p>
+</section>
+
+<section class="sec" id="escalon">
+  <h2><span class="dot"></span>Modelos paramétricos con escalón</h2>
+  <h3>Primer orden con retardo</h3>
+  <div class="eq key">\[\frac{Y(s)}{U(s)}=\frac{K}{\tau s+1}\,e^{-Ts}\;\Rightarrow\;y(t)=K\,\Delta u\Big(1-e^{-(t-T)/\tau}\Big)\ \ (t\ge T)\]</div>
+  <figure>
+    {{svg:fopdt}}
+    <figcaption>Respuesta de un primer orden con retardo \(T\). La ganancia es el cambio final de la salida entre el escalón aplicado.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div class="eq key"><span class="lab">Ganancia</span>\[K=\frac{\Delta y}{\Delta u}\quad(\text{valor final})\]</div>
+    <div class="eq key wide"><span class="lab">Dos puntos (28 % y 63 %)</span>\[t_{63}=T+\tau,\quad t_{28}=T+\frac\tau3\;\Rightarrow\;\tau=\tfrac32\,(t_{63}-t_{28}),\ \ T=t_{63}-\tau\]</div>
+  </div>
+  <p>De dónde sale el 63,2 %: en \(t=T+\tau\) la exponencial vale \(1-e^{-1}=0{,}632\). El 28,3 % sale de \(1-e^{-1/3}=0{,}283\). Si el sistema no es de primer orden pero la salida tiene forma de «S» (un segundo orden sobreamortiguado), se aproxima con este modelo leyendo \(t_{28}\) y \(t_{63}\) sobre la gráfica.</p>
+
+  <h3>Segundo orden subamortiguado</h3>
+  <div class="eq key">\[G(s)=\frac{K\omega_n^2}{s^2+2\xi\omega_ns+\omega_n^2}\]</div>
+  <figure>
+    {{svg:segundo}}
+    <figcaption>Con \(K=1\) se leen directamente la sobreoscilación, el tiempo de pico y el de establecimiento.</figcaption>
+  </figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Magnitud</th><th>Fórmula</th></tr></thead>
+    <tbody>
+      <tr><td>Frecuencia amortiguada</td><td>\(\omega_d=\omega_n\sqrt{1-\xi^2}\)</td></tr>
+      <tr><td>Atenuación</td><td>\(\sigma=\xi\omega_n\)</td></tr>
+      <tr><td>Tiempo de pico</td><td>\(t_p=\dfrac{\pi}{\omega_d}\)</td></tr>
+      <tr><td>Sobreoscilación</td><td>\(M_p=e^{-\pi\xi/\sqrt{1-\xi^2}}=\dfrac{y(t_p)-y(\infty)}{y(\infty)}\)</td></tr>
+      <tr><td>Establecimiento (5 % / 2 %)</td><td>\(t_s\approx\dfrac3\sigma\ /\ \dfrac4\sigma\)</td></tr>
+      <tr><td>Tiempo de subida</td><td>\(t_r=\dfrac{1}{\omega_d}\arctan\!\Big(\dfrac{\omega_d}{-\sigma}\Big)=\dfrac{\pi-\arccos\xi}{\omega_d}\) (con el arco en el cuadrante correcto)</td></tr>
+    </tbody></table></div>
+  <p>Para identificar: se mide \(M_p\) y de ahí \(\xi=\dfrac{-\ln M_p}{\sqrt{\pi^2+\ln^2M_p}}\); se mide \(t_p\) y se obtiene \(\omega_d=\pi/t_p\) y \(\omega_n=\omega_d/\sqrt{1-\xi^2}\).</p>
+</section>
+
+<section class="sec" id="impulso">
+  <h2><span class="dot"></span>Respuesta al impulso y operador de retardo</h2>
+  <p>Un modelo no paramétrico trata los experimentos como impulsos. Como el sistema es lineal, la salida es la suma de las respuestas a cada entrada:</p>
+  <div class="eq key">\[y(k)=\sum_{\ell=0}^{\infty}g(\ell)\,u(k-\ell)\]</div>
+  <p>El operador de retardo \(q\) desplaza la serie: \(q\,x(k)=x(k+1)\) y \(q^{-1}x(k)=x(k-1)\). Es lineal. Con él, el modelo se escribe como función de transferencia en \(q\):</p>
+  <div class="eq">\[G(q)=\sum_{\ell=1}^{\infty}g(\ell)\,q^{-\ell},\qquad y(k)=G(q)\,u(k)\]</div>
+</section>
+
+<section class="sec" id="perturbaciones">
+  <h2><span class="dot"></span>Modelo con perturbaciones</h2>
+  <p>Los datos reales llevan ruido. Se modela como ruido blanco \(e(k)\) (depende solo de sí mismo en cada instante) filtrado por \(H(q)\):</p>
+  <div class="eq key">\[y(k)=G(q)\,u(k)+H(q)\,e(k)\]</div>
+  <p>Con polinomios en \(q^{-1}\) (\(A,B,C,D,F\); los de \(C,D,F\) empiezan en 1, son «mónicos»):</p>
+  <div class="eq">\[G(q)=\frac{B(q)}{F(q)A(q)},\quad H(q)=\frac{C(q)}{D(q)A(q)}\;\Rightarrow\;A(q)\,y(k)=\frac{B(q)}{F(q)}\,u(k)+\frac{C(q)}{D(q)}\,e(k)\]</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Ecuación</th><th>\(G(q)\)</th><th>\(H(q)\)</th></tr></thead>
+    <tbody>
+      <tr><td><b>FIR</b>, respuesta al impulso finita</td><td>\(y=B\,u+e\)</td><td>\(B\)</td><td>\(1\)</td></tr>
+      <tr><td><b>ARX</b>, autorregresivo con entrada exógena</td><td>\(A\,y=B\,u+e\)</td><td>\(B/A\)</td><td>\(1/A\)</td></tr>
+      <tr><td><b>ARMAX</b>, con media móvil</td><td>\(A\,y=B\,u+C\,e\)</td><td>\(B/A\)</td><td>\(C/A\)</td></tr>
+      <tr><td><b>OE</b>, error de salida</td><td>\(y=\dfrac BF\,u+e\)</td><td>\(B/F\)</td><td>\(1\)</td></tr>
+      <tr><td><b>Box-Jenkins</b></td><td>\(y=\dfrac BF\,u+\dfrac CD\,e\)</td><td>\(B/F\)</td><td>\(C/D\)</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec" id="prediccion">
+  <h2><span class="dot"></span>Predictor</h2>
+  <p>Para estimar hay que predecir \(y(k)\) con lo medido hasta \(k-1\). El ruido pasado se recupera de los datos y la mejor predicción de \(e(k)\) es cero (media nula). Para que sea posible, \(H(q)\) debe ser <b>estable</b>, <b>invertible</b> y <b>mónico</b>.</p>
+  <div class="eq key"><span class="lab">Predictor general</span>\[\hat y(k|k-1)=H^{-1}(q)\,G(q)\,u(k)+\big(1-H^{-1}(q)\big)\,y(k)\]</div>
+  <p>Particularizando para cada modelo:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Modelo</th><th>Predictor</th><th>Regresor \(\varphi\), parámetros \(\theta\)</th></tr></thead>
+    <tbody>
+      <tr><td>FIR</td><td>\(\hat y=B(q)\,u(k)\)</td><td>\(\varphi=\big(u(k-1),\dots,u(k-n_b)\big)^T\), \(\theta=(b_1,\dots,b_{n_b})^T\)</td></tr>
+      <tr><td>ARX</td><td>\(\hat y=B\,u+\big(1-A\big)\,y\)</td><td>\(\varphi=\big(-y(k-1),\dots,-y(k-n_a),\,u(k-1),\dots,u(k-n_b)\big)^T\), \(\theta=(a_1,\dots,a_{n_a},b_1,\dots,b_{n_b})^T\)</td></tr>
+      <tr><td>ARMAX</td><td>\(C\,\hat y=B\,u+(C-A)\,y\)</td><td>como ARX, más \(\varepsilon(k-1),\dots,\varepsilon(k-n_c)\) y los \(c_i\); \(\varepsilon=y-\hat y\)</td></tr>
+      <tr><td>OE</td><td>\(F\,\hat y=B\,u\)</td><td>\(\varphi=\big(u(k-1),\dots,u(k-n_b),\,-\hat y(k-1),\dots,-\hat y(k-n_f)\big)^T\)</td></tr>
+    </tbody></table></div>
+  <p>FIR y ARX dan <b>regresión lineal</b>: \(\hat y=\theta^T\varphi(k)\). ARMAX y OE dan <b>regresión pseudolineal</b>, porque el regresor depende de las estimaciones (\(\varepsilon\) o \(\hat y\) pasados), es decir, de \(\theta\).</p>
+</section>
+
+<section class="sec" id="minimos">
+  <h2><span class="dot"></span>Estimación por mínimos cuadrados</h2>
+  <p>Se eligen los parámetros que minimizan la suma de los cuadrados de los errores sobre los \(N\) datos:</p>
+  <div class="eq">\[J(\theta)=\frac1N\sum_{k=1}^{N}\big(y(k)-\theta^T\varphi(k)\big)^2\]</div>
+  <p>Si se apilan los regresores por filas en \(\Phi\) y las salidas en \(\mathbf Y\), anular la derivada da las ecuaciones normales y su solución:</p>
+  <div class="eq key">\[\big[\Phi^T\Phi\big]\hat\theta=\Phi^T\mathbf Y\;\Rightarrow\;\hat\theta_N=\big[\Phi^T\Phi\big]^{-1}\Phi^T\mathbf Y\]</div>
+  <p>Solo se aplica a los modelos de regresión lineal (FIR y ARX).</p>
+  <h3>Ejemplo resuelto: modelo FIR con \(n_b=2\)</h3>
+  <p>Se excita el sistema y se miden estos datos (con \(u=0\) antes de empezar, es decir, sistema causal con condiciones iniciales nulas):</p>
+  <div class="tbl-wrap" style="max-width:320px"><table>
+    <thead><tr><th>\(k\)</th><th>\(u(k)\)</th><th>\(y(k)\)</th></tr></thead>
+    <tbody><tr><td>1</td><td>1</td><td>2</td></tr><tr><td>2</td><td>1</td><td>3</td></tr><tr><td>3</td><td>2</td><td>4</td></tr><tr><td>4</td><td>3</td><td>5</td></tr></tbody></table></div>
+  <ol class="steps">
+    <li><b>Regresor.</b> \(\varphi(k)=(u(k-1),\,u(k-2))^T\). Para \(k=1\) hace falta \(u(0)\) y \(u(-1)\), que valen 0.</li>
+    <li><b>Matrices.</b> \(\Phi=\begin{pmatrix}0&0\\1&0\\1&1\\2&1\end{pmatrix}\), \(\mathbf Y=\begin{pmatrix}2\\3\\4\\5\end{pmatrix}\).</li>
+    <li><b>Productos.</b> \(\Phi^T\Phi=\begin{pmatrix}6&3\\3&2\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}17\\9\end{pmatrix}\).</li>
+    <li><b>Resolver.</b> El determinante es \(6\cdot2-3\cdot3=3\), de donde \(\hat\theta=\begin{pmatrix}7/3\\1\end{pmatrix}\approx\begin{pmatrix}2{,}33\\1\end{pmatrix}\).</li>
+  </ol>
+</section>
+
+<section class="sec" id="trampas">
+  <h2><span class="dot"></span>Trampas típicas</h2>
+  <div class="trap"><b class="t">Signo en ARX</b><p>El regresor lleva \(-y(k-1),-y(k-2),\dots\) porque \(A(q)=1+a_1q^{-1}+\cdots\). Con \(A=1-0{,}5q^{-1}\), \(a_1=-0{,}5\) y el término \(-a_1y(k-1)\) suma.</p></div>
+  <div class="trap"><b class="t">Retardo</b><p>El regresor empieza en \(u(k-1)\), no en \(u(k)\). Un FIR con \(B=3q^{-1}+5q^{-2}\) usa \(3u(k-1)+5u(k-2)\).</p></div>
+  <div class="trap"><b class="t">Primeras filas</b><p>Para \(k\) pequeño los datos previos no existen y se toman como cero. La primera fila de \(\Phi\) puede ser toda de ceros y no aporta información.</p></div>
+  <div class="trap"><b class="t">Qué modelos se resuelven así</b><p>Las ecuaciones normales valen para FIR y ARX. ARMAX y OE son pseudolineales: el regresor contiene estimaciones y la solución no es esta fórmula directa.</p></div>
+  <div class="trap"><b class="t">Retardo puro</b><p>En el método de los dos puntos se mide \(t\) desde que se aplica el escalón. \(T\) se obtiene restando: \(T=t_{63}-\tau\), no leyendo \(t_{63}\).</p></div>
+  <div class="trap"><b class="t">Establecimiento</b><p>\(t_s\approx4/\sigma\) es una aproximación. La curva real puede entrar en la banda del 2 % un poco después.</p></div>
+</section>
+
+<section class="sec" id="autoeval">
+  <h2><span class="dot"></span>Autoevaluación</h2>
+  <p>Seis ejercicios recreados. Resuelve primero y luego pulsa una opción.</p>
+  <div class="score" id="score" aria-live="polite"></div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Primer orden con retardo</em></div>
+    <p>Al aplicar un escalón \(\Delta u=2\) en \(t=0\), la salida pasa de 0 a 6. Se lee \(t_{28}=2{,}33\) s y \(t_{63}=5{,}00\) s. ¿Valores de \(K\), \(\tau\) y \(T\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(K=3\), \(\tau=4\) s, \(T=1\) s</button><button class="opt" data-k="b">\(K=6\), \(\tau=4\) s, \(T=1\) s</button><button class="opt" data-k="c">\(K=3\), \(\tau=5\) s, \(T=0\)</button><button class="opt" data-k="d">\(K=3\), \(\tau=2{,}67\) s, \(T=2{,}33\) s</button></div>
+    <div class="expl" hidden><p>\(K=\Delta y/\Delta u=6/2=3\). Luego \(\tau=1{,}5\,(5-2{,}33)=4\) s y \(T=t_{63}-\tau=1\) s. El 6 olvida dividir entre \(\Delta u\); el 5 y el 0 confunden \(t_{63}\) con \(\tau\).</p></div>
+  </div>
+
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Segundo orden</em></div>
+    <p>Una respuesta al escalón unitario tiene \(M_p=16{,}3\,\%\) y \(t_p=0{,}8\) s. ¿Cuánto valen \(\xi\) y \(\omega_n\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(\xi=0{,}16\), \(\omega_n=3{,}93\) rad/s</button><button class="opt" data-k="b">\(\xi=0{,}5\), \(\omega_n=4{,}53\) rad/s</button><button class="opt" data-k="c">\(\xi=0{,}5\), \(\omega_n=3{,}93\) rad/s</button><button class="opt" data-k="d">\(\xi=0{,}8\), \(\omega_n=4{,}53\) rad/s</button></div>
+    <div class="expl" hidden><p>\(\xi=-\ln0{,}163/\sqrt{\pi^2+\ln^20{,}163}=0{,}5\). \(\omega_d=\pi/0{,}8=3{,}93\) rad/s y \(\omega_n=\omega_d/\sqrt{1-0{,}25}=4{,}53\) rad/s. El 3,93 de la opción c es \(\omega_d\), no \(\omega_n\).</p></div>
+  </div>
+
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Predicción FIR</em></div>
+    <p>Un FIR es \(y(k)=(3q^{-1}+5q^{-2})\,u(k)+e(k)\) con sistema causal. Entradas \(u(0),u(1),u(2),u(3)=1,3,5,7\). ¿Cuánto vale \(\hat y(3)\)?</p>
+    <div class="opts"><button class="opt" data-k="a">46</button><button class="opt" data-k="b">14</button><button class="opt" data-k="c">30</button><button class="opt" data-k="d">15</button></div>
+    <div class="expl" hidden><p>\(\hat y(3)=3u(2)+5u(1)=3\cdot5+5\cdot3=30\). Los valores previos son \(\hat y(0)=0\), \(\hat y(1)=3\), \(\hat y(2)=14\). El 46 usa \(u(3)\) y \(u(2)\), sin retardo.</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Mínimos cuadrados</em></div>
+    <p>Para un FIR con \(n_b=2\) salen \(\Phi^T\Phi=\begin{pmatrix}6&3\\3&2\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}17\\9\end{pmatrix}\). ¿Cuánto vale \(\hat\theta=(b_1,b_2)^T\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\((7/3,\ 1)\)</button><button class="opt" data-k="b">\((1,\ 7/3)\)</button><button class="opt" data-k="c">\((17/6,\ 9/2)\)</button><button class="opt" data-k="d">\((3,\ 1)\)</button></div>
+    <div class="expl" hidden><p>\(\det=12-9=3\). \(\hat\theta=\tfrac13\begin{pmatrix}2&-3\\-3&6\end{pmatrix}\begin{pmatrix}17\\9\end{pmatrix}=\tfrac13\begin{pmatrix}7\\3\end{pmatrix}\). El orden de \(b_1,b_2\) sigue el del regresor.</p></div>
+  </div>
+
+  <div class="q" data-correct="d">
+    <div class="qh">Recreada · <em>Qué modelo se resuelve directamente</em></div>
+    <p>¿En cuál de estos modelos <b>no</b> se puede aplicar la fórmula \(\hat\theta=[\Phi^T\Phi]^{-1}\Phi^T\mathbf Y\)?</p>
+    <div class="opts"><button class="opt" data-k="a">FIR</button><button class="opt" data-k="b">ARX</button><button class="opt" data-k="c">Una recta \(y=ax+b\) ajustada a puntos</button><button class="opt" data-k="d">OE</button></div>
+    <div class="expl" hidden><p>En OE el regresor contiene \(-\hat y(k-1),\dots\), que dependen de \(\theta\): regresión pseudolineal. FIR, ARX y la recta son lineales en los parámetros.</p></div>
+  </div>
+
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Predictor ARX</em></div>
+    <p>Un ARX tiene \(A(q)=1-0{,}5q^{-1}\) y \(B(q)=2q^{-1}\). Se mide \(y(0)=1\) y \(u(0)=3\). ¿Cuánto vale \(\hat y(1|0)\)?</p>
+    <div class="opts"><button class="opt" data-k="a">6,5</button><button class="opt" data-k="b">5,5</button><button class="opt" data-k="c">7</button><button class="opt" data-k="d">3,5</button></div>
+    <div class="expl" hidden><p>\(\hat y=B\,u+(1-A)\,y=2u(0)+0{,}5\,y(0)=6+0{,}5=6{,}5\). Con \(a_1=-0{,}5\) el término \(-a_1y(0)\) suma. Un 5,5 viene de equivocar el signo.</p></div>
+  </div>
+
+  <button class="reset" id="reset-q" type="button">Reiniciar</button>
+</section>
+
+<div class="pager">
+  <a href="tema-1.html"><small>Anterior</small>Tema 1 · Modelado de sistemas</a>
+  <a class="next" href="problemas.html"><small>Siguiente</small>Problemas</a>
+</div>

@@ -1,0 +1,189 @@
+<header>
+  <div class="kicker">UD 4 · Métodos numéricos (temas 9 a 11)</div>
+  <h1>Métodos numéricos para simular</h1>
+  <p class="lead">Cómo convertir un modelo en un programa: Euler, Runge-Kutta, Adams-Bashforth, paso variable y rigidez. Es la parte que más se pregunta como pseudocódigo en el examen.</p>
+  <div class="tags"><span class="tag ctl">simulación</span><span class="tag">pseudocódigo</span><span class="tag">examen: todos los años</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Resumida y reescrita a partir de los apuntes del aula virtual del curso 2025-2026. Los errores de la tabla de orden se calcularon con código.</p>
+</header>
+
+<section class="sec" id="esencial">
+  <h2><span class="dot"></span>Lo esencial</h2>
+  <ul>
+    <li>Un simulador resuelve un <b>problema de valor inicial</b>: \(y'=f(y,t)\), \(y(a)=\alpha\), en \(a\le t\le b\), y devuelve \(w(k)\approx y(a+kh)\).</li>
+    <li>Los métodos están definidos para ecuaciones de <b>primer orden</b>. Una ecuación de orden \(n\) se pasa a un sistema de \(n\) ecuaciones de primer orden con variables de estado.</li>
+    <li><b>Un solo paso</b> (Euler, Runge-Kutta): \(w(k+1)\) depende solo de \(w(k)\). <b>Multipaso</b> (Adams): usa también \(w(k-1),\dots\)</li>
+    <li><b>Explícito</b>: \(w(k+1)\) queda despejado. <b>Implícito</b>: aparece a los dos lados y hay que resolver una ecuación (o usar predictor-corrector).</li>
+    <li>El orden \(n\) del método dice cómo baja el error al reducir \(h\): con orden \(n\), dividir \(h\) entre 2 divide el error entre \(2^n\).</li>
+  </ul>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Método</th><th>Tipo</th><th>Error local</th><th>Evaluaciones de \(f\) por paso</th></tr></thead>
+    <tbody>
+      <tr><td>Euler</td><td>1 paso, explícito</td><td>\(O(h)\)</td><td>1</td></tr>
+      <tr><td>Runge-Kutta 2</td><td>1 paso, explícito</td><td>\(O(h^2)\)</td><td>2</td></tr>
+      <tr><td>Runge-Kutta 4</td><td>1 paso, explícito</td><td>\(O(h^4)\)</td><td>4</td></tr>
+      <tr><td>Adams-Bashforth de \(m\) pasos</td><td>multipaso, explícito</td><td>\(O(h^m)\)</td><td>1</td></tr>
+      <tr><td>Adams-Moulton de \(m\) pasos</td><td>multipaso, implícito</td><td>\(O(h^{m+1})\)</td><td>1 (más resolver la ecuación)</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec" id="euler">
+  <h2><span class="dot"></span>Método de Euler</h2>
+  <p>Se queda con el término lineal del desarrollo de Taylor: \(y(t+h)\approx y(t)+h\,y'(t)\).</p>
+  <div class="eq key"><span class="lab">Euler</span>\[w(0)=\alpha,\qquad w(k+1)=w(k)+h\,f\big(w(k),t(k)\big),\qquad t(k)=a+kh\]</div>
+  <h3>De una ecuación de segundo orden a un sistema</h3>
+  <p>Masa, muelle y fricción con \(y(0)=1\) y sin velocidad inicial: \(M\ddot y=-Ky-B\dot y\). Se definen \(x_1=y\) y \(x_2=\dot y\):</p>
+  <div class="eq"><span class="lab">Sistema de primer orden</span>\[\dot x_1=x_2,\qquad \dot x_2=\frac1M\,(-Kx_1-Bx_2),\qquad x_1(0)=1,\ x_2(0)=0\]</div>
+  <pre class="code">h = (b - a) / N
+w1[0] = 1 ; w2[0] = 0
+para k = 0 hasta N-1:
+    w1[k+1] = w1[k] + h * w2[k]
+    w2[k+1] = w2[k] + (h/M) * ( -K*w1[k] - B*w2[k] )</pre>
+  <div class="trap"><b class="t">Trampa</b><p>Las dos actualizaciones usan los valores del paso <b>anterior</b> (<code>w1[k]</code>, <code>w2[k]</code>). Si actualizas <code>w1</code> y luego usas el <code>w1[k+1]</code> nuevo en la segunda línea, ya no es Euler. Además, en Matlab los vectores empiezan en 1: el \(w(0)\) de la teoría es <code>w(1)</code>.</p></div>
+</section>
+
+<section class="sec" id="rk">
+  <h2><span class="dot"></span>Runge-Kutta</h2>
+  <p>Los métodos de Taylor de orden \(n\) mejoran Euler pero necesitan derivadas de \(f\). La idea de Runge-Kutta es reproducir la precisión de Taylor usando solo evaluaciones de \(f\) en puntos intermedios.</p>
+  <h3>Runge-Kutta de orden 2</h3>
+  <p>Se parte de Taylor de orden 2, \(w+h\big[f+\tfrac h2 f'\big]\), y se aproxima el corchete por \(a\,f(y+\beta,\,t+\alpha)\). Al igualar los términos del desarrollo de dos variables salen \(a=1\), \(\alpha=h/2\) y \(\beta=\tfrac h2 f\).</p>
+  <div class="eq key"><span class="lab">RK2 (punto medio)</span>\[w(k+1)=w(k)+h\,f\Big(w(k)+\frac h2 f\big(w(k),t(k)\big),\ t(k)+\frac h2\Big)\]</div>
+  <p>Es de orden 2 y no necesita derivadas, pero evalúa \(f\) dos veces por paso.</p>
+  <h3>Runge-Kutta de orden 4</h3>
+  <div class="eq key wide"><span class="lab">RK4</span>\[\begin{aligned}K_1&=h\,f(t,w), & K_2&=h\,f\big(t+\tfrac h2,\ w+\tfrac{K_1}{2}\big),\\ K_3&=h\,f\big(t+\tfrac h2,\ w+\tfrac{K_2}{2}\big), & K_4&=h\,f(t+h,\ w+K_3),\end{aligned}\qquad w\leftarrow w+\frac{K_1+2K_2+2K_3+K_4}{6}\]</div>
+  <p>Para un sistema de \(m\) ecuaciones, cada \(K_i\) es un vector: se calculan los cuatro vectores con todas las variables a la vez y luego se actualiza todo el estado.</p>
+  <h3>Cuánto mejora el orden</h3>
+  <p>Masa-muelle-fricción con \(M=1\), \(K=5\), \(B=1\), \(y(0)=1\). Error absoluto en \(t=10\) respecto de la solución exacta \(y(10)=-0{,}006306\):</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Paso \(h\)</th><th>Euler</th><th>RK2</th><th>RK4</th><th>Adams-Bashforth 2</th></tr></thead>
+    <tbody>
+      <tr><td>0,1</td><td>6,8·10<sup>-2</sup></td><td>2,2·10<sup>-4</sup></td><td>1,7·10<sup>-6</sup></td><td>8,6·10<sup>-4</sup></td></tr>
+      <tr><td>0,05</td><td>1,6·10<sup>-2</sup></td><td>6,2·10<sup>-5</sup></td><td>1,2·10<sup>-7</sup></td><td>1,5·10<sup>-4</sup></td></tr>
+      <tr><td>0,025</td><td>5,8·10<sup>-3</sup></td><td>1,8·10<sup>-5</sup></td><td>7,8·10<sup>-9</sup></td><td>3,6·10<sup>-5</sup></td></tr>
+    </tbody></table></div>
+  <p>Con Euler y \(h=0{,}1\) el error en \(t=10\) es unas diez veces mayor que la propia solución: hace falta un \(h\) muy pequeño. RK4 con \(h=0{,}1\) ya tiene un error del orden de \(10^{-6}\). A cambio, RK4 cuesta cuatro evaluaciones de \(f\) por paso.</p>
+</section>
+
+<section class="sec" id="multipaso">
+  <h2><span class="dot"></span>Métodos multipaso: Adams</h2>
+  <p>Integrando la ecuación entre \(t(k)\) y \(t(k+1)\):</p>
+  <div class="eq"><span class="lab">Punto de partida</span>\[y\big(t(k+1)\big)=y\big(t(k)\big)+\int_{t(k)}^{t(k+1)}f\big(y(t),t\big)\,dt\]</div>
+  <p>La integral no se sabe hacer, así que se sustituye \(f\) por un polinomio \(P(t)\) que pasa por los valores ya calculados \(f(w(i),t(i))\). Según los puntos elegidos salen dos familias:</p>
+  <ul>
+    <li><b>Adams-Bashforth</b> (explícito, \(m\) pasos): puntos \(t(k),t(k-1),\dots,t(k-m+1)\). Error local \(O(h^m)\).</li>
+    <li><b>Adams-Moulton</b> (implícito, \(m\) pasos): añade el punto \(t(k+1)\). Error local \(O(h^{m+1})\).</li>
+  </ul>
+  <h3>Deducción de Adams-Bashforth de dos pasos (se pide en examen)</h3>
+  <ol class="steps">
+    <li><b>Polinomio.</b> Una recta por dos puntos: \(P(t)=\dfrac{t(k)-t}{h}\,f_{k-1}+\dfrac{t-t(k-1)}{h}\,f_k\), con \(f_i=f(w(i),t(i))\). Cumple \(P(t(k-1))=f_{k-1}\) y \(P(t(k))=f_k\).</li>
+    <li><b>Integrar</b> de \(t(k)\) a \(t(k+1)=t(k)+h\). Con \(s=t-t(k)\) la recta es \(P=f_k+\dfrac{f_k-f_{k-1}}{h}\,s\), y
+      \[\int_0^h\Big(f_k+\frac{f_k-f_{k-1}}{h}s\Big)ds=h f_k+\frac h2\,(f_k-f_{k-1})\]</li>
+    <li><b>Despejar.</b> El resultado es:</li>
+  </ol>
+  <div class="eq key"><span class="lab">Adams-Bashforth de 2 pasos</span>\[w(k+1)=w(k)+h\Big(\tfrac32\,f\big(w(k),t(k)\big)-\tfrac12\,f\big(w(k-1),t(k-1)\big)\Big)\]</div>
+  <p>Hace falta \(w(1)\), que no es un dato del problema. Se obtiene con un método de un paso, por ejemplo Euler: \(w(1)=\alpha+h f(\alpha,a)\). En general, un método de \(m\) pasos necesita \(m-1\) valores de arranque.</p>
+  <p><b>Otra forma de verlo:</b> es el método de Taylor de orden 2, \(w+h\big(f+\tfrac h2 f'\big)\), con la derivada aproximada por \(f'\approx(f_k-f_{k-1})/h\).</p>
+  <pre class="code">h = (b - a) / N
+w[0] = alfa
+w[1] = w[0] + h * f(w[0], a)            // arranque con Euler
+para k = 1 hasta N-1:
+    w[k+1] = w[k] + h * ( 1.5*f(w[k], t[k]) - 0.5*f(w[k-1], t[k-1]) )</pre>
+  <div class="trap"><b class="t">Trampa</b><p>En masa-muelle-fricción con fuerza externa, \(f\) es un vector (posición y velocidad) y la fuerza \(F(t)\) se evalúa en el <b>tiempo de cada paso</b>: \(F(t(k))\) y \(F(t(k-1))\). Olvidar el segundo término es el fallo habitual.</p></div>
+  <h3>Predictor-corrector</h3>
+  <p>En un método implícito \(w(k+1)\) aparece a los dos lados. Se puede resolver la ecuación con Newton o usar un <b>predictor-corrector</b>: un método explícito (predictor) da una primera estimación de \(w(k+1)\), con ella se calcula \(f(w(k+1),t(k+1))\) y el método implícito (corrector) da el valor final. Un ejemplo habitual es Adams de cuarto orden: el predictor es Adams-Bashforth de 4 pasos y el corrector Adams-Moulton, con los tres primeros valores calculados con RK4.</p>
+</section>
+
+<section class="sec" id="paso-variable">
+  <h2><span class="dot"></span>Paso variable</h2>
+  <p>La idea es mantener el error de truncamiento local por debajo de una cota \(\varepsilon\): cada paso tiene su propio \(h(k)\), pequeño donde la solución cambia deprisa y grande donde cambia poco.</p>
+  <ol class="steps">
+    <li><b>Dos aproximaciones.</b> \(w(k)\) con error \(O(h^n)\) y \(w^*(k)\) con error \(O(h^{n+1})\).</li>
+    <li><b>Estimar el error.</b> Restando, \(\tau(k)\approx\dfrac{w^*(k)-w(k)}{h}\).</li>
+    <li><b>Elegir el paso nuevo.</b> Como \(\tau=Kh^n\), con un paso \(qh\) el error es \(q^n\tau\). Para que cumpla \(|\tau|\lt\varepsilon\):
+      \[q\lt\Big(\frac{\varepsilon\,h}{|w^*(k)-w(k)|}\Big)^{1/n}\]</li>
+    <li><b>Aceptar o rechazar.</b> Si \(|\tau|\lt\varepsilon\), se acepta y el paso siguiente es \(qh\) (con un máximo para \(q\), para que no crezca de golpe). Si no, se rechaza y se repite con \(qh\). Si \(qh\) baja de \(h_{min}\), el método falla con «paso mínimo excedido».</li>
+  </ol>
+  <p><b>Runge-Kutta-Fehlberg</b> usa un RK de orden 4 y otro de orden 5 con las mismas evaluaciones. Es el método que Simulink usa por defecto con paso variable (<code>ode45</code>, Dormand-Prince).</p>
+  <div class="card">
+    <h3>Solvers de Simulink</h3>
+    <p>Configuración del modelo → Solver. <b>Variable-step</b>: <code>ode45</code> por defecto. <b>Fixed-step</b>: <code>ode1</code> es Euler; <code>ode2</code>, <code>ode3</code>, <code>ode4</code>, <code>ode5</code> y <code>ode8</code> son Runge-Kutta de ese orden. Se puede dibujar el paso usado con <code>plot(diff(tout))</code>: baja cuando la salida varía mucho.</p>
+  </div>
+</section>
+
+<section class="sec" id="rigidez">
+  <h2><span class="dot"></span>Ecuaciones rígidas</h2>
+  <p>Un sistema es <b>rígido</b> cuando tiene dinámicas muy rápidas junto a otras muy lentas. La rápida desaparece pronto, pero su estabilidad numérica obliga a usar un paso diminuto durante toda la simulación aunque lo que interese sea la escala lenta.</p>
+  <p>Caso mínimo: \(y'=\lambda y\), \(\lambda\lt0\), cuya solución \(\alpha e^{\lambda t}\) tiende a 0. Con Euler:</p>
+  <div class="eq"><span class="lab">Euler sobre y' = λy</span>\[w(n)=\alpha\,(1+\lambda h)^n\]</div>
+  <p>Para que \(w(n)\to0\) hace falta \(|1+\lambda h|\lt1\), es decir:</p>
+  <div class="eq key"><span class="lab">Paso máximo estable con Euler</span>\[h\lt\frac{2}{|\lambda|}\]</div>
+  <div class="grid2">
+    <div class="card"><h3>\(y'=-10y\), \(\alpha=1\)</h3><p>Límite \(h\lt2/10=0{,}2\). Con \(h=0{,}1\) la solución cae a 0 en un paso. Con \(h=0{,}19\) el factor es \(-0{,}9\): oscila pero decae. Con \(h=0{,}2\) vale \(-1\): oscila sin decaer. Con \(h=0{,}21\) el factor es \(-1{,}1\) y diverge (tras 50 pasos, \(|w|\approx117\)).</p></div>
+    <div class="card"><h3>Ejemplo físico</h3><p>Un circuito o un sistema térmico con una constante de tiempo de milisegundos acoplada a otra de minutos, o una suspensión con una masa pequeña unida a otra muy grande (\(M_1=10\), \(M_2=1000\)). Hay que simular minutos con un paso que respete los milisegundos.</p></div>
+  </div>
+  <div class="trap"><b class="t">Trampa</b><p>Dentro del límite \(h\lt2/|\lambda|\) la solución numérica es estable pero puede ser poco precisa: estabilidad y exactitud son cosas distintas. Y en un sistema con varios polos, el límite lo pone el más rápido.</p></div>
+</section>
+
+<section class="sec ctl" id="plantilla">
+  <h2><span class="dot"></span>Plantilla de pseudocódigo para el examen</h2>
+  <p>Casi todos los exámenes piden «pseudocódigo para simular el sistema» con un controlador. Este es el esqueleto que sirve para casi todos.</p>
+  <ol class="steps">
+    <li><b>Ecuaciones del modelo</b> con variables de estado (cada derivada de orden superior pasa a una variable).</li>
+    <li><b>Parámetros, entradas y condiciones iniciales.</b> Hay una condición inicial por variable de estado, y si falta alguna se dice cuál se supone.</li>
+    <li><b>Bucle temporal</b> con el método elegido (Euler, RK2…), dejando claro qué es <code>k</code> y qué es <code>k+1</code>.</li>
+  </ol>
+  <h3>Con controlador PID analógico</h3>
+  <p>El controlador se simula a la vez que la planta: el error y su integral y derivada se calculan en cada paso de integración \(h\).</p>
+  <pre class="code">// estado de la planta: x[0] = x0 ; integral = 0 ; e_ant = ref(a) - y(x0)
+para k = 0 hasta N-1:
+    t = a + k*h
+    e = ref(t) - y(x[k])
+    integral = integral + h * e
+    deriv = (e - e_ant) / h
+    u = Kp * ( e + integral/Ti + Td*deriv )
+    u = saturar(u, umin, umax)            // si el actuador tiene límites
+    x[k+1] = x[k] + h * f( x[k], u, t )   // Euler sobre la planta
+    e_ant = e</pre>
+  <h3>Con control por computador (discreto)</h3>
+  <p>El controlador solo actúa cada periodo \(T_c=n\,h\), con \(n\) entero. Entre dos actuaciones la salida del controlador se mantiene constante (retenedor de orden cero), mientras la planta sigue integrándose con el paso \(h\).</p>
+  <pre class="code">n = Tc / h                                // p. ej. Tc = 5*h
+para k = 0 hasta N-1:
+    t = a + k*h
+    si k mod n == 0:                      // instante de control
+        e = ref(t) - y(x[k])
+        integral = integral + Tc * e
+        deriv = (e - e_ant) / Tc
+        u = Kp * ( e + integral/Ti + Td*deriv )
+        e_ant = e
+    // si no, u conserva el último valor
+    x[k+1] = x[k] + h * f( x[k], u, t )</pre>
+  <div class="trap"><b class="t">Trampa</b><p>En el controlador discreto la integral y la derivada usan \(T_c\), no \(h\). Y si el enunciado da un actuador adicional «con \(G(s)=1\)», no añade dinámica: la salida del controlador entra directamente a la planta.</p></div>
+  <p>Si el sistema tiene lógica todo-nada con histéresis (como la válvula de la práctica 3), se escribe como un <code>si</code> dentro del bucle: se abre cuando \(h\le h_{min}\), se cierra cuando \(h\ge h_{max}\) y en otro caso <b>conserva el estado anterior</b>.</p>
+</section>
+
+<section class="sec" id="trampas">
+  <h2><span class="dot"></span>Trampas habituales</h2>
+  <div class="trap"><b class="t">Condiciones iniciales</b><p>Una ecuación de orden 2 necesita dos condiciones iniciales (posición y velocidad). Un sistema con dos depósitos y una temperatura necesita tres. El examen pregunta por ellas de forma explícita.</p></div>
+  <div class="trap"><b class="t">Paso de integración</b><p>No hay un \(h\) universal: depende de la dinámica más rápida. Si el resultado oscila y crece, prueba antes con un paso menor que con otro método.</p></div>
+  <div class="trap"><b class="t">Orden del método ≠ orden del sistema</b><p>El orden del método (Euler es de orden 1) no tiene nada que ver con el orden de la ecuación diferencial (el masa-muelle es de orden 2).</p></div>
+</section>
+
+<section class="sec" id="autoevaluacion">
+  <h2><span class="dot"></span>Autoevaluación</h2>
+  <details class="sol"><summary>1 · ¿Cuál es el paso máximo para que Euler tienda a cero con \(y'=-10y\)? (apareció en un parcial)</summary>
+    <p>Hace falta \(|1-10h|\lt1\), luego \(0\lt h\lt0{,}2\). En \(h=0{,}2\) justo el factor vale \(-1\) y la solución numérica oscila sin decaer, así que el límite es estricto.</p></details>
+  <details class="sol"><summary>2 · Escribe el pseudocódigo de RK2 para un péndulo con fricción \(\ddot\theta=-\tfrac gL\sin\theta-\tfrac bm\dot\theta\)</summary>
+    <pre class="code">x1 = theta0 ; x2 = omega0
+para k = 0 hasta N-1:
+    // f(x1,x2) = ( x2 , -(g/L)*sin(x1) - (b/m)*x2 )
+    k1a = x2                       ; k1b = f2(x1, x2)
+    mx1 = x1 + (h/2)*k1a           ; mx2 = x2 + (h/2)*k1b
+    x1 = x1 + h * mx2              ; x2 = x2 + h * f2(mx1, mx2)</pre>
+    <p>Se evalúa \(f\) en el estado, se avanza medio paso y se evalúa de nuevo en el punto medio; con ese valor se da el paso completo, usando el estado <b>original</b>. Los valores del punto medio (<code>mx1</code>, <code>mx2</code>) se calculan antes de tocar \(x_1,x_2\), para no mezclar estados de pasos distintos.</p></details>
+  <details class="sol"><summary>3 · ¿Por qué un método de \(m\) pasos necesita valores de arranque?</summary>
+    <p>Porque para calcular \(w(k+1)\) usa \(w(k),\dots,w(k-m+1)\), y al principio solo se conoce \(w(0)=\alpha\). Los \(m-1\) valores que faltan se obtienen con un método de un paso, mejor si es del mismo orden (RK4 para Adams de cuarto orden).</p></details>
+</section>
+
+<div class="pager">
+  <a href="problemas.html"><small>Anterior</small>Problemas</a>
+  <a class="next" href="error.html"><small>Siguiente</small>Análisis del error y predicción</a>
+</div>
