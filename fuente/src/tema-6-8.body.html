@@ -79,6 +79,11 @@ end</pre>
   <p>El modelo de Simulink equivalente tiene cuatro integradores, dos ganancias de valor 10, una función seno, una constante \(\pi/2\) para la condición inicial, y está configurado con <code>ode45</code> y 10 s.</p>
   <p>Con \(\theta(0)=90^\circ\) el ángulo está lejos de donde \(\sin\theta\approx\theta\), así que la versión linealizada se separa de la real, y el RK2 coincide con la referencia (Euler solo se le acerca con pasos muy pequeños): tienes las cifras en la <a href="examenes-resueltos.html#junio">cuestión 3 de junio de 2026</a>.</p>
   <div class="box trap"><h4>Un paso de \(10^{-5}\) s</h4><p>El script usa un millón de pasos para que Euler no se desvíe. Eso funciona, pero es una forma cara de compensar un método de orden 1: RK2 con un paso cien veces mayor (\(10^{-3}\) s) comete menos error: unos \(10^{-6}\) rad frente a unos \(3\cdot10^{-5}\) rad de Euler con \(10^{-5}\) s (comprobado con código frente a una integración de referencia).</p></div>
+  <div class="vids"><h3>Vídeos para reforzar · Temas 6 y 8</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por el título y la descripción, sin haberlos visto enteros; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="Kgh0tPCWsok" data-title="Simulación de un sistema dinámico"><a href="https://www.youtube.com/watch?v=Kgh0tPCWsok" target="_blank" rel="noopener">Simulación de un sistema dinámico (YouTube)</a></div>
+    <div class="yt" data-id="EyOcvG4BlQg" data-title="Método de Euler usando Matlab"><a href="https://www.youtube.com/watch?v=EyOcvG4BlQg" target="_blank" rel="noopener">Método de Euler usando Matlab (YouTube)</a></div>
+    <div class="yt" data-id="Ust16oaMQ6Y" data-title="Euler para una ecuación de orden 2 con Matlab"><a href="https://www.youtube.com/watch?v=Ust16oaMQ6Y" target="_blank" rel="noopener">Euler para una ecuación de orden 2 con Matlab (YouTube)</a></div>
+  </div></div>
 </section>
 
 {{herramientas}}
