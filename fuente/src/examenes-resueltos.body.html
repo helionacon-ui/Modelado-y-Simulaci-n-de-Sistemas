@@ -1,0 +1,217 @@
+<header>
+  <div class="kicker">Practicar · exámenes de 2026</div>
+  <h1>Exámenes de 2026 resueltos</h1>
+  <p class="lead">Los enunciados de junio, mayo y abril de 2026 resueltos paso a paso, con las hipótesis explícitas y los cálculos comprobados con código. Intenta cada uno antes de abrir la solución.</p>
+  <div class="tags"><span class="tag">junio 2026</span><span class="tag">mayo 2026</span><span class="tag">abril 2026</span><span class="tag">solución propia</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Son <b>soluciones propias, no oficiales</b>: las figuras de los enunciados dejan detalles abiertos y, donde ocurre, la solución dice qué se ha supuesto. Los enunciados están resumidos, no copiados. Compara siempre con lo que enseñe el profesorado.</p>
+</header>
+
+<section class="sec" id="como">
+  <h2><span class="dot"></span>Cómo leer esta página</h2>
+  <ul>
+    <li>Cada apartado empieza con una frase que resume el enunciado, y después hay un desplegable con la solución.</li>
+    <li><b>Hipótesis</b> marca lo que he tenido que suponer porque la figura no lo fija. Si el profesorado supone otra cosa, el método es el mismo.</li>
+    <li><b>Comprobación</b> indica qué se ha verificado con código: simulaciones de los pseudocódigos, función de transferencia contra integración numérica, ajuste a las gráficas.</li>
+    <li>Las cuestiones con datos (modelo OE, autocorrelación, probabilidad) están resueltas en <a href="tema-12-13.html#ejemplo-oe">la página de error</a>; aquí se enlazan.</li>
+  </ul>
+</section>
+
+<section class="sec mec" id="junio">
+  <h2><span class="dot"></span>Convocatoria de junio de 2026</h2>
+  <p class="vid-note">Parcial 1: Problema 1 + Cuestión 1 + Cuestión 2. Parcial 2: Problema 2 + Cuestión 3 + Cuestión 4.</p>
+
+  <h3>Problema 1 · Amortiguación dinámica con caudal de fluido</h3>
+  <p><b>Enunciado resumido.</b> Dos masas \(M_1\) y \(M_2\) unidas por un muelle \(K\) y un amortiguador \(B\) en paralelo; \(M_1\) se apoya sobre la base (que se mueve \(x_0\)) con un muelle \(K_1\). Un cilindro con émbolo y muelle \(K_i\), alimentado con un caudal \(f_i\), permite modificar la amortiguación. Un controlador PD actúa sobre la aceleración de \(M_2\). a) Diagrama y ecuaciones lineales. b) Función de transferencia en lazo cerrado.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>El enunciado no dice cómo actúa el cilindro. Se interpreta como <b>actuador</b>: el caudal desplaza el émbolo (área \(A\), posición \(z\)) y el muelle \(K_i\) comprimido empuja entre las dos masas con fuerza \(K_iz\). Se linealiza alrededor del equilibrio, de modo que el peso no aparece.</p></div>
+    <p><b>a) Diagrama.</b> Base \(x_0\) → muelle \(K_1\) → \(M_1\) → (\(K\) ‖ \(B\) ‖ actuador) → \(M_2\). La aceleración \(\ddot x_2\) se mide, pasa por el PD y da el caudal \(f_i\), que mueve el émbolo y cierra el lazo.</p>
+    <p><b>Ecuaciones lineales</b> (desviaciones respecto al equilibrio):</p>
+    <div class="eq">\[\begin{aligned}M_1\ddot x_1&=-K_1(x_1-x_0)+K(x_2-x_1)+B(\dot x_2-\dot x_1)-K_iz\\ M_2\ddot x_2&=-K(x_2-x_1)-B(\dot x_2-\dot x_1)+K_iz\\ A\dot z&=f_i\\ f_i&=-\big(K_p\ddot x_2+K_d\dddot x_2\big)\end{aligned}\]</div>
+    <p>El signo menos del PD hace que, si \(M_2\) acelera hacia arriba, se reduzca el caudal y con él la fuerza que lo empuja.</p>
+    <p><b>b) Lazo cerrado.</b> En Laplace, con \(Z=-(K_p+K_ds)\,s\,X_2/A\) y definiendo \(C(s)=\dfrac{K_i}{A}\,(K_ds^2+K_ps)\):</p>
+    <div class="eq">\[D_1=M_1s^2+Bs+K+K_1,\qquad P_2=M_2s^2+Bs+K+C(s)\]</div>
+    <div class="eq key">\[\frac{X_2(s)}{X_0(s)}=\frac{K_1\,(Bs+K)}{D_1\,P_2-(Bs+K)\,(Bs+K+C(s))}\]</div>
+    <p><b>Lectura.</b> \(C(s)\) solo modifica a \(M_2\): el término proporcional añade amortiguamiento \(\Delta B=K_iK_p/A\) y el derivativo añade masa \(\Delta M=K_iK_d/A\). Con \(s=0\) la ganancia estática es 1: si la base sube un metro, \(M_2\) acaba un metro más arriba.</p>
+    <p class="vid-note"><b>Comprobación.</b> Con valores de prueba (\(M_1=2\), \(M_2=1\), \(K=300\), \(K_1=500\), \(B=8\), \(K_i=50\), \(A=0{,}01\), \(K_p=0{,}3\), \(K_d=0{,}02\)) la respuesta al escalón de esta función de transferencia coincide con la integración numérica de las ecuaciones temporales con un error máximo de \(8\cdot10^{-11}\).</p>
+  </details>
+
+  <h3>Cuestión 1 · Péndulo con fricción y par externo</h3>
+  <p><b>Enunciado.</b> Modelo en función de transferencia de un péndulo con fricción sometido a un par externo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Masa \(m\) a distancia \(L\), fricción viscosa \(b\) y par externo \(T\):</p>
+    <div class="eq">\[mL^2\ddot\theta+b\dot\theta+mgL\sin\theta=T\]</div>
+    <p>La ecuación es no lineal. Alrededor de la posición de reposo \(\theta=0\) se aproxima \(\sin\theta\approx\theta\):</p>
+    <div class="eq key">\[\frac{\Theta(s)}{T(s)}=\frac{1}{mL^2s^2+bs+mgL}\]</div>
+    <p>Es un sistema de segundo orden con \(\omega_n=\sqrt{g/L}\) y \(\xi=\dfrac{b}{2mL\sqrt{gL}}\). Alrededor de la posición invertida (\(\theta=\pi\)) cambia el signo del último término y el sistema es inestable.</p>
+  </details>
+
+  <h3>Cuestión 2 · Tanque: modelo desde un step-test</h3>
+  <p><b>Enunciado.</b> A los 3 minutos el caudal de entrada pasa de 10 a 15 l/min. Las gráficas muestran que la altura pasa de 0,1 m a 0,225 m y el caudal de salida de 10 a 15 l/min, ambos con forma exponencial. Proponer un modelo y comprobar que es dimensionalmente coherente.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p><b>1. Qué dicen los datos.</b> Hay dos estados estacionarios: \((h,Q)=(0{,}1\ \mathrm m,\ 10\ \mathrm{l/min})\) y \((0{,}225\ \mathrm m,\ 15\ \mathrm{l/min})\). Si la salida fuera lineal en la altura (\(Q\propto h\)), al pasar de 10 a 15 l/min la altura sería \(0{,}15\) m, no 0,225. En cambio, con \(Q=k\sqrt h\):</p>
+    <div class="eq">\[k=\frac{10}{\sqrt{0{,}1}}=31{,}6\ \frac{\mathrm{l/min}}{\sqrt{\mathrm m}},\qquad Q_2=k\sqrt{0{,}225}=15{,}0\ \mathrm{l/min}\ \checkmark\]</div>
+    <p>La salida sigue la ley de una válvula u orificio: <b>el caudal es proporcional a la raíz de la altura</b>.</p>
+    <p><b>2. Modelo.</b> Balance de volumen en el tanque de sección \(S\):</p>
+    <div class="eq key">\[S\,\dot h=f_i-k\sqrt h,\qquad Q_{sal}=k\sqrt h\]</div>
+    <p><b>3. Dinámica.</b> Linealizado en el punto final (\(h_0=0{,}225\) m, \(Q_0=15\) l/min) es de primer orden, con \(\tau=\dfrac{2Sh_0}{Q_0}\). Ajustando \(S\) para que la simulación pase por las lecturas de las gráficas (a los 4 min: \(h\approx0{,}19\) m y \(Q\approx13{,}7\) l/min) sale \(S\approx0{,}03\ \mathrm m^2\) (30 l por metro de altura), es decir \(\tau\approx0{,}9\) min.</p>
+    <p><b>4. Coherencia dimensional.</b> \([S\dot h]=\mathrm m^2\cdot\mathrm m/\mathrm{min}=\mathrm m^3/\mathrm{min}\), igual que \([f_i]\) y que \([k\sqrt h]=\dfrac{\mathrm l/\mathrm{min}}{\sqrt{\mathrm m}}\sqrt{\mathrm m}\) (con \(1\ \mathrm m^3=1000\) l). Cada término es un caudal.</p>
+    <p class="vid-note"><b>Comprobación.</b> Se ha integrado el modelo con \(S=0{,}03\ \mathrm m^2\): a los 4 min da \(h=0{,}188\) m y \(Q=13{,}72\) l/min, y los valores finales son exactamente 0,225 m y 15 l/min. El valor de \(S\) es una estimación a partir de la gráfica, no un dato.</p>
+  </details>
+
+  <h3>Problema 2 · Sistema propulsado con motor de reacción</h3>
+  <p><b>Enunciado resumido.</b> Una bancada lleva un motor de reacción, su tanque de combustible y un acelerómetro mecánico (masa-muelle-amortiguador). El empuje es proporcional al gasto de combustible, que fija un controlador analógico P de velocidad. a) Diagrama de bloques y pseudocódigo. b) Pseudocódigo con control por computador tipo PID.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>Empuje \(F=c\,q\), con \(q\) el gasto de combustible en kg/s; rozamiento viscoso \(b_r\) de la bancada; combustible inicial \(m_{f0}\) que baja con \(\dot m_f=-q\). La velocidad se estima integrando la aceleración que mide el acelerómetro (\(a_m=-k_ay/m\), con \(y\) el desplazamiento relativo de su masa).</p></div>
+    <p><b>Modelo.</b></p>
+    <div class="eq">\[\begin{aligned}(M_b+m_f)\,\dot v&=c\,q-b_rv,\qquad \dot x=v,\qquad \dot m_f=-q\\ m\,\ddot y&=-k_ay-b_a\dot y-m\,\dot v,\qquad \dot v_m=-\frac{k_a}{m}\,y\end{aligned}\]</div>
+    <p><b>a) Diagrama de bloques.</b> Consigna \(v_{ref}\) → resta con \(v_m\) → \(K_p\) → saturación \([0,q_{max}]\) → motor (\(F=cq\)) → bancada (masa variable) → \(v\) → acelerómetro → integrador → \(v_m\) que realimenta.</p>
+    <p><b>Pseudocódigo con control analógico</b> (el controlador se evalúa en cada paso de simulación):</p>
+<pre class="code">x = 0 ; v = 0 ; mf = mf0 ; y = 0 ; w = 0 ; vm = 0
+N = T/h
+para k = 0 hasta N-1:
+    t  = k*h
+    q  = Kp*(vref - vm)                  // controlador P
+    q  = limitar(q, 0, qmax) ; si mf &lt;= 0: q = 0
+    a  = (c*q - br*v)/(Mb + mf)          // aceleración de la bancada
+    dw = (-ka*y - ba*w)/m - a            // acelerómetro
+    am = -ka*y/m                         // lo que "mide"
+    x = x + h*v ; v = v + h*a ; mf = max(mf - h*q, 0)
+    y = y + h*w ; w = w + h*dw ; vm = vm + h*am
+    guardar(t, v, vm, q)</pre>
+    <p><b>b) Con control por computador y PID</b> (el actuador no añade dinámica; el controlador solo se recalcula cada \(T_c=nh\) y entre medias se mantiene su salida):</p>
+<pre class="code">I = 0 ; eprev = 0 ; Tc = n*h
+para k = 0 hasta N-1:
+    si k mod n == 0:                     // instante de muestreo
+        e = vref - vm
+        I = I + e*Tc
+        u = Kp*e + Ki*I + Kd*(e - eprev)/Tc
+        eprev = e
+        q = limitar(u, 0, qmax)
+    // (resto del bucle igual que antes, usando el último q)</pre>
+    <p class="vid-note"><b>Comprobación.</b> Con \(M_b=100\) kg, \(m_{f0}=40\) kg, \(m=0{,}5\) kg, \(k_a=200\) N/m, \(b_a=4\), \(c=800\), \(b_r=2\), \(q_{max}=2\) kg/s y \(v_{ref}=5\) m/s, el pseudocódigo analógico llega a \(v=4{,}98\) m/s a los 20 s con \(K_p=0{,}8\); el digital (\(T_c=0{,}05\) s, \(K_p=0{,}8\), \(K_i=0{,}4\)) llega a \(4{,}99\) m/s. Son valores de prueba: en el examen solo se pide el pseudocódigo.</p>
+  </details>
+
+  <h3>Cuestión 3 · RK2 para un péndulo con fricción</h3>
+  <p><b>Enunciado.</b> Pseudocódigo para simular el péndulo no lineal, autónomo y con fricción, con RK2. El enunciado da la fórmula \(w_{k+1}=w_k+h\,f\big(w_k+\tfrac h2f(w_k,t_k),\,t_k+\tfrac h2\big)\).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Estado \(x_1=\theta\), \(x_2=\dot\theta\), con \(f=\big(x_2,\ -\tfrac gL\sin x_1-\tfrac bm\,x_2\big)\):</p>
+<pre class="code">x1 = theta0 ; x2 = omega0
+para k = 0 hasta N-1:
+    // f(x1,x2) = ( x2 , -(g/L)*sin(x1) - (b/m)*x2 )
+    k1a = x2                       ; k1b = -(g/L)*sin(x1) - (b/m)*x2
+    mx1 = x1 + (h/2)*k1a           ; mx2 = x2 + (h/2)*k1b     // punto medio
+    x1  = x1 + h*mx2               ; x2  = x2 + h*( -(g/L)*sin(mx1) - (b/m)*mx2 )
+    // (x1 y x2 se actualizan DESPUÉS de calcular mx1, mx2)</pre>
+    <p><b>Qué mejora RK2.</b> Con el péndulo del material de prácticas (\(g/L=9{,}8\), fricción \(b/m=1\), \(\theta_0=\pi/2\), 10 s, \(h=5\cdot10^{-5}\)) el ángulo \(\theta\) en distintos instantes es:</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>\(t\) (s)</th><th>Euler no lineal</th><th>Euler linealizado</th><th>RK2</th><th>Referencia</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>−0,7730</td><td>−0,9438</td><td>−0,7728</td><td>−0,7728</td></tr>
+        <tr><td>2</td><td>0,4051</td><td>0,5655</td><td>0,4050</td><td>0,4050</td></tr>
+        <tr><td>5</td><td>−0,0696</td><td>−0,1196</td><td>−0,0695</td><td>−0,0695</td></tr>
+        <tr><td>10</td><td>0,0034</td><td>0,0084</td><td>0,0034</td><td>0,0034</td></tr>
+      </tbody></table></div>
+    <p>La referencia es una integración con tolerancia \(10^{-11}\). El modelo lineal se aparta mucho porque el ángulo inicial (90°) está lejos de donde \(\sin\theta\approx\theta\). Esta comparación sale del script de prácticas de Euler con el péndulo, repetido con código.</p>
+  </details>
+
+  <h3>Cuestión 4 · Autocorrelación del error de un modelo OE</h3>
+  <p><b>Enunciado.</b> Modelo con \(B(q)=0{,}0001096\,q^{-1}\), \(F(q)=1-1{,}999\,q^{-1}+0{,}999\,q^{-2}\), entrada \(2,3,\dots,10\) y salida medida dada. Los tres primeros términos de la autocorrelación del error.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Resuelto con todos los pasos en la <a href="tema-12-13.html#ejemplo-oe">página de predicción y error</a>:</p>
+    <div class="eq">\[\hat R(0)=4{,}19\cdot10^{-5},\qquad \hat R(1)=-1{,}23\cdot10^{-5},\qquad \hat R(2)=1{,}6\cdot10^{-7}\]</div>
+  </details>
+</section>
+
+<section class="sec ctl" id="mayo">
+  <h2><span class="dot"></span>Segundo parcial de mayo de 2026</h2>
+
+  <h3>Problema A · Control de la aceleración con acople mecánico</h3>
+  <p><b>Enunciado resumido.</b> Mismo sistema propulsado, pero ahora se controla la <b>aceleración</b>: el gasto de combustible se controla directamente mediante un acople mecánico con la masa del acelerómetro. 1) Diagrama de bloques y pseudocódigo (2 puntos). 2) Control por computador con un accionador adicional \(G(s)=1\) y controlador PID (1 punto).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>El mismo modelo de bancada y acelerómetro que en el Problema 2 de junio. El acople hace que la apertura de la válvula siga el desplazamiento \(y\) de la masa del acelerómetro: \(q=q_0+K_c\,(y-y_{ref})\), con \(y_{ref}=-m\,a_{ref}/k_a\) (el desplazamiento que corresponde a la aceleración deseada) y \(q_0=(M_b+m_{f0})\,a_{ref}/c\).</p></div>
+    <p><b>Diagrama.</b> La masa del acelerómetro se desplaza \(y\) según la aceleración de la bancada, y ese desplazamiento actúa directamente sobre la válvula del combustible: es un lazo cerrado sin electrónica, con ganancia \(K_c\) positiva (si la aceleración sube, \(y\) se hace más negativo y baja el caudal).</p>
+<pre class="code">v = 0 ; mf = mf0 ; y = 0 ; w = 0
+yref = -m*aref/ka ; q0 = (Mb + mf0)*aref/c
+para k = 0 hasta N-1:
+    q  = limitar(q0 + Kc*(y - yref), 0, qmax) ; si mf &lt;= 0: q = 0   // acople mecánico
+    a  = (c*q - br*v)/(Mb + mf)
+    v  = v + h*a ; mf = max(mf - h*q, 0)
+    y  = y + h*w ; w = w + h*((-ka*y - ba*w)/m - a)
+    guardar(k*h, a, q, y)</pre>
+    <p><b>Con computador (parte 2).</b> Se mide la aceleración con el acelerómetro (\(a_m=-k_ay/m\)) y se calcula, cada \(T_c=nh\), \(e=a_{ref}-a_m\) y \(u=K_pe+K_iI+K_d\,\Delta e/T_c\), que va al accionador \(G(s)=1\) (\(q=u\), saturado). Es la misma estructura de pseudocódigo con el controlador dentro de <code>si k mod n == 0</code>.</p>
+    <p class="vid-note"><b>Comprobación.</b> Con los parámetros del Problema 2 de junio, \(a_{ref}=0{,}5\) m/s² y \(K_c=400\), la aceleración queda en \(0{,}48\) m/s² a los 18 s (con \(K_c=2000\) hay un transitorio fuerte, porque se acerca a la frecuencia propia del acelerómetro, 20 rad/s).</p>
+  </details>
+
+  <h3>Cuestión 1 · Ecuaciones rígidas</h3>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Un sistema es rígido cuando mezcla dinámicas con escalas de tiempo muy distintas. Ejemplo físico: un <b>motor de continua</b> con constante eléctrica \(\tau_e=L/R\approx1\) ms y constante mecánica \(\tau_m\approx1\) s. Sus polos están en \(\lambda_1\approx-1000\) y \(\lambda_2\approx-1\) s⁻¹.</p>
+    <p>Un método explícito como Euler solo es estable con \(h\lt2/|\lambda_{max}|=2\) ms, aunque la respuesta lenta pida pasos mucho mayores: simular 10 s costaría 5000 pasos solo por el polo rápido. Se resuelve con un método implícito para ecuaciones rígidas (<code>ode15s</code>, <code>ode23s</code>) o aceptando pasos mínimos. Más en <a href="tema-9-11.html#rigidez">métodos numéricos</a>.</p>
+  </details>
+
+  <h3>Cuestión 2 · Probabilidad dentro de una desviación típica</h3>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Con el modelo OE de junio: \(P\big(|e-\bar e|\le\sigma_e\big)\approx5/9=0{,}56\), con cualquiera de las dos definiciones de la desviación. Está completa en la <a href="tema-12-13.html#ejemplo-oe">página de error</a>.</p>
+  </details>
+
+  <h3>Problema B · Globo aerostático con resistencia</h3>
+  <p><b>Enunciado resumido.</b> Un globo se calienta con una resistencia alimentada por una batería; se puede ajustar la intensidad. Hay pérdidas de calor con el exterior y la temperatura exterior baja proporcionalmente con la altura. Se da la superficie de la esfera \(4\pi r^2\). 1) Pseudocódigo con PID analógico para controlar la altura. 2) Pseudocódigo con control por computador.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>Volumen \(V\) fijo y aire como gas ideal a presión constante \(p\). Energía del aire interior: \(C_{th}\dot T=R_{res}I^2-US\,(T-T_{ext})\), con \(C_{th}=\rho_iVc_p\) y \(S=4\pi r^2\). Temperatura exterior \(T_{ext}=T_0-\gamma z\). Empuje de Arquímedes con \(\rho=p/(R_aT)\) y rozamiento viscoso \(b\).</p></div>
+    <div class="eq">\[\begin{aligned}C_{th}\dot T&=R_{res}I^2-US\,(T-T_{ext}(z)),\qquad T_{ext}=T_0-\gamma z\\ (m_c+\rho_iV)\,\ddot z&=(\rho_e-\rho_i)\,V g-m_cg-b\dot z\end{aligned}\]</div>
+    <p>con \(\rho_i=p/(R_aT)\) y \(\rho_e=p/(R_aT_{ext})\). La entrada es la intensidad \(I\), que sale del PID.</p>
+<pre class="code">T = Text0 + dT0 ; z = 0 ; vz = 0 ; ie = 0 ; eprev = zref
+para k = 0 hasta N-1:
+    e  = zref - z                                  // PID analógico: cada paso
+    ie = ie + e*h ; de = (e - eprev)/h ; eprev = e
+    I  = limitar(Kp*e + Ki*ie + Kd*de, 0, Imax)
+    Text = T0 - gam*z
+    rho_i = p/(Ra*T) ; rho_e = p/(Ra*Text)
+    dT  = (Rres*I^2 - U*(4*pi*r^2)*(T - Text)) / (rho_i*V*cp)
+    dvz = ((rho_e - rho_i)*V*g - mc*g - b*vz) / (mc + rho_i*V)
+    z = z + h*vz ; vz = vz + h*dvz ; T = T + h*dT
+    guardar(k*h, z, T, I)</pre>
+    <p><b>Con control por computador</b> el bloque del PID solo se ejecuta cuando <code>k mod n == 0</code>, con \(T_c=nh\), y el integral y la derivada usan \(T_c\) en lugar de \(h\); entre muestras se mantiene \(I\).</p>
+    <p class="vid-note"><b>Comprobación.</b> Con \(r=3\) m, \(m_c=20\) kg, \(U=5\ \mathrm{W/m^2K}\), \(R_{res}=1\ \Omega\), \(T_0=288\) K, \(\gamma=0{,}0065\) K/m, \(b=60\), \(\Delta T_0=40\) K, \(I_{max}=500\) A y consigna 100 m, el PID \(K_p=2\), \(K_i=0{,}01\), \(K_d=100\) lleva el globo a 100 m con una sobreoscilación máxima de 101,6 m (analógico) y 101,3 m (digital con \(T_c=1\) s); con \(T_c=5\) s sigue convergiendo. En régimen final la temperatura interior es 62,5 °C y la intensidad 165 A. Los parámetros son de prueba, no del enunciado. Con ganancias pequeñas (\(K_p\le0{,}1\)) la intensidad no basta para vencer las pérdidas y el globo no despega.</p>
+  </details>
+</section>
+
+<section class="sec flu" id="abril">
+  <h2><span class="dot"></span>Primer parcial de abril de 2026</h2>
+
+  <h3>Problema · Fuente de tres depósitos cónicos</h3>
+  <p><b>Enunciado resumido.</b> Tres depósitos cónicos de relación \(H/R\) (volumen \(\tfrac13A_bh\)), alimentados por una válvula en la parte superior, caen en cascada. 1) Modelo en ecuaciones diferenciales (1 punto). 2) Función de transferencia entre caudal de salida y de entrada para \(N\) depósitos (2 puntos).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>Cada depósito descarga por un orificio con \(Q_i=k\sqrt{h_i}\) (ley de válvula) al siguiente; el primero recibe \(Q_{in}\) de la válvula superior. Los orificios son iguales.</p></div>
+    <p><b>1. Ecuaciones.</b> Con radio \(\rho=h\,R/H\) a la altura \(h\), el volumen es \(V_i=\tfrac13\pi\rho^2h=\tfrac\pi3\big(\tfrac RH\big)^2h_i^3\), y la superficie libre \(A_i=\pi\big(\tfrac RH\big)^2h_i^2\). El balance de volumen da, para \(i=1,2,3\):</p>
+    <div class="eq key">\[\pi\Big(\frac RH\Big)^2h_i^2\,\dot h_i=Q_{i-1}-k\sqrt{h_i},\qquad Q_0=Q_{in},\quad Q_i=k\sqrt{h_i}\]</div>
+    <p><b>2. Linealización.</b> En equilibrio todos los depósitos tienen el mismo caudal \(Q_0\) y la misma altura \(h_0=(Q_0/k)^2\). Con \(A_0=\pi(R/H)^2h_0^2\) y \(\dfrac{dQ_i}{dh_i}=\dfrac k{2\sqrt{h_0}}=\dfrac{Q_0}{2h_0}\):</p>
+    <div class="eq">\[A_0\,\Delta\dot h_i=\Delta Q_{i-1}-\frac{Q_0}{2h_0}\Delta h_i\;\Rightarrow\;\frac{\Delta Q_i}{\Delta Q_{i-1}}=\frac{1}{\tau s+1},\quad \tau=\frac{2h_0A_0}{Q_0}=\frac{6V_0}{Q_0}\]</div>
+    <p>donde \(V_0=\tfrac\pi3(R/H)^2h_0^3\) es el volumen de cada depósito en equilibrio. Cada depósito es un primer orden que descarga en el siguiente, así que para \(N\) depósitos iguales:</p>
+    <div class="eq key">\[\frac{Q_{sal}(s)}{Q_{in}(s)}=\frac{1}{(\tau s+1)^N}\]</div>
+    <p class="vid-note"><b>Comprobación.</b> Se integró el modelo no lineal de tres depósitos con un escalón pequeño y se comparó con \(1/(\tau s+1)^3\): la diferencia es proporcional al tamaño del escalón (0,8 % con un escalón del 0,5 %, 0,08 % con el 0,05 %), como corresponde a una linealización correcta.</p>
+  </details>
+
+  <h3>Cuestión 1 · Tanque con válvula: dos step-tests</h3>
+  <p><b>Enunciado.</b> Un tanque recibe \(f_i\) y tiene una válvula de salida de apertura \(a\). En el test 1 cambia solo el caudal de entrada (de \(3{,}33\cdot10^{-4}\) a \(1{,}67\cdot10^{-4}\ \mathrm{m^3/s}\), con \(a=0{,}5\)): la altura baja de 0,3 m a unos 0,075 m. En el test 2 cambia solo la apertura (de 0,5 a 0,75): la altura baja de 0,3 m a unos 0,133 m. Proponer un modelo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p><b>Modelo.</b> Balance de volumen con válvula de apertura \(a\):</p>
+    <div class="eq key">\[S\,\dot h=f_i-K\,a\sqrt h\]</div>
+    <p><b>Parámetros.</b> En el estado inicial hay equilibrio, \(f_i=Ka\sqrt h\):</p>
+    <div class="eq">\[K=\frac{3{,}33\cdot10^{-4}}{0{,}5\sqrt{0{,}3}}=1{,}22\cdot10^{-3}\ \mathrm{m^{5/2}/s}\]</div>
+    <p><b>Contraste con los dos tests.</b> Como \(h_{final}=(f_i/Ka)^2\):</p>
+    <div class="eq">\[\text{test 1: }0{,}3\Big(\frac{1{,}67}{3{,}33}\Big)^2=0{,}075\ \checkmark\qquad \text{test 2: }0{,}3\Big(\frac{0{,}5}{0{,}75}\Big)^2=0{,}133\ \checkmark\]</div>
+    <p>Los dos tests, con un único \(K\), reproducen las alturas finales: es la evidencia de que la salida depende de \(a\sqrt h\) (y no, por ejemplo, de \(a\,h\)). La sección \(S\) sale de la velocidad de bajada; ajustando a las curvas queda \(S\approx0{,}13\ \mathrm m^2\) (estimación gráfica).</p>
+  </details>
+
+  <h3>Cuestión 2 · Salida de un modelo OE</h3>
+  <p><b>Enunciado.</b> Con los mismos polinomios \(B(q)\) y \(F(q)\), estimar la salida del modelo para \(u=\{2,3,4,5,6\}\).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Recurrencia del modelo OE, con predicciones y entradas anteriores a \(k=1\) iguales a cero:</p>
+    <div class="eq">\[\hat y(k)=1{,}999\,\hat y(k-1)-0{,}999\,\hat y(k-2)+0{,}0001096\,u(k-1)\]</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>\(k\)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+      <tbody><tr><td>\(u(k)\)</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+      <tr><td>\(\hat y(k)\)</td><td>0</td><td>0,00022</td><td>0,00077</td><td>0,00175</td><td>0,00329</td></tr></tbody></table></div>
+    <p>Si se usara la versión ARX, cada término usaría la salida <b>medida</b> en lugar de la predicha (ver <a href="tema-12-13.html#prediccion">predicción</a>).</p>
+  </details>
+</section>

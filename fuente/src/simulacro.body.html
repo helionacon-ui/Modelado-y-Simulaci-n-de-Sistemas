@@ -1,0 +1,82 @@
+<header>
+  <div class="kicker">Practicar · simulacro con soluciones</div>
+  <h1>Simulacro de examen</h1>
+  <p class="lead">Un examen completo con la misma forma que los de 2023 a 2026: dos problemas de 3 puntos y cuatro cuestiones de 1 punto. Resuélvelo en una hora y media sin mirar y luego corrige con las soluciones.</p>
+  <div class="tags"><span class="tag">10 puntos</span><span class="tag">2 problemas</span><span class="tag">4 cuestiones</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Es un examen inventado por mí con la estructura que muestran los enunciados de años anteriores. No sale del aula virtual y no sabemos si el de este curso será igual. Todos los números de las soluciones están comprobados con código.</p>
+</header>
+
+<section class="sec mec" id="p1">
+  <h2><span class="dot"></span>Problema 1 · Masa con realimentación de posición (3 puntos)</h2>
+  <div class="card">
+    <p>Una masa \(M=2\) kg se apoya en un muelle de \(K=50\) N/m con un amortiguador \(B=4\) N·s/m. Una fuerza de control \(F=K_c\,(r-x)\) con \(K_c=150\) N/m empuja la masa, donde \(r\) es la posición deseada y \(x\) la real.</p>
+    <ol type="a">
+      <li>Ecuación diferencial del sistema en lazo cerrado y función de transferencia \(X(s)/R(s)\). (1,5 puntos)</li>
+      <li>Frecuencia natural, factor de amortiguamiento, polos y valor final ante un escalón unitario. (1,5 puntos)</li>
+    </ol>
+  </div>
+  <details class="sol"><summary>Ver solución</summary>
+    <p><b>a)</b> \(M\ddot x=-Kx-B\dot x+K_c(r-x)\Rightarrow M\ddot x+B\dot x+(K+K_c)x=K_cr\). En Laplace:</p>
+    <div class="eq key">\[\frac{X(s)}{R(s)}=\frac{K_c}{Ms^2+Bs+K+K_c}=\frac{150}{2s^2+4s+200}\]</div>
+    <p><b>b)</b> \(\omega_n=\sqrt{\dfrac{K+K_c}{M}}=\sqrt{100}=10\) rad/s; \(\xi=\dfrac{B}{2\sqrt{(K+K_c)M}}=\dfrac{4}{2\cdot20}=0{,}1\). Los polos son \(-1\pm9{,}95j\): muy poco amortiguado, con una sobreoscilación de \(e^{-\pi\xi/\sqrt{1-\xi^2}}\approx73\,\%\). El valor final ante un escalón unitario es la ganancia estática \(\dfrac{K_c}{K+K_c}=0{,}75\): no llega a la consigna, porque el muelle \(K\) también empuja.</p>
+  </details>
+</section>
+
+<section class="sec ctl" id="p2">
+  <h2><span class="dot"></span>Problema 2 · Control de nivel por computador (3 puntos)</h2>
+  <div class="card">
+    <p>Un tanque de sección \(S=2\ \mathrm m^2\) tiene una válvula de salida \(Q=k\,a\sqrt h\) (\(k=0{,}01\), \(a=1\)). Se controla el nivel con un caudal de entrada \(f_i\) acotado entre 0 y \(0{,}05\ \mathrm{m^3/s}\), que fija un controlador PI.</p>
+    <ol type="a">
+      <li>Ecuación del tanque y pseudocódigo para simularlo con Euler y control analógico. (2 puntos)</li>
+      <li>Pseudocódigo con control por computador, con periodo de control igual a 10 pasos de simulación. (1 punto)</li>
+    </ol>
+  </div>
+  <details class="sol"><summary>Ver solución</summary>
+    <p><b>a)</b> Balance de volumen: \(S\,\dot h=f_i-ka\sqrt h\). Variable de estado: \(h\) (y la integral del error, si se usa PI). Condición inicial: \(h(0)=h_0\).</p>
+<pre class="code">h = h0 ; I = 0
+para k = 0 hasta N-1:
+    e  = href - h
+    I  = I + e*dt
+    fi = limitar(Kp*e + Ki*I, 0, fmax)        // PI analógico, cada paso
+    h  = h + dt*(fi - k*a*sqrt(h))/S
+    guardar(k*dt, h, fi)</pre>
+    <p><b>b)</b> El PI solo se recalcula cada \(T_c=10\,dt\); entre medias \(f_i\) se mantiene.</p>
+<pre class="code">h = h0 ; I = 0 ; fi = 0 ; Tc = 10*dt
+para k = 0 hasta N-1:
+    si k mod 10 == 0:
+        e  = href - h
+        I  = I + e*Tc
+        fi = limitar(Kp*e + Ki*I, 0, fmax)
+    h = h + dt*(fi - k*a*sqrt(h))/S
+    guardar(k*dt, h, fi)</pre>
+    <p class="vid-note"><b>Comprobación.</b> Con \(h_{ref}=1\) m, \(h_0=0{,}2\) m, \(dt=0{,}05\) s, \(K_p=0{,}02\) y \(K_i=0{,}0004\), el pseudocódigo digital lleva el nivel a \(0{,}996\) m a los 600 s. El caudal de equilibrio es \(ka\sqrt{h_{ref}}=0{,}01\ \mathrm{m^3/s}\).</p>
+  </details>
+</section>
+
+<section class="sec" id="cuestiones">
+  <h2><span class="dot"></span>Cuestiones (1 punto cada una)</h2>
+  <div class="card"><p><b>Cuestión 1.</b> Un escalón \(\Delta u=3\) lleva la salida de 2 a 8. Se lee \(t_{28}=2{,}5\) s y \(t_{63}=5{,}5\) s. Propón un modelo de primer orden con retardo.</p></div>
+  <details class="sol"><summary>Solución de la cuestión 1</summary>
+    <p>\(K=6/3=2\); \(\tau=1{,}5\,(5{,}5-2{,}5)=4{,}5\) s; \(T=5{,}5-4{,}5=1\) s. Modelo: \(G(s)=\dfrac{2\,e^{-s}}{4{,}5\,s+1}\).</p></details>
+
+  <div class="card"><p><b>Cuestión 2.</b> Con Euler y \(h=0{,}1\), calcula las tres primeras aproximaciones de \(y'=-4y+2\), \(y(0)=0\).</p></div>
+  <details class="sol"><summary>Solución de la cuestión 2</summary>
+    <p>\(w_1=0+0{,}1\cdot2=0{,}2\); \(w_2=0{,}2+0{,}1\,(-0{,}8+2)=0{,}32\); \(w_3=0{,}32+0{,}1\,(-1{,}28+2)=0{,}392\). La solución exacta tiende a \(0{,}5\).</p></details>
+
+  <div class="card"><p><b>Cuestión 3.</b> Un sistema tiene un polo en \(-25\ \mathrm{s^{-1}}\). ¿Qué \(h\) máximo permite Euler? ¿Qué ocurre con \(h=0{,}1\)?</p></div>
+  <details class="sol"><summary>Solución de la cuestión 3</summary>
+    <p>Hace falta \(h\lt2/25=0{,}08\) s. Con \(h=0{,}1\) el factor de amplificación es \(1-25\cdot0{,}1=-1{,}5\), de módulo mayor que 1: la solución numérica oscila y crece sin límite aunque el sistema real sea estable.</p></details>
+
+  <div class="card"><p><b>Cuestión 4.</b> Un modelo FIR \(y(k)=b_1u(k-1)+b_2u(k-2)\) se estima con \(\Phi^T\Phi=\begin{pmatrix}30&20\\20&14\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}32{,}7\\21{,}7\end{pmatrix}\). Calcula \(\hat\theta\).</p></div>
+  <details class="sol"><summary>Solución de la cuestión 4</summary>
+    <p>\(\det=30\cdot14-20\cdot20=20\). \(\hat\theta=\dfrac1{20}\begin{pmatrix}14&-20\\-20&30\end{pmatrix}\begin{pmatrix}32{,}7\\21{,}7\end{pmatrix}=\dfrac1{20}\begin{pmatrix}23{,}8\\-3\end{pmatrix}=\begin{pmatrix}1{,}19\\-0{,}15\end{pmatrix}\).</p></details>
+</section>
+
+<section class="sec" id="criterio">
+  <h2><span class="dot"></span>Cómo corregirte</h2>
+  <ul>
+    <li>Cada problema vale 3 puntos y cada cuestión 1. Como criterio propio (no oficial), si el planteamiento es completo —variables, ecuaciones, condiciones iniciales— pero falla un número, dátelo casi por bueno.</li>
+    <li>Si has fallado el Problema 1, repasa <a href="tema-1-2.html">la unidad 1</a> y <a href="problemas.html">los problemas</a>. Si el 2, <a href="tema-9-11.html#plantilla">la plantilla de pseudocódigo</a>.</li>
+    <li>Cuestiones 1 y 4: <a href="tema-3-5.html">identificación</a>. Cuestiones 2 y 3: <a href="tema-9-11.html">métodos numéricos</a>.</li>
+  </ul>
+</section>

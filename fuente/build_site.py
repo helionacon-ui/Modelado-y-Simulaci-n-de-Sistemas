@@ -24,6 +24,10 @@ PAGES = [
     ("practicas.html", "Prácticas del curso", "Prácticas", "Prácticas de modelado y simulación · Modelado y Simulación"),
     ("problemas.html", "Problemas resueltos", "Practicar", "Problemas de modelado e identificación · Modelado y Simulación"),
     ("examenes.html", "Qué se pregunta en el examen", "Practicar", "Qué se pregunta en el examen · Modelado y Simulación"),
+    ("examenes-resueltos.html", "Exámenes 2026 resueltos", "Practicar", "Exámenes de 2026 resueltos · Modelado y Simulación"),
+    ("simulacro.html", "Simulacro de examen", "Practicar", "Simulacro de examen · Modelado y Simulación"),
+    ("complementarios.html", "Ejercicios complementarios", "Practicar", "Ejercicios complementarios · Modelado y Simulación"),
+    ("demostraciones.html", "Demostraciones", "Practicar", "Demostraciones tipo examen · Modelado y Simulación"),
     ("autoevaluacion.html", "Autoevaluación", "Practicar", "Autoevaluación · Modelado y Simulación"),
     ("formulario.html", "Formulario por unidad", "Repasar", "Formulario por unidad · Modelado y Simulación"),
     ("glosario.html", "Glosario", "Repasar", "Glosario · Modelado y Simulación"),
@@ -34,7 +38,7 @@ SUBS = {  # entradas del menú que apuntan a un apartado
     "empezar.html": [("#prioridades", "Prioridades"), ("#progreso", "Tu progreso")],
 }
 COLOR = {"index.html": 0, "empezar.html": 0, "tema-1-2.html": 1, "tema-3-5.html": 2, "tema-6-8.html": 3, "tema-9-11.html": 4,
-         "tema-12-13.html": 5, "practicas.html": 6, "problemas.html": 7, "examenes.html": 7, "autoevaluacion.html": 7,
+         "tema-12-13.html": 5, "practicas.html": 6, "problemas.html": 7, "examenes.html": 7, "autoevaluacion.html": 7, "examenes-resueltos.html": 7, "simulacro.html": 7, "complementarios.html": 7, "demostraciones.html": 7,
          "formulario.html": 8, "glosario.html": 8, "plan.html": 8, "guia-completa.html": 0}
 
 
@@ -135,7 +139,7 @@ def shell_body(current, body, pg=True):
 def full_doc(title, content, assets_prefix=""):
     return ('<!doctype html><html lang="es"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
-            f'<title>{title}</title>{FONTS}<link rel="stylesheet" href="{assets_prefix}assets/style.css">{THEME_INIT}{MATHJAX}</head>'
+            f'<title>{title}</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#b45309"><link rel="icon" href="assets/icon.svg">{FONTS}<link rel="stylesheet" href="{assets_prefix}assets/style.css">{THEME_INIT}{MATHJAX}</head>'
             f'<body>{content}<script src="{assets_prefix}assets/app.js"></script><script src="{assets_prefix}assets/sims.js"></script></body></html>')
 
 
@@ -198,6 +202,17 @@ def main():
     for out in ("site", "artifact"):
         (ROOT / out / "guia-completa.html").write_text(full_doc(gtitle, shell_body("guia-completa.html", gc, pg=False)), encoding="utf-8")
     (ROOT / "site" / ".nojekyll").write_text("")
+    if (ROOT / "pdf").exists():
+        shutil.copytree(ROOT / "pdf", ROOT / "site" / "pdf")
+    (ROOT / "site" / "manifest.webmanifest").write_text((ROOT / "src" / "manifest.webmanifest").read_text(encoding="utf-8"), encoding="utf-8")
+    import hashlib
+    files = sorted(p.relative_to(ROOT / "site").as_posix() for p in (ROOT / "site").rglob("*") if p.is_file() and p.name != "sw.js")
+    ver = hashlib.sha1(b"".join((ROOT / "site" / f).read_bytes() for f in files)).hexdigest()[:10]
+    sw = ("const V='msg-" + ver + "';const FILES=" + json.dumps(["./"] + files) + ";\n"
+          "self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});\n"
+          "self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==V).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});\n"
+          "self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{if(res&&(res.ok||res.type==='opaque')){const cp=res.clone();caches.open(V).then(c=>c.put(e.request,cp))}return res}).catch(()=>caches.match('index.html'))))});\n")
+    (ROOT / "site" / "sw.js").write_text(sw, encoding="utf-8")
     print("ok:", len(PAGES) + 1, "páginas;", len(idx), "entradas de búsqueda")
 
 

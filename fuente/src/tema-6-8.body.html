@@ -37,4 +37,48 @@ t = (0:N)*h;  plot(t, y)</pre>
   <p class="vid-note">Los números de este ejemplo se han comprobado con Python; el código Matlab no se ha podido ejecutar aquí (no hay Matlab ni Octave en el entorno de trabajo).</p>
 </section>
 
+<section class="sec" id="solver">
+  <h2><span class="dot"></span>Elegir el solver en Simulink</h2>
+  <p>El solver es el método numérico que decide el siguiente instante de la simulación y avanza el estado. Se elige en <i>Configuración del modelo → Solver</i>. Hay tres decisiones, en este orden:</p>
+  <ol class="steps">
+    <li><b>Paso fijo o variable.</b> Con paso fijo el \(h\) no cambia; con paso variable el solver lo ajusta para cumplir las tolerancias de error. Si el modelo va a generar código para tiempo real hay que usar paso fijo; si no, el paso variable suele ahorrar muchos pasos.</li>
+    <li><b>Explícito o implícito.</b> Los explícitos sirven para sistemas no rígidos; los implícitos están pensados para ecuaciones rígidas (ver <a href="tema-9-11.html#rigidez">rigidez</a>).</li>
+    <li><b>Un paso o multipaso.</b> Un paso usa solo el valor anterior; multipaso usa varios (necesita arrancar con un método de un paso).</li>
+  </ol>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Solver</th><th>Tipo</th><th>Cuándo usarlo</th></tr></thead>
+    <tbody>
+      <tr><td><code>ode45</code></td><td>variable, explícito, un paso (Runge-Kutta)</td><td>Primera opción para casi todo; es el que Simulink usa por defecto en paso variable</td></tr>
+      <tr><td><code>ode23</code></td><td>variable, explícito, un paso (orden más bajo)</td><td>Tolerancias poco exigentes o rigidez leve</td></tr>
+      <tr><td><code>ode113</code></td><td>variable, explícito, multipaso (Adams)</td><td>Tolerancias muy estrictas o modelos costosos de evaluar</td></tr>
+      <tr><td><code>ode15s</code>, <code>ode23s</code>, <code>ode23t</code>, <code>ode23tb</code></td><td>variable, implícito</td><td>Sistemas rígidos</td></tr>
+      <tr><td><code>ode1</code>, <code>ode2</code>, <code>ode3</code>, <code>ode4</code>, <code>ode5</code>, <code>ode8</code></td><td>fijo, explícito, de menor a mayor complejidad</td><td><code>ode1</code> es Euler y <code>ode4</code> es Runge-Kutta de orden 4; <code>ode3</code> es el que se usa por defecto en paso fijo</td></tr>
+      <tr><td><code>ode14x</code></td><td>fijo, implícito</td><td>Rigidez con paso fijo</td></tr>
+    </tbody></table></div>
+  <div class="box key"><p><b>Receta de la propia documentación de Simulink.</b> Empieza con <code>ode45</code>. Si la simulación va lenta, el problema puede ser rígido: prueba un solver implícito. Para paso fijo, compara con el resultado del paso variable y prueba <code>ode1</code>; si no basta, sube a <code>ode3</code> y después a <code>ode5</code>, y si aun así no es exacto reduce el paso.</p></div>
+  <p class="vid-note">Resumen en mis palabras del documento «Choosing a Solver» de MathWorks que aparece en el material del aula virtual.</p>
+</section>
+
+<section class="sec ter" id="pendulo">
+  <h2><span class="dot"></span>Ejemplo del material: el péndulo en Matlab y Simulink</h2>
+  <p>El material incluye un script de Matlab y un modelo de Simulink del mismo péndulo con fricción, \(\ddot\theta=-9{,}8\sin\theta-\dot\theta\), con \(\theta(0)=\pi/2\) y 10 s de simulación. El script simula tres versiones a la vez, cada una con su método:</p>
+  <ul>
+    <li><b>Euler no lineal</b>, con \(\sin\theta\).</li>
+    <li><b>Euler linealizado</b>, sustituyendo \(\sin\theta\) por \(\theta\).</li>
+    <li><b>Runge-Kutta de orden 2</b> (punto medio), con \(\sin\theta\).</li>
+  </ul>
+<pre class="code">x1(1) = pi/2 ; x2(1) = 0                    % estado inicial (theta, velocidad)
+for i = 1:N
+    x1(i+1) = x1(i) + h*x2(i);
+    x2(i+1) = x2(i) + h*(-9.8*sin(x1(i)) - x2(i));       % Euler no lineal
+    K1 = xe1(i) + (h/2)*xe2(i);                          % RK2: estado en el punto medio
+    K2 = xe2(i) + (h/2)*(-9.8*sin(xe1(i)) - xe2(i));
+    xe1(i+1) = xe1(i) + h*K2;
+    xe2(i+1) = xe2(i) + h*(-9.8*sin(K1) - K2);
+end</pre>
+  <p>El modelo de Simulink equivalente tiene cuatro integradores, dos ganancias de valor 10, una función seno, una constante \(\pi/2\) para la condición inicial, y está configurado con <code>ode45</code> y 10 s.</p>
+  <p>Con \(\theta(0)=90^\circ\) el ángulo está lejos de donde \(\sin\theta\approx\theta\), así que la versión linealizada se separa de la real, y el RK2 coincide con la referencia (Euler solo se le acerca con pasos muy pequeños): tienes las cifras en la <a href="examenes-resueltos.html#junio">cuestión 3 de junio de 2026</a>.</p>
+  <div class="box trap"><h4>Un paso de \(10^{-5}\) s</h4><p>El script usa un millón de pasos para que Euler no se desvíe. Eso funciona, pero es una forma cara de compensar un método de orden 1: RK2 con un paso cien veces mayor (\(10^{-3}\) s) comete menos error: unos \(10^{-6}\) rad frente a unos \(3\cdot10^{-5}\) rad de Euler con \(10^{-5}\) s (comprobado con código frente a una integración de referencia).</p></div>
+</section>
+
 {{herramientas}}

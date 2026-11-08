@@ -1,0 +1,67 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Demostraciones tipo examen · Modelado y Simulación</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#b45309"><link rel="icon" href="assets/icon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Todas las guías </span>GIEyA</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><div class="pg"><div class="grp">Empezar</div><a href="index.html" style="--tc:var(--c0)">Portada</a><a class="sub" href="index.html#cero" style="--tc:var(--c0)">Empieza aquí desde cero</a><a href="empezar.html" style="--tc:var(--c0)">Cómo es el examen</a><a class="sub" href="empezar.html#prioridades" style="--tc:var(--c0)">Prioridades</a><a class="sub" href="empezar.html#progreso" style="--tc:var(--c0)">Tu progreso</a><div class="grp">Unidades</div><a href="tema-1-2.html" style="--tc:var(--c1)">T1–2 Modelado de sistemas</a><a href="tema-3-5.html" style="--tc:var(--c2)">T3–5 Identificación</a><a href="tema-6-8.html" style="--tc:var(--c3)">T6–8 Simulador, Simulink y Matlab</a><a href="tema-9-11.html" style="--tc:var(--c4)">T9–11 Métodos numéricos</a><a href="tema-12-13.html" style="--tc:var(--c5)">T12–13 Predicción y error</a><div class="grp">Prácticas</div><a href="practicas.html" style="--tc:var(--c6)">Prácticas del curso</a><div class="grp">Practicar</div><a href="problemas.html" style="--tc:var(--c7)">Problemas resueltos</a><a href="examenes.html" style="--tc:var(--c7)">Qué se pregunta en el examen</a><a href="examenes-resueltos.html" style="--tc:var(--c7)">Exámenes 2026 resueltos</a><a href="simulacro.html" style="--tc:var(--c7)">Simulacro de examen</a><a href="complementarios.html" style="--tc:var(--c7)">Ejercicios complementarios</a><a href="demostraciones.html" aria-current="page" class="cur" style="--tc:var(--c7)">Demostraciones</a><a href="autoevaluacion.html" style="--tc:var(--c7)">Autoevaluación</a><div class="grp">Repasar</div><a href="formulario.html" style="--tc:var(--c8)">Formulario por unidad</a><a href="glosario.html" style="--tc:var(--c8)">Glosario</a><a href="plan.html" style="--tc:var(--c8)">Plan de estudio</a><div class="grp">Todo junto</div><a href="guia-completa.html">Guía completa en una página</a></div><h4>En esta página</h4><div class="toc"><a href="#d-numericos">Métodos numéricos</a><a href="#d-identificacion">Identificación</a><a href="#d-modelado">Modelado</a></div></nav><main id="top" style="--tc:var(--c7)"><div class="srch-card gs"><label class="srch-lab" for="gsrch">Buscar en toda la guía</label><input type="search" id="gsrch" placeholder="Por ejemplo: Euler, ARX, linealización, rigidez…" autocomplete="off" spellcheck="false"><div id="gsrch-out" class="gs-out" hidden></div></div><header>
+  <div class="kicker">Practicar · deducciones</div>
+  <h1>Demostraciones tipo examen</h1>
+  <p class="lead">Las deducciones que más se piden o que más ayudan a entender los métodos, escritas paso a paso y cortas. Si las sabes hacer, no hace falta memorizar las fórmulas.</p>
+  <div class="tags"><span class="tag">10 demostraciones</span><span class="tag">UD 1, 2 y 4</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Deducciones propias a partir de resultados estándar. La de Adams-Bashforth de dos pasos aparece en los exámenes; el resto sirven para entender.</p>
+</header>
+
+<section class="sec ctl" id="d-numericos">
+  <h2><span class="dot"></span>Métodos numéricos</h2>
+
+  <details class="sol"><summary>1 · Adams-Bashforth de dos pasos (se pide en examen)</summary>
+    <p><b>Idea.</b> Integrar \(y'=f\) entre \(t_k\) y \(t_{k+1}\) sustituyendo \(f\) por la recta que pasa por \((t_{k-1},f_{k-1})\) y \((t_k,f_k)\).</p>
+    <p>Con \(s=t-t_k\): \(f(s)\approx f_k+\dfrac{f_k-f_{k-1}}{h}\,s\). Entonces</p>
+    <div class="eq">\[w_{k+1}=w_k+\int_0^h\Big[f_k+\frac{f_k-f_{k-1}}h\,s\Big]ds=w_k+hf_k+\frac{f_k-f_{k-1}}{h}\cdot\frac{h^2}{2}\]</div>
+    <div class="eq key">\[w_{k+1}=w_k+\frac h2\,\big(3f_k-f_{k-1}\big)\]</div>
+    <p>Es un método de orden 2 y necesita \(w_1\), que se obtiene con un método de un paso.</p></details>
+
+  <details class="sol"><summary>2 · Runge-Kutta de orden 2 (punto medio) tiene orden 2</summary>
+    <p>Desarrolla la solución exacta: \(y(t+h)=y+hf+\tfrac{h^2}2\,(f_t+f_yf)+O(h^3)\).</p>
+    <p>El método da \(w_{k+1}=y+h\,f\big(t+\tfrac h2,\ y+\tfrac h2f\big)\). Desarrollando \(f\) en el punto medio:</p>
+    <div class="eq">\[f\big(t+\tfrac h2,\ y+\tfrac h2f\big)=f+\tfrac h2f_t+\tfrac h2f_yf+O(h^2)\;\Rightarrow\;w_{k+1}=y+hf+\tfrac{h^2}2(f_t+f_yf)+O(h^3)\]</div>
+    <p>Coincide con la exacta hasta \(h^2\): el error local es \(O(h^3)\) y el global \(O(h^2)\).</p></details>
+
+  <details class="sol"><summary>3 · Estabilidad de Euler: \(h\lt2/|\lambda|\)</summary>
+    <p>Con \(y'=\lambda y\), \(\lambda\lt0\), la solución exacta decae. Euler da \(w_{k+1}=w_k+h\lambda w_k=(1+h\lambda)\,w_k\), es decir \(w_k=(1+h\lambda)^kw_0\).</p>
+    <p>Decae solo si \(|1+h\lambda|\lt1\), o sea \(-1\lt1+h\lambda\lt1\Rightarrow h\lt\dfrac{2}{|\lambda|}\). Por ejemplo, con \(\lambda=-10\), \(h\lt0{,}2\).</p></details>
+
+  <details class="sol"><summary>4 · Error local de Euler</summary>
+    <p>Por Taylor, \(y(t+h)=y(t)+hy'(t)+\tfrac{h^2}2y''(\xi)\). Euler usa solo los dos primeros términos, así que el error en un paso es \(\tfrac{h^2}{2}y''(\xi)=O(h^2)\). En \(N=T/h\) pasos se acumula \(N\cdot O(h^2)=O(h)\): por eso Euler es de orden 1.</p></details>
+</section>
+
+<section class="sec" id="d-identificacion">
+  <h2><span class="dot"></span>Identificación</h2>
+
+  <details class="sol"><summary>5 · Mínimos cuadrados: la ecuación normal</summary>
+    <p>Se busca \(\hat\theta\) que minimice \(J=\|\mathbf Y-\Phi\theta\|^2=(\mathbf Y-\Phi\theta)^T(\mathbf Y-\Phi\theta)\).</p>
+    <div class="eq">\[\frac{\partial J}{\partial\theta}=-2\Phi^T(\mathbf Y-\Phi\theta)=0\;\Rightarrow\;\Phi^T\Phi\,\hat\theta=\Phi^T\mathbf Y\;\Rightarrow\;\hat\theta=(\Phi^T\Phi)^{-1}\Phi^T\mathbf Y\]</div>
+    <p>Exige que \(\Phi^T\Phi\) sea invertible, es decir, que la entrada excite lo bastante al sistema.</p></details>
+
+  <details class="sol"><summary>6 · De dónde sale \(\tau=1{,}5\,(t_{63}-t_{28})\)</summary>
+    <p>Respuesta de primer orden con retardo \(T\) a un escalón: \(y(t)=y_\infty\big(1-e^{-(t-T)/\tau}\big)\) para \(t\gt T\).</p>
+    <p>Al 63,2 %: \(e^{-(t-T)/\tau}=0{,}368\Rightarrow t_{63}=T+\tau\). Al 28,3 %: \(e^{-(t-T)/\tau}=0{,}717\Rightarrow t_{28}=T+0{,}333\,\tau\).</p>
+    <p>Restando: \(t_{63}-t_{28}=\tfrac23\tau\), luego \(\tau=1{,}5\,(t_{63}-t_{28})\) y \(T=t_{63}-\tau\).</p></details>
+
+  <details class="sol"><summary>7 · ARX frente a OE: por qué el ARX se resuelve con mínimos cuadrados</summary>
+    <p>El ARX es \(A(q)y=B(q)u+e\), es decir \(y(k)=-a_1y(k-1)-\dots+b_1u(k-1)+\dots+e(k)\): la salida es <b>lineal en los parámetros</b>, con regresores conocidos (las salidas y entradas medidas). Eso es exactamente \(\mathbf Y=\Phi\theta+e\).</p>
+    <p>En el OE, \(y=\dfrac BFu+e\): el regresor contiene salidas del modelo, que dependen de los parámetros que se buscan. El problema deja de ser lineal y se resuelve iterando.</p></details>
+</section>
+
+<section class="sec mec" id="d-modelado">
+  <h2><span class="dot"></span>Modelado</h2>
+
+  <details class="sol"><summary>8 · Motor de continua: \(K\) y \(\tau\)</summary>
+    <p>Eléctrica (inductancia despreciable): \(V=Ri+K_b\dot\theta\). Mecánica: \(K_ii-B\dot\theta=I\ddot\theta\). Se despeja \(i=(V-K_b\dot\theta)/R\):</p>
+    <div class="eq">\[I\ddot\theta+\Big(B+\frac{K_iK_b}R\Big)\dot\theta=\frac{K_i}{R}V\;\Rightarrow\;\frac{\Omega}{V}=\frac{K_i/R}{Is+B+K_iK_b/R}=\frac{K}{\tau s+1}\]</div>
+    <p>con \(K=\dfrac{K_i}{BR+K_iK_b}\) y \(\tau=\dfrac{IR}{BR+K_iK_b}\).</p></details>
+
+  <details class="sol"><summary>9 · Linealizar un depósito con válvula</summary>
+    <p>\(S\dot h=f_i-Ka\sqrt h\). En equilibrio \(f_{i0}=Ka_0\sqrt{h_0}\). Linealizando \(g(a,h)=Ka\sqrt h\):</p>
+    <div class="eq">\[\Delta g=K\sqrt{h_0}\,\Delta a+\frac{Ka_0}{2\sqrt{h_0}}\,\Delta h\;\Rightarrow\;S\,\Delta\dot h+\frac{Ka_0}{2\sqrt{h_0}}\Delta h=\Delta f_i-K\sqrt{h_0}\,\Delta a\]</div>
+    <p>Es un primer orden con \(\tau=\dfrac{2S\sqrt{h_0}}{Ka_0}=\dfrac{2Sh_0}{Q_0}\), usando \(Q_0=Ka_0\sqrt{h_0}\).</p></details>
+
+  <details class="sol"><summary>10 · \(N\) depósitos iguales en cascada: \(1/(\tau s+1)^N\)</summary>
+    <p>Cada depósito linealizado cumple \(\tau\,\Delta\dot h_i+\Delta h_i=R\,\Delta Q_{i-1}\) con \(\Delta Q_i=\Delta h_i/R\). Entonces \(\dfrac{\Delta Q_i}{\Delta Q_{i-1}}=\dfrac1{\tau s+1}\), y, como el caudal de salida de uno es el de entrada del siguiente, las funciones se multiplican: \(\dfrac{Q_N}{Q_0}=\dfrac1{(\tau s+1)^N}\). Para depósitos cónicos con orificio \(Q=k\sqrt h\) sale \(\tau=6V_0/Q_0\), como en <a href="examenes-resueltos.html#abril">abril de 2026</a>.</p></details>
+</section>
+<nav class="pager" aria-label="Páginas"><a href="complementarios.html"><small>← Anterior</small>Ejercicios complementarios</a><a class="nx" href="autoevaluacion.html"><small>Siguiente →</small>Autoevaluación</a></nav><footer>Guía no oficial de la UPCT (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

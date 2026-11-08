@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Guía completa · Modelado y Simulación</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Todas las guías </span>GIEyA</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><div class="pg"><div class="grp">Empezar</div><a href="index.html" style="--tc:var(--c0)">Portada</a><a class="sub" href="index.html#cero" style="--tc:var(--c0)">Empieza aquí desde cero</a><a href="empezar.html" style="--tc:var(--c0)">Cómo es el examen</a><a class="sub" href="empezar.html#prioridades" style="--tc:var(--c0)">Prioridades</a><a class="sub" href="empezar.html#progreso" style="--tc:var(--c0)">Tu progreso</a><div class="grp">Unidades</div><a href="tema-1-2.html" style="--tc:var(--c1)">T1–2 Modelado de sistemas</a><a href="tema-3-5.html" style="--tc:var(--c2)">T3–5 Identificación</a><a href="tema-6-8.html" style="--tc:var(--c3)">T6–8 Simulador, Simulink y Matlab</a><a href="tema-9-11.html" style="--tc:var(--c4)">T9–11 Métodos numéricos</a><a href="tema-12-13.html" style="--tc:var(--c5)">T12–13 Predicción y error</a><div class="grp">Prácticas</div><a href="practicas.html" style="--tc:var(--c6)">Prácticas del curso</a><div class="grp">Practicar</div><a href="problemas.html" style="--tc:var(--c7)">Problemas resueltos</a><a href="examenes.html" style="--tc:var(--c7)">Qué se pregunta en el examen</a><a href="autoevaluacion.html" style="--tc:var(--c7)">Autoevaluación</a><div class="grp">Repasar</div><a href="formulario.html" style="--tc:var(--c8)">Formulario por unidad</a><a href="glosario.html" style="--tc:var(--c8)">Glosario</a><a href="plan.html" style="--tc:var(--c8)">Plan de estudio</a><div class="grp">Todo junto</div><a href="guia-completa.html" aria-current=page class=cur>Guía completa en una página</a></div><h4>En esta página</h4><div class="toc"><a href="#examen">Cómo es el examen</a><a href="#prioridades">Prioridades</a><a href="#progreso">Tu progreso</a><a href="#esencial">Lo esencial</a><a href="#conservacion">Principios de conservación</a><a href="#mecanicos">Sistemas mecánicos</a><a href="#electricos">Sistemas eléctricos</a><a href="#motor">Electromecánico: motor de continua</a><a href="#fluidos">Sistemas de fluidos</a><a href="#termicos">Sistemas térmicos</a><a href="#linealizacion">Linealización</a><a href="#equivalencias">Equivalencias entre dominios</a><a href="#ordenes">Sistemas de primer y segundo orden</a><a href="#reguladores">Amplificadores operacionales: reguladores y filtros</a><a href="#trampas">Trampas típicas</a><a href="#esencial">Lo esencial</a><a href="#escalon">Modelos paramétricos con escalón</a><a href="#reto">Reto: identificar con los datos</a><a href="#impulso">Respuesta al impulso y operador de retardo</a><a href="#perturbaciones">Modelo con perturbaciones</a><a href="#prediccion">Predictor</a><a href="#minimos">Estimación por mínimos cuadrados</a><a href="#trampas">Trampas típicas</a><a href="#diseno">Qué tiene un simulador</a><a href="#matlab">Del pseudocódigo a Matlab</a><a href="#herramientas">Matlab y Simulink: lo que se usa</a><a href="#esencial">Lo esencial</a><a href="#euler">Método de Euler</a><a href="#rk">Runge-Kutta</a><a href="#multipaso">Métodos multipaso: Adams</a><a href="#paso-variable">Paso variable</a><a href="#rigidez">Ecuaciones rígidas</a><a href="#plantilla">Plantilla de pseudocódigo para el examen</a><a href="#trampas">Trampas habituales</a><a href="#esencial">Lo esencial</a><a href="#prediccion">Calcular la predicción</a><a href="#estimadores">Herramientas para analizar el error</a><a href="#ejemplo-oe">Ejemplo resuelto: modelo OE y probabilidad dentro de una desviación</a><a href="#ejemplo-gs">Ejemplo resuelto: modelo en función de transferencia</a><a href="#resumen">Las cuatro de un vistazo</a><a href="#p1">Práctica 1 · Identificar un motor de primer orden</a><a href="#p2">Práctica 2 · Tanque con válvula y calentador</a><a href="#p3">Práctica 3 · Generación de fluido caliente</a><a href="#p4">Práctica 4 · Modelos no paramétricos del motor</a><a href="#metodo">Método</a><a href="#p1">Problema 1 · Acelerómetro</a><a href="#p2">Problema 2 · Dos depósitos con válvula</a><a href="#p3">Problema 3 · Depósito cónico</a><a href="#p4">Problema 4 · Identificar un ARX</a><a href="#siguientes">Siguientes pasos</a><a href="#estructura">Estructura de un examen</a><a href="#problema-1">Problema 1: modelar un sistema</a><a href="#problema-2">Problema 2: pseudocódigo de simulación</a><a href="#cuestiones">Cuestiones que se repiten</a><a href="#como-estudiar">Cómo preparar el examen con esta guía</a><a href="#test-ud1">Test · Unidad 1: modelado</a><a href="#test-ud2">Test · Unidad 2: identificación</a><a href="#abiertas-ud4">Preguntas abiertas · Unidad 4: métodos numéricos</a><a href="#abiertas-ud5">Preguntas abiertas · Unidad 5: error</a><a href="#f-ud1">Unidad 1 · Modelado</a><a href="#f-ud2">Unidad 2 · Identificación</a><a href="#f-ud4">Unidad 4 · Métodos numéricos</a><a href="#f-ud5">Unidad 5 · Análisis del error</a><a href="#g-ud1">Unidad 1 · Modelado</a><a href="#g-ud2">Unidad 2 · Identificación</a><a href="#g-ud3">Unidades 3 y 4 · Simulación y métodos numéricos</a><a href="#g-ud5">Unidad 5 · Análisis del error</a><a href="#semanas">Cuatro semanas</a></div></nav><main id="top" style="--tc:var(--c0)"><header><div class="kicker">Todo junto</div><h1>Guía completa en una sola página</h1><p class="lead">Las mismas páginas de la guía una detrás de otra, para buscar con Ctrl+F o imprimir.</p></header><nav class="gc-toc"><b>Contenido</b> <a href="#pg-empezar">Cómo es el examen</a> · <a href="#pg-tema-1-2">T1–2 Modelado de sistemas</a> · <a href="#pg-tema-3-5">T3–5 Identificación</a> · <a href="#pg-tema-6-8">T6–8 Simulador, Simulink y Matlab</a> · <a href="#pg-tema-9-11">T9–11 Métodos numéricos</a> · <a href="#pg-tema-12-13">T12–13 Predicción y error</a> · <a href="#pg-practicas">Prácticas del curso</a> · <a href="#pg-problemas">Problemas resueltos</a> · <a href="#pg-examenes">Qué se pregunta en el examen</a> · <a href="#pg-autoevaluacion">Autoevaluación</a> · <a href="#pg-formulario">Formulario por unidad</a> · <a href="#pg-glosario">Glosario</a> · <a href="#pg-plan">Plan de estudio</a></nav><div class="gc-page" id="pg-empezar"><header>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Guía completa · Modelado y Simulación</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#b45309"><link rel="icon" href="assets/icon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Todas las guías </span>GIEyA</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><div class="pg"><div class="grp">Empezar</div><a href="index.html" style="--tc:var(--c0)">Portada</a><a class="sub" href="index.html#cero" style="--tc:var(--c0)">Empieza aquí desde cero</a><a href="empezar.html" style="--tc:var(--c0)">Cómo es el examen</a><a class="sub" href="empezar.html#prioridades" style="--tc:var(--c0)">Prioridades</a><a class="sub" href="empezar.html#progreso" style="--tc:var(--c0)">Tu progreso</a><div class="grp">Unidades</div><a href="tema-1-2.html" style="--tc:var(--c1)">T1–2 Modelado de sistemas</a><a href="tema-3-5.html" style="--tc:var(--c2)">T3–5 Identificación</a><a href="tema-6-8.html" style="--tc:var(--c3)">T6–8 Simulador, Simulink y Matlab</a><a href="tema-9-11.html" style="--tc:var(--c4)">T9–11 Métodos numéricos</a><a href="tema-12-13.html" style="--tc:var(--c5)">T12–13 Predicción y error</a><div class="grp">Prácticas</div><a href="practicas.html" style="--tc:var(--c6)">Prácticas del curso</a><div class="grp">Practicar</div><a href="problemas.html" style="--tc:var(--c7)">Problemas resueltos</a><a href="examenes.html" style="--tc:var(--c7)">Qué se pregunta en el examen</a><a href="examenes-resueltos.html" style="--tc:var(--c7)">Exámenes 2026 resueltos</a><a href="simulacro.html" style="--tc:var(--c7)">Simulacro de examen</a><a href="complementarios.html" style="--tc:var(--c7)">Ejercicios complementarios</a><a href="demostraciones.html" style="--tc:var(--c7)">Demostraciones</a><a href="autoevaluacion.html" style="--tc:var(--c7)">Autoevaluación</a><div class="grp">Repasar</div><a href="formulario.html" style="--tc:var(--c8)">Formulario por unidad</a><a href="glosario.html" style="--tc:var(--c8)">Glosario</a><a href="plan.html" style="--tc:var(--c8)">Plan de estudio</a><div class="grp">Todo junto</div><a href="guia-completa.html" aria-current=page class=cur>Guía completa en una página</a></div><h4>En esta página</h4><div class="toc"><a href="#examen">Cómo es el examen</a><a href="#prioridades">Prioridades</a><a href="#progreso">Tu progreso</a><a href="#esencial">Lo esencial</a><a href="#conservacion">Principios de conservación</a><a href="#mecanicos">Sistemas mecánicos</a><a href="#electricos">Sistemas eléctricos</a><a href="#motor">Electromecánico: motor de continua</a><a href="#fluidos">Sistemas de fluidos</a><a href="#termicos">Sistemas térmicos</a><a href="#linealizacion">Linealización</a><a href="#equivalencias">Equivalencias entre dominios</a><a href="#ordenes">Sistemas de primer y segundo orden</a><a href="#reguladores">Amplificadores operacionales: reguladores y filtros</a><a href="#trampas">Trampas típicas</a><a href="#esencial">Lo esencial</a><a href="#escalon">Modelos paramétricos con escalón</a><a href="#reto">Reto: identificar con los datos</a><a href="#impulso">Respuesta al impulso y operador de retardo</a><a href="#perturbaciones">Modelo con perturbaciones</a><a href="#prediccion">Predictor</a><a href="#minimos">Estimación por mínimos cuadrados</a><a href="#trampas">Trampas típicas</a><a href="#diseno">Qué tiene un simulador</a><a href="#matlab">Del pseudocódigo a Matlab</a><a href="#solver">Elegir el solver en Simulink</a><a href="#pendulo">Ejemplo del material: el péndulo en Matlab y Simulink</a><a href="#herramientas">Matlab y Simulink: lo que se usa</a><a href="#esencial">Lo esencial</a><a href="#euler">Método de Euler</a><a href="#rk">Runge-Kutta</a><a href="#multipaso">Métodos multipaso: Adams</a><a href="#paso-variable">Paso variable</a><a href="#rigidez">Ecuaciones rígidas</a><a href="#plantilla">Plantilla de pseudocódigo para el examen</a><a href="#trampas">Trampas habituales</a><a href="#esencial">Lo esencial</a><a href="#prediccion">Calcular la predicción</a><a href="#estimadores">Herramientas para analizar el error</a><a href="#ejemplo-oe">Ejemplo resuelto: modelo OE y probabilidad dentro de una desviación</a><a href="#ejemplo-gs">Ejemplo resuelto: modelo en función de transferencia</a><a href="#resumen">Las cuatro de un vistazo</a><a href="#p1">Práctica 1 · Identificar un motor de primer orden</a><a href="#p2">Práctica 2 · Tanque con válvula y calentador</a><a href="#p3">Práctica 3 · Generación de fluido caliente</a><a href="#p4">Práctica 4 · Modelos no paramétricos del motor</a><a href="#metodo">Método</a><a href="#p1">Problema 1 · Acelerómetro</a><a href="#p2">Problema 2 · Dos depósitos con válvula</a><a href="#p3">Problema 3 · Depósito cónico</a><a href="#p4">Problema 4 · Identificar un ARX</a><a href="#siguientes">Siguientes pasos</a><a href="#estructura">Estructura de un examen</a><a href="#problema-1">Problema 1: modelar un sistema</a><a href="#problema-2">Problema 2: pseudocódigo de simulación</a><a href="#cuestiones">Cuestiones que se repiten</a><a href="#como-estudiar">Cómo preparar el examen con esta guía</a><a href="#como">Cómo leer esta página</a><a href="#junio">Convocatoria de junio de 2026</a><a href="#mayo">Segundo parcial de mayo de 2026</a><a href="#abril">Primer parcial de abril de 2026</a><a href="#p1">Problema 1 · Masa con realimentación de posición (3 puntos)</a><a href="#p2">Problema 2 · Control de nivel por computador (3 puntos)</a><a href="#cuestiones">Cuestiones (1 punto cada una)</a><a href="#criterio">Cómo corregirte</a><a href="#lista">Ejercicios por unidad</a><a href="#d-numericos">Métodos numéricos</a><a href="#d-identificacion">Identificación</a><a href="#d-modelado">Modelado</a><a href="#test-ud1">Test · Unidad 1: modelado</a><a href="#test-ud2">Test · Unidad 2: identificación</a><a href="#test-ud4">Test · Unidad 4: métodos numéricos</a><a href="#test-ud5">Test · Unidad 5: error</a><a href="#generador">Generador de ejercicios</a><a href="#fichas">Fichas de repaso</a><a href="#abiertas-ud4">Preguntas abiertas · Unidad 4: métodos numéricos</a><a href="#abiertas-ud5">Preguntas abiertas · Unidad 5: error</a><a href="#f-ud1">Unidad 1 · Modelado</a><a href="#f-ud2">Unidad 2 · Identificación</a><a href="#f-ud4">Unidad 4 · Métodos numéricos</a><a href="#f-ud5">Unidad 5 · Análisis del error</a><a href="#g-ud1">Unidad 1 · Modelado</a><a href="#g-ud2">Unidad 2 · Identificación</a><a href="#g-ud3">Unidades 3 y 4 · Simulación y métodos numéricos</a><a href="#g-ud5">Unidad 5 · Análisis del error</a><a href="#semanas">Cuatro semanas</a></div></nav><main id="top" style="--tc:var(--c0)"><header><div class="kicker">Todo junto</div><h1>Guía completa en una sola página</h1><p class="lead">Las mismas páginas de la guía una detrás de otra, para buscar con Ctrl+F o imprimir.</p></header><nav class="gc-toc"><b>Contenido</b> <a href="#pg-empezar">Cómo es el examen</a> · <a href="#pg-tema-1-2">T1–2 Modelado de sistemas</a> · <a href="#pg-tema-3-5">T3–5 Identificación</a> · <a href="#pg-tema-6-8">T6–8 Simulador, Simulink y Matlab</a> · <a href="#pg-tema-9-11">T9–11 Métodos numéricos</a> · <a href="#pg-tema-12-13">T12–13 Predicción y error</a> · <a href="#pg-practicas">Prácticas del curso</a> · <a href="#pg-problemas">Problemas resueltos</a> · <a href="#pg-examenes">Qué se pregunta en el examen</a> · <a href="#pg-examenes-resueltos">Exámenes 2026 resueltos</a> · <a href="#pg-simulacro">Simulacro de examen</a> · <a href="#pg-complementarios">Ejercicios complementarios</a> · <a href="#pg-demostraciones">Demostraciones</a> · <a href="#pg-autoevaluacion">Autoevaluación</a> · <a href="#pg-formulario">Formulario por unidad</a> · <a href="#pg-glosario">Glosario</a> · <a href="#pg-plan">Plan de estudio</a></nav><div class="gc-page" id="pg-empezar"><header>
   <div class="kicker">Empezar · el examen y cómo estudiar</div>
   <h1>Cómo es el examen y cómo estudiar</h1>
   <p class="lead">Qué se evalúa, cuánto pesa cada parte, qué conviene estudiar primero y una lista para ir marcando lo que llevas.</p>
@@ -633,6 +633,50 @@ t = (0:N)*h;  plot(t, y)</pre>
 [t, y] = ode45(f, [0 2], 0);</pre>
   <div class="box trap"><h4>Trampa de índices</h4><p>En Matlab los vectores empiezan en 1: no existe <code>y(0)</code>. El \(y(0)\) de la teoría es <code>y(1)</code>, y por eso <code>y</code> tiene <code>N+1</code> posiciones.</p></div>
   <p class="vid-note">Los números de este ejemplo se han comprobado con Python; el código Matlab no se ha podido ejecutar aquí (no hay Matlab ni Octave en el entorno de trabajo).</p>
+</section>
+
+<section class="sec" id="solver">
+  <h2><span class="dot"></span>Elegir el solver en Simulink</h2>
+  <p>El solver es el método numérico que decide el siguiente instante de la simulación y avanza el estado. Se elige en <i>Configuración del modelo → Solver</i>. Hay tres decisiones, en este orden:</p>
+  <ol class="steps">
+    <li><b>Paso fijo o variable.</b> Con paso fijo el \(h\) no cambia; con paso variable el solver lo ajusta para cumplir las tolerancias de error. Si el modelo va a generar código para tiempo real hay que usar paso fijo; si no, el paso variable suele ahorrar muchos pasos.</li>
+    <li><b>Explícito o implícito.</b> Los explícitos sirven para sistemas no rígidos; los implícitos están pensados para ecuaciones rígidas (ver <a href="tema-9-11.html#rigidez">rigidez</a>).</li>
+    <li><b>Un paso o multipaso.</b> Un paso usa solo el valor anterior; multipaso usa varios (necesita arrancar con un método de un paso).</li>
+  </ol>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Solver</th><th>Tipo</th><th>Cuándo usarlo</th></tr></thead>
+    <tbody>
+      <tr><td><code>ode45</code></td><td>variable, explícito, un paso (Runge-Kutta)</td><td>Primera opción para casi todo; es el que Simulink usa por defecto en paso variable</td></tr>
+      <tr><td><code>ode23</code></td><td>variable, explícito, un paso (orden más bajo)</td><td>Tolerancias poco exigentes o rigidez leve</td></tr>
+      <tr><td><code>ode113</code></td><td>variable, explícito, multipaso (Adams)</td><td>Tolerancias muy estrictas o modelos costosos de evaluar</td></tr>
+      <tr><td><code>ode15s</code>, <code>ode23s</code>, <code>ode23t</code>, <code>ode23tb</code></td><td>variable, implícito</td><td>Sistemas rígidos</td></tr>
+      <tr><td><code>ode1</code>, <code>ode2</code>, <code>ode3</code>, <code>ode4</code>, <code>ode5</code>, <code>ode8</code></td><td>fijo, explícito, de menor a mayor complejidad</td><td><code>ode1</code> es Euler y <code>ode4</code> es Runge-Kutta de orden 4; <code>ode3</code> es el que se usa por defecto en paso fijo</td></tr>
+      <tr><td><code>ode14x</code></td><td>fijo, implícito</td><td>Rigidez con paso fijo</td></tr>
+    </tbody></table></div>
+  <div class="box key"><p><b>Receta de la propia documentación de Simulink.</b> Empieza con <code>ode45</code>. Si la simulación va lenta, el problema puede ser rígido: prueba un solver implícito. Para paso fijo, compara con el resultado del paso variable y prueba <code>ode1</code>; si no basta, sube a <code>ode3</code> y después a <code>ode5</code>, y si aun así no es exacto reduce el paso.</p></div>
+  <p class="vid-note">Resumen en mis palabras del documento «Choosing a Solver» de MathWorks que aparece en el material del aula virtual.</p>
+</section>
+
+<section class="sec ter" id="pendulo">
+  <h2><span class="dot"></span>Ejemplo del material: el péndulo en Matlab y Simulink</h2>
+  <p>El material incluye un script de Matlab y un modelo de Simulink del mismo péndulo con fricción, \(\ddot\theta=-9{,}8\sin\theta-\dot\theta\), con \(\theta(0)=\pi/2\) y 10 s de simulación. El script simula tres versiones a la vez, cada una con su método:</p>
+  <ul>
+    <li><b>Euler no lineal</b>, con \(\sin\theta\).</li>
+    <li><b>Euler linealizado</b>, sustituyendo \(\sin\theta\) por \(\theta\).</li>
+    <li><b>Runge-Kutta de orden 2</b> (punto medio), con \(\sin\theta\).</li>
+  </ul>
+<pre class="code">x1(1) = pi/2 ; x2(1) = 0                    % estado inicial (theta, velocidad)
+for i = 1:N
+    x1(i+1) = x1(i) + h*x2(i);
+    x2(i+1) = x2(i) + h*(-9.8*sin(x1(i)) - x2(i));       % Euler no lineal
+    K1 = xe1(i) + (h/2)*xe2(i);                          % RK2: estado en el punto medio
+    K2 = xe2(i) + (h/2)*(-9.8*sin(xe1(i)) - xe2(i));
+    xe1(i+1) = xe1(i) + h*K2;
+    xe2(i+1) = xe2(i) + h*(-9.8*sin(K1) - K2);
+end</pre>
+  <p>El modelo de Simulink equivalente tiene cuatro integradores, dos ganancias de valor 10, una función seno, una constante \(\pi/2\) para la condición inicial, y está configurado con <code>ode45</code> y 10 s.</p>
+  <p>Con \(\theta(0)=90^\circ\) el ángulo está lejos de donde \(\sin\theta\approx\theta\), así que la versión linealizada se separa de la real, y el RK2 coincide con la referencia (Euler solo se le acerca con pasos muy pequeños): tienes las cifras en la <a href="examenes-resueltos.html#junio">cuestión 3 de junio de 2026</a>.</p>
+  <div class="box trap"><h4>Un paso de \(10^{-5}\) s</h4><p>El script usa un millón de pasos para que Euler no se desvíe. Eso funciona, pero es una forma cara de compensar un método de orden 1: RK2 con un paso cien veces mayor (\(10^{-3}\) s) comete menos error: unos \(10^{-6}\) rad frente a unos \(3\cdot10^{-5}\) rad de Euler con \(10^{-5}\) s (comprobado con código frente a una integración de referencia).</p></div>
 </section>
 
 <section class="sec" id="herramientas">
@@ -1341,11 +1385,418 @@ fin</pre>
     <li><b>Teoría.</b> Sabe deducir Adams-Bashforth de dos pasos y la fórmula de RK2, y explica la rigidez con \(h\lt2/|\lambda|\).</li>
   </ol>
 </section>
+</div><div class="gc-page" id="pg-examenes-resueltos"><header>
+  <div class="kicker">Practicar · exámenes de 2026</div>
+  <h1>Exámenes de 2026 resueltos</h1>
+  <p class="lead">Los enunciados de junio, mayo y abril de 2026 resueltos paso a paso, con las hipótesis explícitas y los cálculos comprobados con código. Intenta cada uno antes de abrir la solución.</p>
+  <div class="tags"><span class="tag">junio 2026</span><span class="tag">mayo 2026</span><span class="tag">abril 2026</span><span class="tag">solución propia</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Son <b>soluciones propias, no oficiales</b>: las figuras de los enunciados dejan detalles abiertos y, donde ocurre, la solución dice qué se ha supuesto. Los enunciados están resumidos, no copiados. Compara siempre con lo que enseñe el profesorado.</p>
+</header>
+
+<section class="sec" id="como">
+  <h2><span class="dot"></span>Cómo leer esta página</h2>
+  <ul>
+    <li>Cada apartado empieza con una frase que resume el enunciado, y después hay un desplegable con la solución.</li>
+    <li><b>Hipótesis</b> marca lo que he tenido que suponer porque la figura no lo fija. Si el profesorado supone otra cosa, el método es el mismo.</li>
+    <li><b>Comprobación</b> indica qué se ha verificado con código: simulaciones de los pseudocódigos, función de transferencia contra integración numérica, ajuste a las gráficas.</li>
+    <li>Las cuestiones con datos (modelo OE, autocorrelación, probabilidad) están resueltas en <a href="tema-12-13.html#ejemplo-oe">la página de error</a>; aquí se enlazan.</li>
+  </ul>
+</section>
+
+<section class="sec mec" id="junio">
+  <h2><span class="dot"></span>Convocatoria de junio de 2026</h2>
+  <p class="vid-note">Parcial 1: Problema 1 + Cuestión 1 + Cuestión 2. Parcial 2: Problema 2 + Cuestión 3 + Cuestión 4.</p>
+
+  <h3>Problema 1 · Amortiguación dinámica con caudal de fluido</h3>
+  <p><b>Enunciado resumido.</b> Dos masas \(M_1\) y \(M_2\) unidas por un muelle \(K\) y un amortiguador \(B\) en paralelo; \(M_1\) se apoya sobre la base (que se mueve \(x_0\)) con un muelle \(K_1\). Un cilindro con émbolo y muelle \(K_i\), alimentado con un caudal \(f_i\), permite modificar la amortiguación. Un controlador PD actúa sobre la aceleración de \(M_2\). a) Diagrama y ecuaciones lineales. b) Función de transferencia en lazo cerrado.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>El enunciado no dice cómo actúa el cilindro. Se interpreta como <b>actuador</b>: el caudal desplaza el émbolo (área \(A\), posición \(z\)) y el muelle \(K_i\) comprimido empuja entre las dos masas con fuerza \(K_iz\). Se linealiza alrededor del equilibrio, de modo que el peso no aparece.</p></div>
+    <p><b>a) Diagrama.</b> Base \(x_0\) → muelle \(K_1\) → \(M_1\) → (\(K\) ‖ \(B\) ‖ actuador) → \(M_2\). La aceleración \(\ddot x_2\) se mide, pasa por el PD y da el caudal \(f_i\), que mueve el émbolo y cierra el lazo.</p>
+    <p><b>Ecuaciones lineales</b> (desviaciones respecto al equilibrio):</p>
+    <div class="eq">\[\begin{aligned}M_1\ddot x_1&=-K_1(x_1-x_0)+K(x_2-x_1)+B(\dot x_2-\dot x_1)-K_iz\\ M_2\ddot x_2&=-K(x_2-x_1)-B(\dot x_2-\dot x_1)+K_iz\\ A\dot z&=f_i\\ f_i&=-\big(K_p\ddot x_2+K_d\dddot x_2\big)\end{aligned}\]</div>
+    <p>El signo menos del PD hace que, si \(M_2\) acelera hacia arriba, se reduzca el caudal y con él la fuerza que lo empuja.</p>
+    <p><b>b) Lazo cerrado.</b> En Laplace, con \(Z=-(K_p+K_ds)\,s\,X_2/A\) y definiendo \(C(s)=\dfrac{K_i}{A}\,(K_ds^2+K_ps)\):</p>
+    <div class="eq">\[D_1=M_1s^2+Bs+K+K_1,\qquad P_2=M_2s^2+Bs+K+C(s)\]</div>
+    <div class="eq key">\[\frac{X_2(s)}{X_0(s)}=\frac{K_1\,(Bs+K)}{D_1\,P_2-(Bs+K)\,(Bs+K+C(s))}\]</div>
+    <p><b>Lectura.</b> \(C(s)\) solo modifica a \(M_2\): el término proporcional añade amortiguamiento \(\Delta B=K_iK_p/A\) y el derivativo añade masa \(\Delta M=K_iK_d/A\). Con \(s=0\) la ganancia estática es 1: si la base sube un metro, \(M_2\) acaba un metro más arriba.</p>
+    <p class="vid-note"><b>Comprobación.</b> Con valores de prueba (\(M_1=2\), \(M_2=1\), \(K=300\), \(K_1=500\), \(B=8\), \(K_i=50\), \(A=0{,}01\), \(K_p=0{,}3\), \(K_d=0{,}02\)) la respuesta al escalón de esta función de transferencia coincide con la integración numérica de las ecuaciones temporales con un error máximo de \(8\cdot10^{-11}\).</p>
+  </details>
+
+  <h3>Cuestión 1 · Péndulo con fricción y par externo</h3>
+  <p><b>Enunciado.</b> Modelo en función de transferencia de un péndulo con fricción sometido a un par externo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Masa \(m\) a distancia \(L\), fricción viscosa \(b\) y par externo \(T\):</p>
+    <div class="eq">\[mL^2\ddot\theta+b\dot\theta+mgL\sin\theta=T\]</div>
+    <p>La ecuación es no lineal. Alrededor de la posición de reposo \(\theta=0\) se aproxima \(\sin\theta\approx\theta\):</p>
+    <div class="eq key">\[\frac{\Theta(s)}{T(s)}=\frac{1}{mL^2s^2+bs+mgL}\]</div>
+    <p>Es un sistema de segundo orden con \(\omega_n=\sqrt{g/L}\) y \(\xi=\dfrac{b}{2mL\sqrt{gL}}\). Alrededor de la posición invertida (\(\theta=\pi\)) cambia el signo del último término y el sistema es inestable.</p>
+  </details>
+
+  <h3>Cuestión 2 · Tanque: modelo desde un step-test</h3>
+  <p><b>Enunciado.</b> A los 3 minutos el caudal de entrada pasa de 10 a 15 l/min. Las gráficas muestran que la altura pasa de 0,1 m a 0,225 m y el caudal de salida de 10 a 15 l/min, ambos con forma exponencial. Proponer un modelo y comprobar que es dimensionalmente coherente.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p><b>1. Qué dicen los datos.</b> Hay dos estados estacionarios: \((h,Q)=(0{,}1\ \mathrm m,\ 10\ \mathrm{l/min})\) y \((0{,}225\ \mathrm m,\ 15\ \mathrm{l/min})\). Si la salida fuera lineal en la altura (\(Q\propto h\)), al pasar de 10 a 15 l/min la altura sería \(0{,}15\) m, no 0,225. En cambio, con \(Q=k\sqrt h\):</p>
+    <div class="eq">\[k=\frac{10}{\sqrt{0{,}1}}=31{,}6\ \frac{\mathrm{l/min}}{\sqrt{\mathrm m}},\qquad Q_2=k\sqrt{0{,}225}=15{,}0\ \mathrm{l/min}\ \checkmark\]</div>
+    <p>La salida sigue la ley de una válvula u orificio: <b>el caudal es proporcional a la raíz de la altura</b>.</p>
+    <p><b>2. Modelo.</b> Balance de volumen en el tanque de sección \(S\):</p>
+    <div class="eq key">\[S\,\dot h=f_i-k\sqrt h,\qquad Q_{sal}=k\sqrt h\]</div>
+    <p><b>3. Dinámica.</b> Linealizado en el punto final (\(h_0=0{,}225\) m, \(Q_0=15\) l/min) es de primer orden, con \(\tau=\dfrac{2Sh_0}{Q_0}\). Ajustando \(S\) para que la simulación pase por las lecturas de las gráficas (a los 4 min: \(h\approx0{,}19\) m y \(Q\approx13{,}7\) l/min) sale \(S\approx0{,}03\ \mathrm m^2\) (30 l por metro de altura), es decir \(\tau\approx0{,}9\) min.</p>
+    <p><b>4. Coherencia dimensional.</b> \([S\dot h]=\mathrm m^2\cdot\mathrm m/\mathrm{min}=\mathrm m^3/\mathrm{min}\), igual que \([f_i]\) y que \([k\sqrt h]=\dfrac{\mathrm l/\mathrm{min}}{\sqrt{\mathrm m}}\sqrt{\mathrm m}\) (con \(1\ \mathrm m^3=1000\) l). Cada término es un caudal.</p>
+    <p class="vid-note"><b>Comprobación.</b> Se ha integrado el modelo con \(S=0{,}03\ \mathrm m^2\): a los 4 min da \(h=0{,}188\) m y \(Q=13{,}72\) l/min, y los valores finales son exactamente 0,225 m y 15 l/min. El valor de \(S\) es una estimación a partir de la gráfica, no un dato.</p>
+  </details>
+
+  <h3>Problema 2 · Sistema propulsado con motor de reacción</h3>
+  <p><b>Enunciado resumido.</b> Una bancada lleva un motor de reacción, su tanque de combustible y un acelerómetro mecánico (masa-muelle-amortiguador). El empuje es proporcional al gasto de combustible, que fija un controlador analógico P de velocidad. a) Diagrama de bloques y pseudocódigo. b) Pseudocódigo con control por computador tipo PID.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>Empuje \(F=c\,q\), con \(q\) el gasto de combustible en kg/s; rozamiento viscoso \(b_r\) de la bancada; combustible inicial \(m_{f0}\) que baja con \(\dot m_f=-q\). La velocidad se estima integrando la aceleración que mide el acelerómetro (\(a_m=-k_ay/m\), con \(y\) el desplazamiento relativo de su masa).</p></div>
+    <p><b>Modelo.</b></p>
+    <div class="eq">\[\begin{aligned}(M_b+m_f)\,\dot v&=c\,q-b_rv,\qquad \dot x=v,\qquad \dot m_f=-q\\ m\,\ddot y&=-k_ay-b_a\dot y-m\,\dot v,\qquad \dot v_m=-\frac{k_a}{m}\,y\end{aligned}\]</div>
+    <p><b>a) Diagrama de bloques.</b> Consigna \(v_{ref}\) → resta con \(v_m\) → \(K_p\) → saturación \([0,q_{max}]\) → motor (\(F=cq\)) → bancada (masa variable) → \(v\) → acelerómetro → integrador → \(v_m\) que realimenta.</p>
+    <p><b>Pseudocódigo con control analógico</b> (el controlador se evalúa en cada paso de simulación):</p>
+<pre class="code">x = 0 ; v = 0 ; mf = mf0 ; y = 0 ; w = 0 ; vm = 0
+N = T/h
+para k = 0 hasta N-1:
+    t  = k*h
+    q  = Kp*(vref - vm)                  // controlador P
+    q  = limitar(q, 0, qmax) ; si mf &lt;= 0: q = 0
+    a  = (c*q - br*v)/(Mb + mf)          // aceleración de la bancada
+    dw = (-ka*y - ba*w)/m - a            // acelerómetro
+    am = -ka*y/m                         // lo que "mide"
+    x = x + h*v ; v = v + h*a ; mf = max(mf - h*q, 0)
+    y = y + h*w ; w = w + h*dw ; vm = vm + h*am
+    guardar(t, v, vm, q)</pre>
+    <p><b>b) Con control por computador y PID</b> (el actuador no añade dinámica; el controlador solo se recalcula cada \(T_c=nh\) y entre medias se mantiene su salida):</p>
+<pre class="code">I = 0 ; eprev = 0 ; Tc = n*h
+para k = 0 hasta N-1:
+    si k mod n == 0:                     // instante de muestreo
+        e = vref - vm
+        I = I + e*Tc
+        u = Kp*e + Ki*I + Kd*(e - eprev)/Tc
+        eprev = e
+        q = limitar(u, 0, qmax)
+    // (resto del bucle igual que antes, usando el último q)</pre>
+    <p class="vid-note"><b>Comprobación.</b> Con \(M_b=100\) kg, \(m_{f0}=40\) kg, \(m=0{,}5\) kg, \(k_a=200\) N/m, \(b_a=4\), \(c=800\), \(b_r=2\), \(q_{max}=2\) kg/s y \(v_{ref}=5\) m/s, el pseudocódigo analógico llega a \(v=4{,}98\) m/s a los 20 s con \(K_p=0{,}8\); el digital (\(T_c=0{,}05\) s, \(K_p=0{,}8\), \(K_i=0{,}4\)) llega a \(4{,}99\) m/s. Son valores de prueba: en el examen solo se pide el pseudocódigo.</p>
+  </details>
+
+  <h3>Cuestión 3 · RK2 para un péndulo con fricción</h3>
+  <p><b>Enunciado.</b> Pseudocódigo para simular el péndulo no lineal, autónomo y con fricción, con RK2. El enunciado da la fórmula \(w_{k+1}=w_k+h\,f\big(w_k+\tfrac h2f(w_k,t_k),\,t_k+\tfrac h2\big)\).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Estado \(x_1=\theta\), \(x_2=\dot\theta\), con \(f=\big(x_2,\ -\tfrac gL\sin x_1-\tfrac bm\,x_2\big)\):</p>
+<pre class="code">x1 = theta0 ; x2 = omega0
+para k = 0 hasta N-1:
+    // f(x1,x2) = ( x2 , -(g/L)*sin(x1) - (b/m)*x2 )
+    k1a = x2                       ; k1b = -(g/L)*sin(x1) - (b/m)*x2
+    mx1 = x1 + (h/2)*k1a           ; mx2 = x2 + (h/2)*k1b     // punto medio
+    x1  = x1 + h*mx2               ; x2  = x2 + h*( -(g/L)*sin(mx1) - (b/m)*mx2 )
+    // (x1 y x2 se actualizan DESPUÉS de calcular mx1, mx2)</pre>
+    <p><b>Qué mejora RK2.</b> Con el péndulo del material de prácticas (\(g/L=9{,}8\), fricción \(b/m=1\), \(\theta_0=\pi/2\), 10 s, \(h=5\cdot10^{-5}\)) el ángulo \(\theta\) en distintos instantes es:</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>\(t\) (s)</th><th>Euler no lineal</th><th>Euler linealizado</th><th>RK2</th><th>Referencia</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>−0,7730</td><td>−0,9438</td><td>−0,7728</td><td>−0,7728</td></tr>
+        <tr><td>2</td><td>0,4051</td><td>0,5655</td><td>0,4050</td><td>0,4050</td></tr>
+        <tr><td>5</td><td>−0,0696</td><td>−0,1196</td><td>−0,0695</td><td>−0,0695</td></tr>
+        <tr><td>10</td><td>0,0034</td><td>0,0084</td><td>0,0034</td><td>0,0034</td></tr>
+      </tbody></table></div>
+    <p>La referencia es una integración con tolerancia \(10^{-11}\). El modelo lineal se aparta mucho porque el ángulo inicial (90°) está lejos de donde \(\sin\theta\approx\theta\). Esta comparación sale del script de prácticas de Euler con el péndulo, repetido con código.</p>
+  </details>
+
+  <h3>Cuestión 4 · Autocorrelación del error de un modelo OE</h3>
+  <p><b>Enunciado.</b> Modelo con \(B(q)=0{,}0001096\,q^{-1}\), \(F(q)=1-1{,}999\,q^{-1}+0{,}999\,q^{-2}\), entrada \(2,3,\dots,10\) y salida medida dada. Los tres primeros términos de la autocorrelación del error.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Resuelto con todos los pasos en la <a href="tema-12-13.html#ejemplo-oe">página de predicción y error</a>:</p>
+    <div class="eq">\[\hat R(0)=4{,}19\cdot10^{-5},\qquad \hat R(1)=-1{,}23\cdot10^{-5},\qquad \hat R(2)=1{,}6\cdot10^{-7}\]</div>
+  </details>
+</section>
+
+<section class="sec ctl" id="mayo">
+  <h2><span class="dot"></span>Segundo parcial de mayo de 2026</h2>
+
+  <h3>Problema A · Control de la aceleración con acople mecánico</h3>
+  <p><b>Enunciado resumido.</b> Mismo sistema propulsado, pero ahora se controla la <b>aceleración</b>: el gasto de combustible se controla directamente mediante un acople mecánico con la masa del acelerómetro. 1) Diagrama de bloques y pseudocódigo (2 puntos). 2) Control por computador con un accionador adicional \(G(s)=1\) y controlador PID (1 punto).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>El mismo modelo de bancada y acelerómetro que en el Problema 2 de junio. El acople hace que la apertura de la válvula siga el desplazamiento \(y\) de la masa del acelerómetro: \(q=q_0+K_c\,(y-y_{ref})\), con \(y_{ref}=-m\,a_{ref}/k_a\) (el desplazamiento que corresponde a la aceleración deseada) y \(q_0=(M_b+m_{f0})\,a_{ref}/c\).</p></div>
+    <p><b>Diagrama.</b> La masa del acelerómetro se desplaza \(y\) según la aceleración de la bancada, y ese desplazamiento actúa directamente sobre la válvula del combustible: es un lazo cerrado sin electrónica, con ganancia \(K_c\) positiva (si la aceleración sube, \(y\) se hace más negativo y baja el caudal).</p>
+<pre class="code">v = 0 ; mf = mf0 ; y = 0 ; w = 0
+yref = -m*aref/ka ; q0 = (Mb + mf0)*aref/c
+para k = 0 hasta N-1:
+    q  = limitar(q0 + Kc*(y - yref), 0, qmax) ; si mf &lt;= 0: q = 0   // acople mecánico
+    a  = (c*q - br*v)/(Mb + mf)
+    v  = v + h*a ; mf = max(mf - h*q, 0)
+    y  = y + h*w ; w = w + h*((-ka*y - ba*w)/m - a)
+    guardar(k*h, a, q, y)</pre>
+    <p><b>Con computador (parte 2).</b> Se mide la aceleración con el acelerómetro (\(a_m=-k_ay/m\)) y se calcula, cada \(T_c=nh\), \(e=a_{ref}-a_m\) y \(u=K_pe+K_iI+K_d\,\Delta e/T_c\), que va al accionador \(G(s)=1\) (\(q=u\), saturado). Es la misma estructura de pseudocódigo con el controlador dentro de <code>si k mod n == 0</code>.</p>
+    <p class="vid-note"><b>Comprobación.</b> Con los parámetros del Problema 2 de junio, \(a_{ref}=0{,}5\) m/s² y \(K_c=400\), la aceleración queda en \(0{,}48\) m/s² a los 18 s (con \(K_c=2000\) hay un transitorio fuerte, porque se acerca a la frecuencia propia del acelerómetro, 20 rad/s).</p>
+  </details>
+
+  <h3>Cuestión 1 · Ecuaciones rígidas</h3>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Un sistema es rígido cuando mezcla dinámicas con escalas de tiempo muy distintas. Ejemplo físico: un <b>motor de continua</b> con constante eléctrica \(\tau_e=L/R\approx1\) ms y constante mecánica \(\tau_m\approx1\) s. Sus polos están en \(\lambda_1\approx-1000\) y \(\lambda_2\approx-1\) s⁻¹.</p>
+    <p>Un método explícito como Euler solo es estable con \(h\lt2/|\lambda_{max}|=2\) ms, aunque la respuesta lenta pida pasos mucho mayores: simular 10 s costaría 5000 pasos solo por el polo rápido. Se resuelve con un método implícito para ecuaciones rígidas (<code>ode15s</code>, <code>ode23s</code>) o aceptando pasos mínimos. Más en <a href="tema-9-11.html#rigidez">métodos numéricos</a>.</p>
+  </details>
+
+  <h3>Cuestión 2 · Probabilidad dentro de una desviación típica</h3>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Con el modelo OE de junio: \(P\big(|e-\bar e|\le\sigma_e\big)\approx5/9=0{,}56\), con cualquiera de las dos definiciones de la desviación. Está completa en la <a href="tema-12-13.html#ejemplo-oe">página de error</a>.</p>
+  </details>
+
+  <h3>Problema B · Globo aerostático con resistencia</h3>
+  <p><b>Enunciado resumido.</b> Un globo se calienta con una resistencia alimentada por una batería; se puede ajustar la intensidad. Hay pérdidas de calor con el exterior y la temperatura exterior baja proporcionalmente con la altura. Se da la superficie de la esfera \(4\pi r^2\). 1) Pseudocódigo con PID analógico para controlar la altura. 2) Pseudocódigo con control por computador.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>Volumen \(V\) fijo y aire como gas ideal a presión constante \(p\). Energía del aire interior: \(C_{th}\dot T=R_{res}I^2-US\,(T-T_{ext})\), con \(C_{th}=\rho_iVc_p\) y \(S=4\pi r^2\). Temperatura exterior \(T_{ext}=T_0-\gamma z\). Empuje de Arquímedes con \(\rho=p/(R_aT)\) y rozamiento viscoso \(b\).</p></div>
+    <div class="eq">\[\begin{aligned}C_{th}\dot T&=R_{res}I^2-US\,(T-T_{ext}(z)),\qquad T_{ext}=T_0-\gamma z\\ (m_c+\rho_iV)\,\ddot z&=(\rho_e-\rho_i)\,V g-m_cg-b\dot z\end{aligned}\]</div>
+    <p>con \(\rho_i=p/(R_aT)\) y \(\rho_e=p/(R_aT_{ext})\). La entrada es la intensidad \(I\), que sale del PID.</p>
+<pre class="code">T = Text0 + dT0 ; z = 0 ; vz = 0 ; ie = 0 ; eprev = zref
+para k = 0 hasta N-1:
+    e  = zref - z                                  // PID analógico: cada paso
+    ie = ie + e*h ; de = (e - eprev)/h ; eprev = e
+    I  = limitar(Kp*e + Ki*ie + Kd*de, 0, Imax)
+    Text = T0 - gam*z
+    rho_i = p/(Ra*T) ; rho_e = p/(Ra*Text)
+    dT  = (Rres*I^2 - U*(4*pi*r^2)*(T - Text)) / (rho_i*V*cp)
+    dvz = ((rho_e - rho_i)*V*g - mc*g - b*vz) / (mc + rho_i*V)
+    z = z + h*vz ; vz = vz + h*dvz ; T = T + h*dT
+    guardar(k*h, z, T, I)</pre>
+    <p><b>Con control por computador</b> el bloque del PID solo se ejecuta cuando <code>k mod n == 0</code>, con \(T_c=nh\), y el integral y la derivada usan \(T_c\) en lugar de \(h\); entre muestras se mantiene \(I\).</p>
+    <p class="vid-note"><b>Comprobación.</b> Con \(r=3\) m, \(m_c=20\) kg, \(U=5\ \mathrm{W/m^2K}\), \(R_{res}=1\ \Omega\), \(T_0=288\) K, \(\gamma=0{,}0065\) K/m, \(b=60\), \(\Delta T_0=40\) K, \(I_{max}=500\) A y consigna 100 m, el PID \(K_p=2\), \(K_i=0{,}01\), \(K_d=100\) lleva el globo a 100 m con una sobreoscilación máxima de 101,6 m (analógico) y 101,3 m (digital con \(T_c=1\) s); con \(T_c=5\) s sigue convergiendo. En régimen final la temperatura interior es 62,5 °C y la intensidad 165 A. Los parámetros son de prueba, no del enunciado. Con ganancias pequeñas (\(K_p\le0{,}1\)) la intensidad no basta para vencer las pérdidas y el globo no despega.</p>
+  </details>
+</section>
+
+<section class="sec flu" id="abril">
+  <h2><span class="dot"></span>Primer parcial de abril de 2026</h2>
+
+  <h3>Problema · Fuente de tres depósitos cónicos</h3>
+  <p><b>Enunciado resumido.</b> Tres depósitos cónicos de relación \(H/R\) (volumen \(\tfrac13A_bh\)), alimentados por una válvula en la parte superior, caen en cascada. 1) Modelo en ecuaciones diferenciales (1 punto). 2) Función de transferencia entre caudal de salida y de entrada para \(N\) depósitos (2 puntos).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <div class="box trap"><h4>Hipótesis</h4><p>Cada depósito descarga por un orificio con \(Q_i=k\sqrt{h_i}\) (ley de válvula) al siguiente; el primero recibe \(Q_{in}\) de la válvula superior. Los orificios son iguales.</p></div>
+    <p><b>1. Ecuaciones.</b> Con radio \(\rho=h\,R/H\) a la altura \(h\), el volumen es \(V_i=\tfrac13\pi\rho^2h=\tfrac\pi3\big(\tfrac RH\big)^2h_i^3\), y la superficie libre \(A_i=\pi\big(\tfrac RH\big)^2h_i^2\). El balance de volumen da, para \(i=1,2,3\):</p>
+    <div class="eq key">\[\pi\Big(\frac RH\Big)^2h_i^2\,\dot h_i=Q_{i-1}-k\sqrt{h_i},\qquad Q_0=Q_{in},\quad Q_i=k\sqrt{h_i}\]</div>
+    <p><b>2. Linealización.</b> En equilibrio todos los depósitos tienen el mismo caudal \(Q_0\) y la misma altura \(h_0=(Q_0/k)^2\). Con \(A_0=\pi(R/H)^2h_0^2\) y \(\dfrac{dQ_i}{dh_i}=\dfrac k{2\sqrt{h_0}}=\dfrac{Q_0}{2h_0}\):</p>
+    <div class="eq">\[A_0\,\Delta\dot h_i=\Delta Q_{i-1}-\frac{Q_0}{2h_0}\Delta h_i\;\Rightarrow\;\frac{\Delta Q_i}{\Delta Q_{i-1}}=\frac{1}{\tau s+1},\quad \tau=\frac{2h_0A_0}{Q_0}=\frac{6V_0}{Q_0}\]</div>
+    <p>donde \(V_0=\tfrac\pi3(R/H)^2h_0^3\) es el volumen de cada depósito en equilibrio. Cada depósito es un primer orden que descarga en el siguiente, así que para \(N\) depósitos iguales:</p>
+    <div class="eq key">\[\frac{Q_{sal}(s)}{Q_{in}(s)}=\frac{1}{(\tau s+1)^N}\]</div>
+    <p class="vid-note"><b>Comprobación.</b> Se integró el modelo no lineal de tres depósitos con un escalón pequeño y se comparó con \(1/(\tau s+1)^3\): la diferencia es proporcional al tamaño del escalón (0,8 % con un escalón del 0,5 %, 0,08 % con el 0,05 %), como corresponde a una linealización correcta.</p>
+  </details>
+
+  <h3>Cuestión 1 · Tanque con válvula: dos step-tests</h3>
+  <p><b>Enunciado.</b> Un tanque recibe \(f_i\) y tiene una válvula de salida de apertura \(a\). En el test 1 cambia solo el caudal de entrada (de \(3{,}33\cdot10^{-4}\) a \(1{,}67\cdot10^{-4}\ \mathrm{m^3/s}\), con \(a=0{,}5\)): la altura baja de 0,3 m a unos 0,075 m. En el test 2 cambia solo la apertura (de 0,5 a 0,75): la altura baja de 0,3 m a unos 0,133 m. Proponer un modelo.</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p><b>Modelo.</b> Balance de volumen con válvula de apertura \(a\):</p>
+    <div class="eq key">\[S\,\dot h=f_i-K\,a\sqrt h\]</div>
+    <p><b>Parámetros.</b> En el estado inicial hay equilibrio, \(f_i=Ka\sqrt h\):</p>
+    <div class="eq">\[K=\frac{3{,}33\cdot10^{-4}}{0{,}5\sqrt{0{,}3}}=1{,}22\cdot10^{-3}\ \mathrm{m^{5/2}/s}\]</div>
+    <p><b>Contraste con los dos tests.</b> Como \(h_{final}=(f_i/Ka)^2\):</p>
+    <div class="eq">\[\text{test 1: }0{,}3\Big(\frac{1{,}67}{3{,}33}\Big)^2=0{,}075\ \checkmark\qquad \text{test 2: }0{,}3\Big(\frac{0{,}5}{0{,}75}\Big)^2=0{,}133\ \checkmark\]</div>
+    <p>Los dos tests, con un único \(K\), reproducen las alturas finales: es la evidencia de que la salida depende de \(a\sqrt h\) (y no, por ejemplo, de \(a\,h\)). La sección \(S\) sale de la velocidad de bajada; ajustando a las curvas queda \(S\approx0{,}13\ \mathrm m^2\) (estimación gráfica).</p>
+  </details>
+
+  <h3>Cuestión 2 · Salida de un modelo OE</h3>
+  <p><b>Enunciado.</b> Con los mismos polinomios \(B(q)\) y \(F(q)\), estimar la salida del modelo para \(u=\{2,3,4,5,6\}\).</p>
+  <details class="sol"><summary>Ver resolución</summary>
+    <p>Recurrencia del modelo OE, con predicciones y entradas anteriores a \(k=1\) iguales a cero:</p>
+    <div class="eq">\[\hat y(k)=1{,}999\,\hat y(k-1)-0{,}999\,\hat y(k-2)+0{,}0001096\,u(k-1)\]</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>\(k\)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+      <tbody><tr><td>\(u(k)\)</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+      <tr><td>\(\hat y(k)\)</td><td>0</td><td>0,00022</td><td>0,00077</td><td>0,00175</td><td>0,00329</td></tr></tbody></table></div>
+    <p>Si se usara la versión ARX, cada término usaría la salida <b>medida</b> en lugar de la predicha (ver <a href="tema-12-13.html#prediccion">predicción</a>).</p>
+  </details>
+</section>
+</div><div class="gc-page" id="pg-simulacro"><header>
+  <div class="kicker">Practicar · simulacro con soluciones</div>
+  <h1>Simulacro de examen</h1>
+  <p class="lead">Un examen completo con la misma forma que los de 2023 a 2026: dos problemas de 3 puntos y cuatro cuestiones de 1 punto. Resuélvelo en una hora y media sin mirar y luego corrige con las soluciones.</p>
+  <div class="tags"><span class="tag">10 puntos</span><span class="tag">2 problemas</span><span class="tag">4 cuestiones</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Es un examen inventado por mí con la estructura que muestran los enunciados de años anteriores. No sale del aula virtual y no sabemos si el de este curso será igual. Todos los números de las soluciones están comprobados con código.</p>
+</header>
+
+<section class="sec mec" id="p1">
+  <h2><span class="dot"></span>Problema 1 · Masa con realimentación de posición (3 puntos)</h2>
+  <div class="card">
+    <p>Una masa \(M=2\) kg se apoya en un muelle de \(K=50\) N/m con un amortiguador \(B=4\) N·s/m. Una fuerza de control \(F=K_c\,(r-x)\) con \(K_c=150\) N/m empuja la masa, donde \(r\) es la posición deseada y \(x\) la real.</p>
+    <ol type="a">
+      <li>Ecuación diferencial del sistema en lazo cerrado y función de transferencia \(X(s)/R(s)\). (1,5 puntos)</li>
+      <li>Frecuencia natural, factor de amortiguamiento, polos y valor final ante un escalón unitario. (1,5 puntos)</li>
+    </ol>
+  </div>
+  <details class="sol"><summary>Ver solución</summary>
+    <p><b>a)</b> \(M\ddot x=-Kx-B\dot x+K_c(r-x)\Rightarrow M\ddot x+B\dot x+(K+K_c)x=K_cr\). En Laplace:</p>
+    <div class="eq key">\[\frac{X(s)}{R(s)}=\frac{K_c}{Ms^2+Bs+K+K_c}=\frac{150}{2s^2+4s+200}\]</div>
+    <p><b>b)</b> \(\omega_n=\sqrt{\dfrac{K+K_c}{M}}=\sqrt{100}=10\) rad/s; \(\xi=\dfrac{B}{2\sqrt{(K+K_c)M}}=\dfrac{4}{2\cdot20}=0{,}1\). Los polos son \(-1\pm9{,}95j\): muy poco amortiguado, con una sobreoscilación de \(e^{-\pi\xi/\sqrt{1-\xi^2}}\approx73\,\%\). El valor final ante un escalón unitario es la ganancia estática \(\dfrac{K_c}{K+K_c}=0{,}75\): no llega a la consigna, porque el muelle \(K\) también empuja.</p>
+  </details>
+</section>
+
+<section class="sec ctl" id="p2">
+  <h2><span class="dot"></span>Problema 2 · Control de nivel por computador (3 puntos)</h2>
+  <div class="card">
+    <p>Un tanque de sección \(S=2\ \mathrm m^2\) tiene una válvula de salida \(Q=k\,a\sqrt h\) (\(k=0{,}01\), \(a=1\)). Se controla el nivel con un caudal de entrada \(f_i\) acotado entre 0 y \(0{,}05\ \mathrm{m^3/s}\), que fija un controlador PI.</p>
+    <ol type="a">
+      <li>Ecuación del tanque y pseudocódigo para simularlo con Euler y control analógico. (2 puntos)</li>
+      <li>Pseudocódigo con control por computador, con periodo de control igual a 10 pasos de simulación. (1 punto)</li>
+    </ol>
+  </div>
+  <details class="sol"><summary>Ver solución</summary>
+    <p><b>a)</b> Balance de volumen: \(S\,\dot h=f_i-ka\sqrt h\). Variable de estado: \(h\) (y la integral del error, si se usa PI). Condición inicial: \(h(0)=h_0\).</p>
+<pre class="code">h = h0 ; I = 0
+para k = 0 hasta N-1:
+    e  = href - h
+    I  = I + e*dt
+    fi = limitar(Kp*e + Ki*I, 0, fmax)        // PI analógico, cada paso
+    h  = h + dt*(fi - k*a*sqrt(h))/S
+    guardar(k*dt, h, fi)</pre>
+    <p><b>b)</b> El PI solo se recalcula cada \(T_c=10\,dt\); entre medias \(f_i\) se mantiene.</p>
+<pre class="code">h = h0 ; I = 0 ; fi = 0 ; Tc = 10*dt
+para k = 0 hasta N-1:
+    si k mod 10 == 0:
+        e  = href - h
+        I  = I + e*Tc
+        fi = limitar(Kp*e + Ki*I, 0, fmax)
+    h = h + dt*(fi - k*a*sqrt(h))/S
+    guardar(k*dt, h, fi)</pre>
+    <p class="vid-note"><b>Comprobación.</b> Con \(h_{ref}=1\) m, \(h_0=0{,}2\) m, \(dt=0{,}05\) s, \(K_p=0{,}02\) y \(K_i=0{,}0004\), el pseudocódigo digital lleva el nivel a \(0{,}996\) m a los 600 s. El caudal de equilibrio es \(ka\sqrt{h_{ref}}=0{,}01\ \mathrm{m^3/s}\).</p>
+  </details>
+</section>
+
+<section class="sec" id="cuestiones">
+  <h2><span class="dot"></span>Cuestiones (1 punto cada una)</h2>
+  <div class="card"><p><b>Cuestión 1.</b> Un escalón \(\Delta u=3\) lleva la salida de 2 a 8. Se lee \(t_{28}=2{,}5\) s y \(t_{63}=5{,}5\) s. Propón un modelo de primer orden con retardo.</p></div>
+  <details class="sol"><summary>Solución de la cuestión 1</summary>
+    <p>\(K=6/3=2\); \(\tau=1{,}5\,(5{,}5-2{,}5)=4{,}5\) s; \(T=5{,}5-4{,}5=1\) s. Modelo: \(G(s)=\dfrac{2\,e^{-s}}{4{,}5\,s+1}\).</p></details>
+
+  <div class="card"><p><b>Cuestión 2.</b> Con Euler y \(h=0{,}1\), calcula las tres primeras aproximaciones de \(y'=-4y+2\), \(y(0)=0\).</p></div>
+  <details class="sol"><summary>Solución de la cuestión 2</summary>
+    <p>\(w_1=0+0{,}1\cdot2=0{,}2\); \(w_2=0{,}2+0{,}1\,(-0{,}8+2)=0{,}32\); \(w_3=0{,}32+0{,}1\,(-1{,}28+2)=0{,}392\). La solución exacta tiende a \(0{,}5\).</p></details>
+
+  <div class="card"><p><b>Cuestión 3.</b> Un sistema tiene un polo en \(-25\ \mathrm{s^{-1}}\). ¿Qué \(h\) máximo permite Euler? ¿Qué ocurre con \(h=0{,}1\)?</p></div>
+  <details class="sol"><summary>Solución de la cuestión 3</summary>
+    <p>Hace falta \(h\lt2/25=0{,}08\) s. Con \(h=0{,}1\) el factor de amplificación es \(1-25\cdot0{,}1=-1{,}5\), de módulo mayor que 1: la solución numérica oscila y crece sin límite aunque el sistema real sea estable.</p></details>
+
+  <div class="card"><p><b>Cuestión 4.</b> Un modelo FIR \(y(k)=b_1u(k-1)+b_2u(k-2)\) se estima con \(\Phi^T\Phi=\begin{pmatrix}30&20\\20&14\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}32{,}7\\21{,}7\end{pmatrix}\). Calcula \(\hat\theta\).</p></div>
+  <details class="sol"><summary>Solución de la cuestión 4</summary>
+    <p>\(\det=30\cdot14-20\cdot20=20\). \(\hat\theta=\dfrac1{20}\begin{pmatrix}14&-20\\-20&30\end{pmatrix}\begin{pmatrix}32{,}7\\21{,}7\end{pmatrix}=\dfrac1{20}\begin{pmatrix}23{,}8\\-3\end{pmatrix}=\begin{pmatrix}1{,}19\\-0{,}15\end{pmatrix}\).</p></details>
+</section>
+
+<section class="sec" id="criterio">
+  <h2><span class="dot"></span>Cómo corregirte</h2>
+  <ul>
+    <li>Cada problema vale 3 puntos y cada cuestión 1. Como criterio propio (no oficial), si el planteamiento es completo —variables, ecuaciones, condiciones iniciales— pero falla un número, dátelo casi por bueno.</li>
+    <li>Si has fallado el Problema 1, repasa <a href="tema-1-2.html">la unidad 1</a> y <a href="problemas.html">los problemas</a>. Si el 2, <a href="tema-9-11.html#plantilla">la plantilla de pseudocódigo</a>.</li>
+    <li>Cuestiones 1 y 4: <a href="tema-3-5.html">identificación</a>. Cuestiones 2 y 3: <a href="tema-9-11.html">métodos numéricos</a>.</li>
+  </ul>
+</section>
+</div><div class="gc-page" id="pg-complementarios"><header>
+  <div class="kicker">Practicar · ejercicios cortos</div>
+  <h1>Ejercicios complementarios</h1>
+  <p class="lead">Dieciséis ejercicios cortos, de un solo cálculo, para practicar lo básico de cada unidad. Todas las soluciones se han calculado con código.</p>
+  <div class="tags"><span class="tag">16 ejercicios</span><span class="tag">con solución</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Ejercicios propios, no del examen. Resuélvelos en papel antes de abrir cada solución.</p>
+</header>
+<section class="sec" id="lista">
+  <h2><span class="dot"></span>Ejercicios por unidad</h2>
+  <details class="sol"><summary>1 · Euler <span class="pill">UD4</span> — Con Euler y \(h=0{,}25\) resuelve \(y'=-2y+4\), \(y(0)=0\). Calcula \(w_1\) y \(w_2\).</summary>
+    <p>\(w_1=0+0{,}25\,(4)=1\); \(w_2=1+0{,}25\,(-2\cdot1+4)=1{,}5\). La exacta en \(t=0{,}5\) es \(2(1-e^{-1})=1{,}2642\): Euler se pasa (error \(0{,}236\)).</p></details>
+  <details class="sol"><summary>2 · Runge-Kutta 2 <span class="pill">UD4</span> — El mismo problema, ahora con RK2 de punto medio y \(h=0{,}25\). Calcula \(w_1\) y \(w_2\).</summary>
+    <p>Primer paso: pendiente en el punto medio \(f(0+0{,}125\cdot4)=f(0{,}5)=3\), \(w_1=0{,}25\cdot3=0{,}75\). Segundo: \(w_2=1{,}21875\). La exacta en \(t=0{,}5\) es \(1{,}2642\): el error baja de \(0{,}236\) (Euler) a \(0{,}045\) (RK2).</p></details>
+  <details class="sol"><summary>3 · Runge-Kutta 4 <span class="pill">UD4</span> — Un paso de RK4 con \(h=0{,}5\) para \(y'=y\), \(y(0)=1\). Compara con \(e^{0{,}5}\).</summary>
+    <p>\(k_1=1\); \(k_2=1{,}25\); \(k_3=1{,}3125\); \(k_4=1{,}6562\); \(w_1=1+\tfrac{0{,}5}6\,(k_1+2k_2+2k_3+k_4)=1{,}6484375\). \(e^{0{,}5}=1{,}6487213\): el error es \(2{,}838e-04\) con un solo paso.</p></details>
+  <details class="sol"><summary>4 · Adams-Bashforth 2 <span class="pill">UD4</span> — Para \(y'=-y\) con \(h=0{,}1\), \(w_0=1\) y \(w_1=0{,}9\), calcula \(w_2\) con Adams-Bashforth de dos pasos.</summary>
+    <p>\(w_2=w_1+\tfrac h2\,(3f_1-f_0)=0{,}9+0{,}05\,(3(-0{,}9)-(-1))=0{,}815\). La exacta es \(0{,}8187\).</p></details>
+  <details class="sol"><summary>5 · Paso máximo <span class="pill">UD4</span> — ¿Qué \(h\) máximo mantiene estable a Euler en \(y'=-50y\)? ¿Y si usas \(h=0{,}05\)?</summary>
+    <p>Hace falta \(|1-50h|\lt1\), luego \(h\lt2/50=0{,}04\). Con \(h=0{,}05\) el factor es \(1-2{,}5=-1{,}5\): \(|{-1{,}5}|\gt1\), la solución numérica oscila y diverge.</p></details>
+  <details class="sol"><summary>6 · Escalón de primer orden <span class="pill">UD2</span> — Un escalón \(\Delta u=3\) lleva la salida de 2 a 8. Se lee \(t_{28}=2{,}5\) s y \(t_{63}=5{,}5\) s. Halla \(K\), \(\tau\) y \(T\).</summary>
+    <p>\(K=\Delta y/\Delta u=6/3=2\); \(\tau=1{,}5\,(5{,}5-2{,}5)=4{,}5\) s; \(T=5{,}5-4{,}5=1\) s.</p></details>
+  <details class="sol"><summary>7 · Segundo orden <span class="pill">UD1</span> — \(2\ddot x+8\dot x+50x=F\). Halla \(\omega_n\) y \(\xi\) y di si oscila.</summary>
+    <p>\(\omega_n=\sqrt{K/M}=5\) rad/s; \(\xi=\dfrac{B}{2\sqrt{KM}}=0{,}4\lt1\): oscila (subamortiguado). La sobreoscilación es \(e^{-\pi\xi/\sqrt{1-\xi^2}}=25{,}4\,\%\).</p></details>
+  <details class="sol"><summary>8 · Motor de continua <span class="pill">UD1</span> — Motor con \(R=2\ \Omega\), \(K_i=K_b=0{,}1\), \(I=0{,}01\), \(B=0{,}002\) (inductancia despreciable). Halla \(K\) y \(\tau\) de \(\Omega/V\).</summary>
+    <p>\(K=\dfrac{K_i}{BR+K_iK_b}=\dfrac{0{,}1}{0{,}004+0{,}01}=7{,}14\) rad/s/V; \(\tau=\dfrac{IR}{BR+K_iK_b}=\dfrac{0{,}02}{0{,}014}=1{,}43\) s.</p></details>
+  <details class="sol"><summary>9 · Tanque linealizado <span class="pill">UD1</span> — Tanque de sección \(S=0{,}5\ \mathrm m^2\) con salida \(Q=k\sqrt h\), en equilibrio con \(h_0=0{,}16\) m y \(Q_0=0{,}004\ \mathrm{m^3/s}\). Halla la constante de tiempo del modelo linealizado.</summary>
+    <p>\(\tau=\dfrac{2Sh_0}{Q_0}=\dfrac{2\cdot0{,}5\cdot0{,}16}{0{,}004}=4\) s.</p></details>
+  <details class="sol"><summary>10 · Predicción ARX <span class="pill">UD2</span> — Modelo ARX \(y(k)=0{,}7\,y(k-1)+0{,}4\,u(k-1)\). Con \(y(k-1)=2\) y \(u(k-1)=1\), ¿cuánto vale \(\hat y(k)\)?</summary>
+    <p>\(\hat y=0{,}7\cdot2+0{,}4\cdot1=1{,}8\). Si fuera OE, en lugar de \(y(k-1)\) medido se usaría la predicción \(\hat y(k-1)\).</p></details>
+  <details class="sol"><summary>11 · Mínimos cuadrados <span class="pill">UD2</span> — Ajusta \(y=a\,u\) a los datos \(u=(1,2,3,4)\), \(y=(2{,}1;\ 3{,}9;\ 6{,}2;\ 7{,}8)\).</summary>
+    <p>\(\hat a=\dfrac{\sum uy}{\sum u^2}=\dfrac{59{,}7}{30}=1{,}99\).</p></details>
+  <details class="sol"><summary>12 · Media y desviación <span class="pill">UD5</span> — Error: \(e=(0{,}2;\,-0{,}1;\,0{,}3;\,-0{,}2;\,0{,}1;\,0)\). Calcula la media, la desviación típica (con \(N-1\)) y la fracción de muestras con \(|e-\bar e|\le\sigma\).</summary>
+    <p>\(\bar e=0{,}05\); \(\sigma=0{,}1871\); dentro de una desviación hay \(4\) de \(6\), es decir \(67\,\%\). Con \(1/N\) sale \(\sigma=0{,}1708\) y el mismo recuento.</p></details>
+  <details class="sol"><summary>13 · Autocorrelación <span class="pill">UD5</span> — Con el mismo error, calcula \(\hat R(0)\), \(\hat R(1)\) y \(\hat R(2)\) con \(\hat R(r)=\frac1{N-r}\sum e(k)e(k+r)\).</summary>
+    <p>\(\hat R(0)=0{,}0317\) (valor medio cuadrático); \(\hat R(1)=-0{,}026\); \(\hat R(2)=0{,}0275\). Con solo seis datos no se puede decir que sea ruido blanco.</p></details>
+  <details class="sol"><summary>14 · Circuito RC <span class="pill">UD1</span> — Circuito RC en serie con \(R=10\ \mathrm{k\Omega}\), \(C=100\ \mu\mathrm F\), salida en el condensador. Función de transferencia y constante de tiempo.</summary>
+    <p>\(\dfrac{V_o}{V_i}=\dfrac1{RCs+1}\) con \(\tau=RC=10^4\cdot10^{-4}=1\) s.</p></details>
+  <details class="sol"><summary>15 · Circuito RLC <span class="pill">UD1</span> — RLC en serie con \(L=0{,}1\) H, \(R=20\ \Omega\), \(C=1\) mF, salida en el condensador. Halla \(\omega_n\) y \(\xi\).</summary>
+    <p>\(\dfrac{V_o}{V}=\dfrac1{LCs^2+RCs+1}\): \(\omega_n=\dfrac1{\sqrt{LC}}=1\) rad/s; \(\xi=\dfrac R2\sqrt{C/L}=1\): amortiguamiento crítico.</p></details>
+  <details class="sol"><summary>16 · Amplificador operacional <span class="pill">UD1</span> — Inversor con \(R_f=100\ \mathrm{k\Omega}\) y \(R_i=10\ \mathrm{k\Omega}\). ¿Ganancia?</summary>
+    <p>\(V_o/V_i=-Z_f/Z_i=-100/10=-10\).</p></details>
+</section>
+</div><div class="gc-page" id="pg-demostraciones"><header>
+  <div class="kicker">Practicar · deducciones</div>
+  <h1>Demostraciones tipo examen</h1>
+  <p class="lead">Las deducciones que más se piden o que más ayudan a entender los métodos, escritas paso a paso y cortas. Si las sabes hacer, no hace falta memorizar las fórmulas.</p>
+  <div class="tags"><span class="tag">10 demostraciones</span><span class="tag">UD 1, 2 y 4</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Deducciones propias a partir de resultados estándar. La de Adams-Bashforth de dos pasos aparece en los exámenes; el resto sirven para entender.</p>
+</header>
+
+<section class="sec ctl" id="d-numericos">
+  <h2><span class="dot"></span>Métodos numéricos</h2>
+
+  <details class="sol"><summary>1 · Adams-Bashforth de dos pasos (se pide en examen)</summary>
+    <p><b>Idea.</b> Integrar \(y'=f\) entre \(t_k\) y \(t_{k+1}\) sustituyendo \(f\) por la recta que pasa por \((t_{k-1},f_{k-1})\) y \((t_k,f_k)\).</p>
+    <p>Con \(s=t-t_k\): \(f(s)\approx f_k+\dfrac{f_k-f_{k-1}}{h}\,s\). Entonces</p>
+    <div class="eq">\[w_{k+1}=w_k+\int_0^h\Big[f_k+\frac{f_k-f_{k-1}}h\,s\Big]ds=w_k+hf_k+\frac{f_k-f_{k-1}}{h}\cdot\frac{h^2}{2}\]</div>
+    <div class="eq key">\[w_{k+1}=w_k+\frac h2\,\big(3f_k-f_{k-1}\big)\]</div>
+    <p>Es un método de orden 2 y necesita \(w_1\), que se obtiene con un método de un paso.</p></details>
+
+  <details class="sol"><summary>2 · Runge-Kutta de orden 2 (punto medio) tiene orden 2</summary>
+    <p>Desarrolla la solución exacta: \(y(t+h)=y+hf+\tfrac{h^2}2\,(f_t+f_yf)+O(h^3)\).</p>
+    <p>El método da \(w_{k+1}=y+h\,f\big(t+\tfrac h2,\ y+\tfrac h2f\big)\). Desarrollando \(f\) en el punto medio:</p>
+    <div class="eq">\[f\big(t+\tfrac h2,\ y+\tfrac h2f\big)=f+\tfrac h2f_t+\tfrac h2f_yf+O(h^2)\;\Rightarrow\;w_{k+1}=y+hf+\tfrac{h^2}2(f_t+f_yf)+O(h^3)\]</div>
+    <p>Coincide con la exacta hasta \(h^2\): el error local es \(O(h^3)\) y el global \(O(h^2)\).</p></details>
+
+  <details class="sol"><summary>3 · Estabilidad de Euler: \(h\lt2/|\lambda|\)</summary>
+    <p>Con \(y'=\lambda y\), \(\lambda\lt0\), la solución exacta decae. Euler da \(w_{k+1}=w_k+h\lambda w_k=(1+h\lambda)\,w_k\), es decir \(w_k=(1+h\lambda)^kw_0\).</p>
+    <p>Decae solo si \(|1+h\lambda|\lt1\), o sea \(-1\lt1+h\lambda\lt1\Rightarrow h\lt\dfrac{2}{|\lambda|}\). Por ejemplo, con \(\lambda=-10\), \(h\lt0{,}2\).</p></details>
+
+  <details class="sol"><summary>4 · Error local de Euler</summary>
+    <p>Por Taylor, \(y(t+h)=y(t)+hy'(t)+\tfrac{h^2}2y''(\xi)\). Euler usa solo los dos primeros términos, así que el error en un paso es \(\tfrac{h^2}{2}y''(\xi)=O(h^2)\). En \(N=T/h\) pasos se acumula \(N\cdot O(h^2)=O(h)\): por eso Euler es de orden 1.</p></details>
+</section>
+
+<section class="sec" id="d-identificacion">
+  <h2><span class="dot"></span>Identificación</h2>
+
+  <details class="sol"><summary>5 · Mínimos cuadrados: la ecuación normal</summary>
+    <p>Se busca \(\hat\theta\) que minimice \(J=\|\mathbf Y-\Phi\theta\|^2=(\mathbf Y-\Phi\theta)^T(\mathbf Y-\Phi\theta)\).</p>
+    <div class="eq">\[\frac{\partial J}{\partial\theta}=-2\Phi^T(\mathbf Y-\Phi\theta)=0\;\Rightarrow\;\Phi^T\Phi\,\hat\theta=\Phi^T\mathbf Y\;\Rightarrow\;\hat\theta=(\Phi^T\Phi)^{-1}\Phi^T\mathbf Y\]</div>
+    <p>Exige que \(\Phi^T\Phi\) sea invertible, es decir, que la entrada excite lo bastante al sistema.</p></details>
+
+  <details class="sol"><summary>6 · De dónde sale \(\tau=1{,}5\,(t_{63}-t_{28})\)</summary>
+    <p>Respuesta de primer orden con retardo \(T\) a un escalón: \(y(t)=y_\infty\big(1-e^{-(t-T)/\tau}\big)\) para \(t\gt T\).</p>
+    <p>Al 63,2 %: \(e^{-(t-T)/\tau}=0{,}368\Rightarrow t_{63}=T+\tau\). Al 28,3 %: \(e^{-(t-T)/\tau}=0{,}717\Rightarrow t_{28}=T+0{,}333\,\tau\).</p>
+    <p>Restando: \(t_{63}-t_{28}=\tfrac23\tau\), luego \(\tau=1{,}5\,(t_{63}-t_{28})\) y \(T=t_{63}-\tau\).</p></details>
+
+  <details class="sol"><summary>7 · ARX frente a OE: por qué el ARX se resuelve con mínimos cuadrados</summary>
+    <p>El ARX es \(A(q)y=B(q)u+e\), es decir \(y(k)=-a_1y(k-1)-\dots+b_1u(k-1)+\dots+e(k)\): la salida es <b>lineal en los parámetros</b>, con regresores conocidos (las salidas y entradas medidas). Eso es exactamente \(\mathbf Y=\Phi\theta+e\).</p>
+    <p>En el OE, \(y=\dfrac BFu+e\): el regresor contiene salidas del modelo, que dependen de los parámetros que se buscan. El problema deja de ser lineal y se resuelve iterando.</p></details>
+</section>
+
+<section class="sec mec" id="d-modelado">
+  <h2><span class="dot"></span>Modelado</h2>
+
+  <details class="sol"><summary>8 · Motor de continua: \(K\) y \(\tau\)</summary>
+    <p>Eléctrica (inductancia despreciable): \(V=Ri+K_b\dot\theta\). Mecánica: \(K_ii-B\dot\theta=I\ddot\theta\). Se despeja \(i=(V-K_b\dot\theta)/R\):</p>
+    <div class="eq">\[I\ddot\theta+\Big(B+\frac{K_iK_b}R\Big)\dot\theta=\frac{K_i}{R}V\;\Rightarrow\;\frac{\Omega}{V}=\frac{K_i/R}{Is+B+K_iK_b/R}=\frac{K}{\tau s+1}\]</div>
+    <p>con \(K=\dfrac{K_i}{BR+K_iK_b}\) y \(\tau=\dfrac{IR}{BR+K_iK_b}\).</p></details>
+
+  <details class="sol"><summary>9 · Linealizar un depósito con válvula</summary>
+    <p>\(S\dot h=f_i-Ka\sqrt h\). En equilibrio \(f_{i0}=Ka_0\sqrt{h_0}\). Linealizando \(g(a,h)=Ka\sqrt h\):</p>
+    <div class="eq">\[\Delta g=K\sqrt{h_0}\,\Delta a+\frac{Ka_0}{2\sqrt{h_0}}\,\Delta h\;\Rightarrow\;S\,\Delta\dot h+\frac{Ka_0}{2\sqrt{h_0}}\Delta h=\Delta f_i-K\sqrt{h_0}\,\Delta a\]</div>
+    <p>Es un primer orden con \(\tau=\dfrac{2S\sqrt{h_0}}{Ka_0}=\dfrac{2Sh_0}{Q_0}\), usando \(Q_0=Ka_0\sqrt{h_0}\).</p></details>
+
+  <details class="sol"><summary>10 · \(N\) depósitos iguales en cascada: \(1/(\tau s+1)^N\)</summary>
+    <p>Cada depósito linealizado cumple \(\tau\,\Delta\dot h_i+\Delta h_i=R\,\Delta Q_{i-1}\) con \(\Delta Q_i=\Delta h_i/R\). Entonces \(\dfrac{\Delta Q_i}{\Delta Q_{i-1}}=\dfrac1{\tau s+1}\), y, como el caudal de salida de uno es el de entrada del siguiente, las funciones se multiplican: \(\dfrac{Q_N}{Q_0}=\dfrac1{(\tau s+1)^N}\). Para depósitos cónicos con orificio \(Q=k\sqrt h\) sale \(\tau=6V_0/Q_0\), como en <a href="examenes-resueltos.html#abril">abril de 2026</a>.</p></details>
+</section>
 </div><div class="gc-page" id="pg-autoevaluacion"><header>
   <div class="kicker">Practicar · repaso activo</div>
   <h1>Autoevaluación</h1>
-  <p class="lead">Doce preguntas de test con corrección inmediata para las unidades 1 y 2, y seis preguntas abiertas con respuesta desplegable para las unidades 4 y 5. Resuelve primero en papel y comprueba después.</p>
-  <div class="tags"><span class="tag">12 de test</span><span class="tag">6 abiertas</span></div>
+  <p class="lead">Veinticuatro preguntas de test con corrección inmediata, un generador de ejercicios con corrección, fichas de repaso y seis preguntas abiertas con respuesta desplegable. Resuelve primero en papel y comprueba después.</p>
+  <div class="tags"><span class="tag">24 de test</span><span class="tag">generador</span><span class="tag">fichas</span><span class="tag">6 abiertas</span></div>
   <p class="notice">Guía no oficial de la UPCT. Preguntas recreadas por mí con el estilo de los exámenes; sus cálculos están comprobados con código. No son preguntas reales del examen.</p>
 </header>
 
@@ -1439,7 +1890,99 @@ fin</pre>
     <div class="opts"><button class="opt" data-k="a">6,5</button><button class="opt" data-k="b">5,5</button><button class="opt" data-k="c">7</button><button class="opt" data-k="d">3,5</button></div>
     <div class="expl" hidden><p>\(\hat y=B\,u+(1-A)\,y=2u(0)+0{,}5\,y(0)=6+0{,}5=6{,}5\). Con \(a_1=-0{,}5\) el término \(-a_1y(0)\) suma. Un 5,5 viene de equivocar el signo.</p></div>
   </div>
+</section>
+
+<section class="sec ctl" id="test-ud4">
+  <h2><span class="dot"></span>Test · Unidad 4: métodos numéricos</h2>
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Euler</em></div>
+    <p>Con Euler y \(h=0{,}25\), \(y'=-2y+4\), \(y(0)=0\). ¿Cuánto vale \(w_1\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(1\)</button><button class="opt" data-k="b">\(0{,}5\)</button><button class="opt" data-k="c">\(2\)</button><button class="opt" data-k="d">\(4\)</button></div>
+    <div class="expl" hidden><p>\(w_1=0+0{,}25\,(-2\cdot0+4)=1\). El 4 olvida multiplicar por \(h\); el 2 sale de usar \(h=0{,}5\).</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Estabilidad</em></div>
+    <p>Un sistema tiene un polo en \(-50\ \mathrm{s^{-1}}\). ¿Qué paso máximo mantiene estable a Euler?</p>
+    <div class="opts"><button class="opt" data-k="a">\(0{,}1\)</button><button class="opt" data-k="b">\(0{,}02\)</button><button class="opt" data-k="c">\(0{,}04\)</button><button class="opt" data-k="d">\(0{,}4\)</button></div>
+    <div class="expl" hidden><p>\(h\lt2/|\lambda|=2/50=0{,}04\). El \(0{,}02\) es \(1/|\lambda|\), la mitad del límite real.</p></div>
+  </div>
+  <div class="q" data-correct="d">
+    <div class="qh">Recreada · <em>Orden</em></div>
+    <p>Con Runge-Kutta de orden 4 (error global \(O(h^4)\)), si divides el paso entre 2, el error se divide aproximadamente entre…</p>
+    <div class="opts"><button class="opt" data-k="a">2</button><button class="opt" data-k="b">4</button><button class="opt" data-k="c">8</button><button class="opt" data-k="d">16</button></div>
+    <div class="expl" hidden><p>\(2^4=16\). Euler se dividiría entre 2 y RK2 entre 4.</p></div>
+  </div>
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Adams-Bashforth</em></div>
+    <p>Para \(y'=-y\), con \(h=0{,}1\), \(w_0=1\) y \(w_1=0{,}9\), Adams-Bashforth de dos pasos da \(w_2=\)…</p>
+    <div class="opts"><button class="opt" data-k="a">\(0{,}815\)</button><button class="opt" data-k="b">\(0{,}810\)</button><button class="opt" data-k="c">\(0{,}820\)</button><button class="opt" data-k="d">\(0{,}800\)</button></div>
+    <div class="expl" hidden><p>\(w_2=w_1+\tfrac h2(3f_1-f_0)=0{,}9+0{,}05\,(-2{,}7+1)=0{,}815\). Con Euler habría salido \(0{,}81\).</p></div>
+  </div>
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Paso variable</em></div>
+    <p>¿Qué hace un solver de paso variable?</p>
+    <div class="opts"><button class="opt" data-k="a">Usa siempre el mismo paso, pero más pequeño</button><button class="opt" data-k="b">Aumenta o reduce el paso según el error estimado, para cumplir la tolerancia</button><button class="opt" data-k="c">Cambia de método en cada paso</button><button class="opt" data-k="d">Descarta los pasos que dan un error positivo</button></div>
+    <div class="expl" hidden><p>Aumenta el paso donde la solución cambia poco y lo reduce donde cambia deprisa. Por eso suele necesitar menos pasos que uno fijo.</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Rigidez</em></div>
+    <p>Un sistema tiene polos en \(-1\) y \(-1000\ \mathrm{s^{-1}}\). Con Euler, ¿qué limita el paso?</p>
+    <div class="opts"><button class="opt" data-k="a">El polo \(-1\): \(h\lt2\)</button><button class="opt" data-k="b">Ninguno: Euler siempre es estable</button><button class="opt" data-k="c">El polo \(-1000\): \(h\lt0{,}002\)</button><button class="opt" data-k="d">La suma de los dos polos</button></div>
+    <div class="expl" hidden><p>El polo más rápido manda: \(h\lt2/1000=0{,}002\) s, aunque la dinámica lenta pida pasos mucho mayores. Eso es la rigidez.</p></div>
+  </div>
+</section>
+
+<section class="sec flu" id="test-ud5">
+  <h2><span class="dot"></span>Test · Unidad 5: error</h2>
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Media del error</em></div>
+    <p>Error: \(e=(0{,}2;\,-0{,}1;\,0{,}3;\,-0{,}2;\,0{,}1;\,0)\). ¿Cuánto vale \(\bar e\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(0\)</button><button class="opt" data-k="b">\(0{,}05\)</button><button class="opt" data-k="c">\(0{,}1\)</button><button class="opt" data-k="d">\(0{,}3\)</button></div>
+    <div class="expl" hidden><p>La suma es \(0{,}3\) y \(N=6\): \(\bar e=0{,}05\).</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Dentro de una desviación</em></div>
+    <p>Con ese error, \(\sigma\approx0{,}187\) (con \(N-1\)). ¿Qué fracción de muestras cumple \(|e-\bar e|\le\sigma\)?</p>
+    <div class="opts"><button class="opt" data-k="a">50 %</button><button class="opt" data-k="b">83 %</button><button class="opt" data-k="c">67 %</button><button class="opt" data-k="d">100 %</button></div>
+    <div class="expl" hidden><p>Cumplen 4 de 6: \(0{,}2\), \(-0{,}1\), \(0{,}1\), \(0\) (las otras, \(0{,}3\) y \(-0{,}2\), quedan fuera): \(4/6=67\,\%\). Un error gaussiano daría el 68 %.</p></div>
+  </div>
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Autocorrelación</em></div>
+    <p>Con ese error, \(\hat R(0)\) vale…</p>
+    <div class="opts"><button class="opt" data-k="a">\(0{,}0317\)</button><button class="opt" data-k="b">\(0{,}187\)</button><button class="opt" data-k="c">\(0{,}05\)</button><button class="opt" data-k="d">\(0{,}0026\)</button></div>
+    <div class="expl" hidden><p>\(\hat R(0)=\frac1N\sum e^2=\frac{0{,}19}{6}=0{,}0317\): es el valor medio cuadrático. El \(0{,}187\) es la desviación, no su cuadrado.</p></div>
+  </div>
+  <div class="q" data-correct="d">
+    <div class="qh">Recreada · <em>ARX frente a OE</em></div>
+    <p>¿Cuál de los dos modelos usa las salidas <b>medidas</b> anteriores para predecir?</p>
+    <div class="opts"><button class="opt" data-k="a">Los dos por igual</button><button class="opt" data-k="b">El OE</button><button class="opt" data-k="c">Ninguno, los dos usan solo la entrada</button><button class="opt" data-k="d">El ARX</button></div>
+    <div class="expl" hidden><p>El ARX corrige en cada paso con lo medido. El OE realimenta sus propias predicciones.</p></div>
+  </div>
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Ruido blanco</em></div>
+    <p>La autocorrelación del error de un modelo decae despacio en lugar de anularse tras \(r=0\). ¿Qué indica?</p>
+    <div class="opts"><button class="opt" data-k="a">El modelo es perfecto</button><button class="opt" data-k="b">El error tiene dinámica sin modelar (ruido coloreado)</button><button class="opt" data-k="c">Hay demasiados datos</button><button class="opt" data-k="d">El paso de simulación es grande</button></div>
+    <div class="expl" hidden><p>Un error con memoria indica que parte de la dinámica no está en el modelo. Si fuera ruido blanco, \(\hat R(r)\approx0\) para \(r\ne0\).</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Error con media</em></div>
+    <p>La media del error es claramente distinta de cero. ¿Qué sospechas?</p>
+    <div class="opts"><button class="opt" data-k="a">Que el modelo es excelente</button><button class="opt" data-k="b">Que hay demasiado ruido</button><button class="opt" data-k="c">Que hay un sesgo: al modelo le falta un término constante o un offset</button><button class="opt" data-k="d">Que la autocorrelación es nula</button></div>
+    <div class="expl" hidden><p>Un error de media no nula es un sesgo sistemático. Hay que revisar el offset o el punto de trabajo.</p></div>
+  </div>
   <button class="reset" id="reset-q" type="button">Reiniciar todo el test</button>
+</section>
+
+<section class="sec ter" id="generador">
+  <h2><span class="dot"></span>Generador de ejercicios</h2>
+  <p>Ejercicios cortos con números al azar y corrección automática (margen del 2 %). Cada vez sale uno distinto: sirve para coger soltura con las cuentas del examen.</p>
+  <div data-sim="gen"></div>
+</section>
+
+<section class="sec ter" id="fichas">
+  <h2><span class="dot"></span>Fichas de repaso</h2>
+  <p>Doce fichas con lo que hay que saber de memoria. Piensa la respuesta antes de girarla.</p>
+  <div data-sim="cards"></div>
 </section>
 
 <section class="sec ctl" id="abiertas-ud4">

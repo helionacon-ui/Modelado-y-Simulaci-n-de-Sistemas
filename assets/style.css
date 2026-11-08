@@ -421,3 +421,17 @@ details.nom td:first-child { white-space: nowrap; }
 .zero { background: color-mix(in srgb, var(--tc, var(--accent)) 14%, var(--surface)); }
 details.nom { border-color: color-mix(in srgb, var(--tc, var(--accent)) 60%, var(--line)); }
 .gc-page { border-top-color: var(--tc, var(--accent)); }
+
+/* generador y fichas */
+.gen, .fc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; max-width: 76ch; }
+.gen-t { font: 600 0.72rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.gen-q { margin: 8px 0 12px; }
+.gen-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+.gen-row input { flex: 1 1 140px; min-width: 0; font: 500 1rem var(--font-body); color: var(--fg); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; }
+.gen-fb { margin: 10px 0 0; font-size: 0.95rem; overflow-wrap: anywhere; }
+.gen-fb.ok { color: var(--ok); } .gen-fb.bad { color: var(--bad); }
+.fc { cursor: pointer; min-height: 120px; user-select: none; }
+.fc.back { background: var(--surface-2); border-color: var(--accent); }
+.fc small { font: 600 0.72rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.fc p { margin: 8px 0 0; font-size: 1.05rem; }
+.fc-n { color: var(--muted); font-size: 0.85rem; }

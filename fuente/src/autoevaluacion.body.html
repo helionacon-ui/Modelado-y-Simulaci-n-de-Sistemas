@@ -1,8 +1,8 @@
 <header>
   <div class="kicker">Practicar · repaso activo</div>
   <h1>Autoevaluación</h1>
-  <p class="lead">Doce preguntas de test con corrección inmediata para las unidades 1 y 2, y seis preguntas abiertas con respuesta desplegable para las unidades 4 y 5. Resuelve primero en papel y comprueba después.</p>
-  <div class="tags"><span class="tag">12 de test</span><span class="tag">6 abiertas</span></div>
+  <p class="lead">Veinticuatro preguntas de test con corrección inmediata, un generador de ejercicios con corrección, fichas de repaso y seis preguntas abiertas con respuesta desplegable. Resuelve primero en papel y comprueba después.</p>
+  <div class="tags"><span class="tag">24 de test</span><span class="tag">generador</span><span class="tag">fichas</span><span class="tag">6 abiertas</span></div>
   <p class="notice">Guía no oficial de la UPCT. Preguntas recreadas por mí con el estilo de los exámenes; sus cálculos están comprobados con código. No son preguntas reales del examen.</p>
 </header>
 
@@ -96,7 +96,99 @@
     <div class="opts"><button class="opt" data-k="a">6,5</button><button class="opt" data-k="b">5,5</button><button class="opt" data-k="c">7</button><button class="opt" data-k="d">3,5</button></div>
     <div class="expl" hidden><p>\(\hat y=B\,u+(1-A)\,y=2u(0)+0{,}5\,y(0)=6+0{,}5=6{,}5\). Con \(a_1=-0{,}5\) el término \(-a_1y(0)\) suma. Un 5,5 viene de equivocar el signo.</p></div>
   </div>
+</section>
+
+<section class="sec ctl" id="test-ud4">
+  <h2><span class="dot"></span>Test · Unidad 4: métodos numéricos</h2>
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Euler</em></div>
+    <p>Con Euler y \(h=0{,}25\), \(y'=-2y+4\), \(y(0)=0\). ¿Cuánto vale \(w_1\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(1\)</button><button class="opt" data-k="b">\(0{,}5\)</button><button class="opt" data-k="c">\(2\)</button><button class="opt" data-k="d">\(4\)</button></div>
+    <div class="expl" hidden><p>\(w_1=0+0{,}25\,(-2\cdot0+4)=1\). El 4 olvida multiplicar por \(h\); el 2 sale de usar \(h=0{,}5\).</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Estabilidad</em></div>
+    <p>Un sistema tiene un polo en \(-50\ \mathrm{s^{-1}}\). ¿Qué paso máximo mantiene estable a Euler?</p>
+    <div class="opts"><button class="opt" data-k="a">\(0{,}1\)</button><button class="opt" data-k="b">\(0{,}02\)</button><button class="opt" data-k="c">\(0{,}04\)</button><button class="opt" data-k="d">\(0{,}4\)</button></div>
+    <div class="expl" hidden><p>\(h\lt2/|\lambda|=2/50=0{,}04\). El \(0{,}02\) es \(1/|\lambda|\), la mitad del límite real.</p></div>
+  </div>
+  <div class="q" data-correct="d">
+    <div class="qh">Recreada · <em>Orden</em></div>
+    <p>Con Runge-Kutta de orden 4 (error global \(O(h^4)\)), si divides el paso entre 2, el error se divide aproximadamente entre…</p>
+    <div class="opts"><button class="opt" data-k="a">2</button><button class="opt" data-k="b">4</button><button class="opt" data-k="c">8</button><button class="opt" data-k="d">16</button></div>
+    <div class="expl" hidden><p>\(2^4=16\). Euler se dividiría entre 2 y RK2 entre 4.</p></div>
+  </div>
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Adams-Bashforth</em></div>
+    <p>Para \(y'=-y\), con \(h=0{,}1\), \(w_0=1\) y \(w_1=0{,}9\), Adams-Bashforth de dos pasos da \(w_2=\)…</p>
+    <div class="opts"><button class="opt" data-k="a">\(0{,}815\)</button><button class="opt" data-k="b">\(0{,}810\)</button><button class="opt" data-k="c">\(0{,}820\)</button><button class="opt" data-k="d">\(0{,}800\)</button></div>
+    <div class="expl" hidden><p>\(w_2=w_1+\tfrac h2(3f_1-f_0)=0{,}9+0{,}05\,(-2{,}7+1)=0{,}815\). Con Euler habría salido \(0{,}81\).</p></div>
+  </div>
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Paso variable</em></div>
+    <p>¿Qué hace un solver de paso variable?</p>
+    <div class="opts"><button class="opt" data-k="a">Usa siempre el mismo paso, pero más pequeño</button><button class="opt" data-k="b">Aumenta o reduce el paso según el error estimado, para cumplir la tolerancia</button><button class="opt" data-k="c">Cambia de método en cada paso</button><button class="opt" data-k="d">Descarta los pasos que dan un error positivo</button></div>
+    <div class="expl" hidden><p>Aumenta el paso donde la solución cambia poco y lo reduce donde cambia deprisa. Por eso suele necesitar menos pasos que uno fijo.</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Rigidez</em></div>
+    <p>Un sistema tiene polos en \(-1\) y \(-1000\ \mathrm{s^{-1}}\). Con Euler, ¿qué limita el paso?</p>
+    <div class="opts"><button class="opt" data-k="a">El polo \(-1\): \(h\lt2\)</button><button class="opt" data-k="b">Ninguno: Euler siempre es estable</button><button class="opt" data-k="c">El polo \(-1000\): \(h\lt0{,}002\)</button><button class="opt" data-k="d">La suma de los dos polos</button></div>
+    <div class="expl" hidden><p>El polo más rápido manda: \(h\lt2/1000=0{,}002\) s, aunque la dinámica lenta pida pasos mucho mayores. Eso es la rigidez.</p></div>
+  </div>
+</section>
+
+<section class="sec flu" id="test-ud5">
+  <h2><span class="dot"></span>Test · Unidad 5: error</h2>
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Media del error</em></div>
+    <p>Error: \(e=(0{,}2;\,-0{,}1;\,0{,}3;\,-0{,}2;\,0{,}1;\,0)\). ¿Cuánto vale \(\bar e\)?</p>
+    <div class="opts"><button class="opt" data-k="a">\(0\)</button><button class="opt" data-k="b">\(0{,}05\)</button><button class="opt" data-k="c">\(0{,}1\)</button><button class="opt" data-k="d">\(0{,}3\)</button></div>
+    <div class="expl" hidden><p>La suma es \(0{,}3\) y \(N=6\): \(\bar e=0{,}05\).</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Dentro de una desviación</em></div>
+    <p>Con ese error, \(\sigma\approx0{,}187\) (con \(N-1\)). ¿Qué fracción de muestras cumple \(|e-\bar e|\le\sigma\)?</p>
+    <div class="opts"><button class="opt" data-k="a">50 %</button><button class="opt" data-k="b">83 %</button><button class="opt" data-k="c">67 %</button><button class="opt" data-k="d">100 %</button></div>
+    <div class="expl" hidden><p>Cumplen 4 de 6: \(0{,}2\), \(-0{,}1\), \(0{,}1\), \(0\) (las otras, \(0{,}3\) y \(-0{,}2\), quedan fuera): \(4/6=67\,\%\). Un error gaussiano daría el 68 %.</p></div>
+  </div>
+  <div class="q" data-correct="a">
+    <div class="qh">Recreada · <em>Autocorrelación</em></div>
+    <p>Con ese error, \(\hat R(0)\) vale…</p>
+    <div class="opts"><button class="opt" data-k="a">\(0{,}0317\)</button><button class="opt" data-k="b">\(0{,}187\)</button><button class="opt" data-k="c">\(0{,}05\)</button><button class="opt" data-k="d">\(0{,}0026\)</button></div>
+    <div class="expl" hidden><p>\(\hat R(0)=\frac1N\sum e^2=\frac{0{,}19}{6}=0{,}0317\): es el valor medio cuadrático. El \(0{,}187\) es la desviación, no su cuadrado.</p></div>
+  </div>
+  <div class="q" data-correct="d">
+    <div class="qh">Recreada · <em>ARX frente a OE</em></div>
+    <p>¿Cuál de los dos modelos usa las salidas <b>medidas</b> anteriores para predecir?</p>
+    <div class="opts"><button class="opt" data-k="a">Los dos por igual</button><button class="opt" data-k="b">El OE</button><button class="opt" data-k="c">Ninguno, los dos usan solo la entrada</button><button class="opt" data-k="d">El ARX</button></div>
+    <div class="expl" hidden><p>El ARX corrige en cada paso con lo medido. El OE realimenta sus propias predicciones.</p></div>
+  </div>
+  <div class="q" data-correct="b">
+    <div class="qh">Recreada · <em>Ruido blanco</em></div>
+    <p>La autocorrelación del error de un modelo decae despacio en lugar de anularse tras \(r=0\). ¿Qué indica?</p>
+    <div class="opts"><button class="opt" data-k="a">El modelo es perfecto</button><button class="opt" data-k="b">El error tiene dinámica sin modelar (ruido coloreado)</button><button class="opt" data-k="c">Hay demasiados datos</button><button class="opt" data-k="d">El paso de simulación es grande</button></div>
+    <div class="expl" hidden><p>Un error con memoria indica que parte de la dinámica no está en el modelo. Si fuera ruido blanco, \(\hat R(r)\approx0\) para \(r\ne0\).</p></div>
+  </div>
+  <div class="q" data-correct="c">
+    <div class="qh">Recreada · <em>Error con media</em></div>
+    <p>La media del error es claramente distinta de cero. ¿Qué sospechas?</p>
+    <div class="opts"><button class="opt" data-k="a">Que el modelo es excelente</button><button class="opt" data-k="b">Que hay demasiado ruido</button><button class="opt" data-k="c">Que hay un sesgo: al modelo le falta un término constante o un offset</button><button class="opt" data-k="d">Que la autocorrelación es nula</button></div>
+    <div class="expl" hidden><p>Un error de media no nula es un sesgo sistemático. Hay que revisar el offset o el punto de trabajo.</p></div>
+  </div>
   <button class="reset" id="reset-q" type="button">Reiniciar todo el test</button>
+</section>
+
+<section class="sec ter" id="generador">
+  <h2><span class="dot"></span>Generador de ejercicios</h2>
+  <p>Ejercicios cortos con números al azar y corrección automática (margen del 2 %). Cada vez sale uno distinto: sirve para coger soltura con las cuentas del examen.</p>
+  <div data-sim="gen"></div>
+</section>
+
+<section class="sec ter" id="fichas">
+  <h2><span class="dot"></span>Fichas de repaso</h2>
+  <p>Doce fichas con lo que hay que saber de memoria. Piensa la respuesta antes de girarla.</p>
+  <div data-sim="cards"></div>
 </section>
 
 <section class="sec ctl" id="abiertas-ud4">

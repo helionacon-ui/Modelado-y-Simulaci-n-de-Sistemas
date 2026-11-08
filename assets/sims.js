@@ -362,7 +362,72 @@
     })(v[i]);
   }
 
-  var SIMS = { num: simNum, stiff: simStiff, orden: simOrden, tanque: simTanque, error: simError, ident: simIdent, pid: simPid };
+  /* ---------- generador de ejercicios con corrección ---------- */
+  function rnd(a, b, d) { var m = Math.pow(10, d || 0); return Math.round((a + Math.random() * (b - a)) * m) / m; }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function fmt(x) { return String(Math.round(x * 1e4) / 1e4).replace('.', ','); }
+  var GEN = [
+    function () { var a = pick([1, 2, 3, 4, 5]), b = pick([1, 2, 3, 4]), h = pick([0.1, 0.2, 0.25, 0.5]), y0 = pick([0, 1, 2]);
+      return { t: 'Euler, un paso', q: 'y′ = −' + a + '·y + ' + b + ', y(0) = ' + y0 + ', h = ' + fmt(h) + '. Calcula w₁.', a: y0 + h * (-a * y0 + b), u: '',
+        s: 'w₁ = y₀ + h·f(y₀) = ' + y0 + ' + ' + fmt(h) + '·(−' + a + '·' + y0 + ' + ' + b + ')' }; },
+    function () { var l = pick([5, 8, 10, 20, 25, 40, 50, 100]);
+      return { t: 'Estabilidad de Euler', q: 'Un sistema tiene un polo en −' + l + ' s⁻¹. ¿Qué paso máximo h (en s) mantiene estable a Euler?', a: 2 / l, u: 's',
+        s: 'h < 2/|λ| = 2/' + l }; },
+    function () { var du = pick([1, 2, 3, 5]), K = pick([1, 1.5, 2, 3, 4]), tau = pick([2, 3, 4, 6]), T = pick([0.5, 1, 2]), y0 = pick([0, 1, 2]);
+      var t28 = T + tau / 3, t63 = T + tau; t28 = Math.round((T + 0.333 * tau) * 100) / 100; t63 = T + tau;
+      return { t: 'Primer orden con retardo', q: 'Un escalón Δu = ' + du + ' lleva la salida de ' + y0 + ' a ' + fmt(y0 + K * du) + '. Se lee t₂₈ = ' + fmt(t28) + ' s y t₆₃ = ' + fmt(t63) + ' s. Calcula τ (en s) con τ = 1,5·(t₆₃ − t₂₈).', a: 1.5 * (t63 - t28), u: 's',
+        s: 'τ = 1,5·(' + fmt(t63) + ' − ' + fmt(t28) + '). Después K = Δy/Δu = ' + fmt(K) + ' y T = t₆₃ − τ = ' + fmt(t63 - 1.5 * (t63 - t28)) }; },
+    function () { var M = pick([1, 2, 4]), K = pick([20, 50, 100]), B = pick([2, 4, 8]);
+      return { t: 'Factor de amortiguamiento', q: 'Mẍ + Bẋ + Kx = F con M = ' + M + ' kg, B = ' + B + ' N·s/m, K = ' + K + ' N/m. Calcula ξ.', a: B / (2 * Math.sqrt(K * M)), u: '',
+        s: 'ξ = B / (2√(K·M)) = ' + B + ' / (2√(' + K + '·' + M + '))' }; },
+    function () { var a1 = pick([-0.9, -0.8, -0.5, 0.2]), b1 = pick([0.2, 0.5, 1, 2]), y = pick([1, 2, 3]), u = pick([1, 2, 4]);
+      return { t: 'Predicción ARX', q: 'Modelo ARX y(k) = −a₁·y(k−1) + b₁·u(k−1) con a₁ = ' + fmt(a1) + ', b₁ = ' + fmt(b1) + '. Con y(k−1) = ' + y + ' y u(k−1) = ' + u + ', calcula la predicción ŷ(k).', a: -a1 * y + b1 * u, u: '',
+        s: 'ŷ = −(' + fmt(a1) + ')·' + y + ' + ' + fmt(b1) + '·' + u }; }
+  ];
+  function simGen(el) {
+    el.innerHTML = '<div class="gen"><div class="gen-t"></div><p class="gen-q"></p><div class="gen-row"><input type="text" inputmode="decimal" aria-label="Tu respuesta" placeholder="Tu respuesta"><button type="button" class="btn gen-ok">Comprobar</button><button type="button" class="btn gen-new">Otro ejercicio</button></div><p class="gen-fb" aria-live="polite"></p></div>';
+    var cur, inp = el.querySelector('input'), fb = el.querySelector('.gen-fb'), n = 0, ok = 0;
+    function nuevo() { cur = pick(GEN)(); el.querySelector('.gen-t').textContent = cur.t; el.querySelector('.gen-q').textContent = cur.q; inp.value = ''; fb.textContent = ''; fb.className = 'gen-fb'; inp.focus(); }
+    el.querySelector('.gen-new').addEventListener('click', nuevo);
+    function check() {
+      var v = parseFloat(inp.value.replace(',', '.')); if (isNaN(v)) { fb.textContent = 'Escribe un número.'; return; }
+      var good = Math.abs(v - cur.a) <= Math.max(0.02 * Math.abs(cur.a), 0.01); n++; if (good) ok++;
+      fb.className = 'gen-fb ' + (good ? 'ok' : 'bad');
+      fb.textContent = (good ? 'Correcto. ' : 'No coincide. ') + cur.s + ' = ' + fmt(cur.a) + (cur.u ? ' ' + cur.u : '') + '.' + (cur.x || '') + '  Aciertos: ' + ok + '/' + n;
+    }
+    el.querySelector('.gen-ok').addEventListener('click', check);
+    inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') check(); });
+    nuevo();
+  }
+
+  /* ---------- fichas de repaso ---------- */
+  var CARDS = [
+    ['Euler: fórmula y orden', 'wₖ₊₁ = wₖ + h·f(tₖ, wₖ). Orden 1: error global O(h).'],
+    ['RK2 (punto medio)', 'Pendiente en el punto medio: wₖ₊₁ = wₖ + h·f(tₖ + h/2, wₖ + (h/2)·f). Orden 2.'],
+    ['Adams-Bashforth de 2 pasos', 'wₖ₊₁ = wₖ + (h/2)·(3fₖ − fₖ₋₁). Necesita w₁ de un método de un paso.'],
+    ['Límite de estabilidad de Euler', 'h < 2/|λ| para un polo λ < 0. Si no, la solución numérica oscila y crece.'],
+    ['Rigidez', 'Polos con escalas muy distintas: el más rápido limita h aunque ya no influya. Se usa un solver implícito.'],
+    ['Modelo FOPDT desde un escalón', 'K = Δy/Δu; τ = 1,5·(t₆₃ − t₂₈); T = t₆₃ − τ.'],
+    ['Mínimos cuadrados', 'θ̂ = (ΦᵀΦ)⁻¹ΦᵀY. Necesita que la entrada excite el sistema.'],
+    ['ARX frente a OE', 'ARX: usa salidas medidas, lineal en los parámetros, mínimos cuadrados. OE: realimenta sus propias predicciones, se resuelve iterando.'],
+    ['Factor de amortiguamiento', 'ξ = B / (2√(K·M)); ωₙ = √(K/M). Con ξ < 1 hay sobreoscilación.'],
+    ['Tiempo de retardo y paso de control', 'En control por computador el controlador se recalcula cada T_c = n·h y entre medias la salida se mantiene.'],
+    ['Autocorrelación del error', 'R(0) es el valor medio cuadrado; si R(r) ≈ 0 para r ≠ 0, el error es ruido blanco: no queda dinámica sin modelar.'],
+    ['¿Qué se guarda en cada paso?', 'Tiempo, estados, entrada y salida: lo necesario para dibujar y analizar después.']
+  ];
+  function simCards(el) {
+    var i = Math.floor(Math.random() * CARDS.length), side = 0;
+    el.innerHTML = '<div class="fc" role="button" tabindex="0" aria-live="polite"></div><div class="gen-row"><button type="button" class="btn fc-prev">Anterior</button><button type="button" class="btn fc-next">Siguiente</button><span class="fc-n"></span></div>';
+    var c = el.querySelector('.fc');
+    function show() { c.className = 'fc' + (side ? ' back' : ''); c.innerHTML = '<small>' + (side ? 'Respuesta' : 'Pregunta') + '</small><p>' + (side ? CARDS[i][1] : CARDS[i][0]) + '</p>'; el.querySelector('.fc-n').textContent = (i + 1) + ' / ' + CARDS.length + ' · toca la ficha para girarla'; }
+    function flip() { side = 1 - side; show(); }
+    c.addEventListener('click', flip); c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+    el.querySelector('.fc-next').addEventListener('click', function () { i = (i + 1) % CARDS.length; side = 0; show(); });
+    el.querySelector('.fc-prev').addEventListener('click', function () { i = (i + CARDS.length - 1) % CARDS.length; side = 0; show(); });
+    show();
+  }
+
+  var SIMS = { num: simNum, stiff: simStiff, orden: simOrden, tanque: simTanque, error: simError, ident: simIdent, pid: simPid, gen: simGen, cards: simCards };
   function init() {
     var els = document.querySelectorAll('[data-sim]');
     for (var i = 0; i < els.length; i++) {
