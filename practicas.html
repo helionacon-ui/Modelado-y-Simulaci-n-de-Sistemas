@@ -65,8 +65,7 @@
   <p><b>Explicación.</b> La no linealidad es la raíz \(\sqrt h\). El caudal entra de forma lineal, así que la diferencia crece despacio (de 0,05 a 0,14 m). La apertura multiplica a \(\sqrt h\): el efecto real de abrir más sigue una curva (la altura baja como \(1/a^2\)) mientras el modelo lineal es una recta, y para +75 % predice una altura negativa, que es físicamente imposible. Por eso el modelo lineal solo sirve cerca del punto de trabajo, y falla antes con la apertura que con el caudal.</p>
   <p><b>Calor.</b> Con \(q=2000\) W, \(T-T_i=\dfrac{q}{\rho C_pf_i}=\dfrac{2000}{1000\cdot4186\cdot2{,}5\cdot10^{-4}}=1{,}9\ ^\circ\mathrm C\) en estacionario (con \(C_p=4186\) J/kg·K). La ecuación de temperatura es lineal en \(q\) si la altura no cambia; la no linealidad viene del factor \(1/h\) y del producto \(f_i\,T\). Al cambiar solo el calor la altura no se mueve, así que el estudio de la diferencia entre ambos modelos debe separar este caso de los de caudal y apertura.</p>
   <div class="trap"><b class="t">Trampa</b><p>Para simular el lineal hay que sumar el punto de trabajo: \(h=h_0+\Delta h\). Si se representa \(\Delta h\) directamente, no es comparable con el no lineal. Además el simulador no lineal parte de \(h_0\), no de 0, o aparece un transitorio falso.</p></div>
-  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
-    <div class="yt" data-id="c--qa3nfmZM" data-title="Linealización de un tanque de mezclado y simulación comparada con el modelo original (ode45, Matlab)"><a href="https://www.youtube.com/watch?v=c--qa3nfmZM" target="_blank" rel="noopener">Linealización de un tanque de mezclado y simulación comparada con el modelo original (ode45, Matlab) (YouTube)</a></div>
+  <div class="vids"><h3>Vídeos para reforzar · Prácticas</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
     <div class="yt" data-id="IbBO9BLhT1g" data-title="Modelado de dos tanques en cascada"><a href="https://www.youtube.com/watch?v=IbBO9BLhT1g" target="_blank" rel="noopener">Modelado de dos tanques en cascada (YouTube)</a></div>
   </div></div>
 </section>
@@ -127,6 +126,10 @@ fin</pre>
       <tr><td>Paso usado por el solver</td><td><code>plot(diff(tout))</code></td></tr>
     </tbody></table></div>
   <div class="trap"><b class="t">Trampa de índices</b><p>En Matlab los vectores empiezan en 1 y no existe <code>y(0)</code>, <code>y(-1)</code>. El término \(w(0)\) de la teoría es <code>w(1)</code>; los valores anteriores a ese se tratan aparte, con ceros, o se empieza el bucle más tarde.</p></div>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 7 · Simulink</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="DCvJlVI_GE0" data-title="Introducción a Simulink para modelado, simulación y pruebas"><a href="https://www.youtube.com/watch?v=DCvJlVI_GE0" target="_blank" rel="noopener">Introducción a Simulink para modelado, simulación y pruebas (YouTube)</a></div>
+    <div class="yt" data-id="Q34hhC7AVL4" data-title="Simulación de sistemas dinámicos en Simulink: circuito RC"><a href="https://www.youtube.com/watch?v=Q34hhC7AVL4" target="_blank" rel="noopener">Simulación de sistemas dinámicos en Simulink: circuito RC (YouTube)</a></div>
+  </div></div>
 </section>
 
 <div class="pager">

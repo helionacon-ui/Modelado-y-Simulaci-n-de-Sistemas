@@ -118,6 +118,9 @@
     <div class="card"><h3>Ensayo en vacío</h3><p>\(v=V_N\), par casi nulo. Se mide \(\dot\theta_N\) y, como \(V_b=V_N\):</p>\[K_b=\frac{V_N}{\dot\theta_N}\]</div>
     <div class="card"><h3>Ensayo de parada</h3><p>\(v=V_N\), \(\dot\theta=0\) (sin fuerza contraelectromotriz). Se mide \(T_N\):</p>\[K_i=R\,\frac{T_N}{V_N}\]</div>
   </div>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 1</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="d1xfirFBd4Q" data-title="Modelo matemático del motor DC: explicación y Simulink"><a href="https://www.youtube.com/watch?v=d1xfirFBd4Q" target="_blank" rel="noopener">Modelo matemático del motor DC: explicación y Simulink (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec flu" id="fluidos">
@@ -172,6 +175,9 @@
   <p>Una válvula \(a_0\) alimenta el primero desde una presión \(p\); \(a_1\) los comunica; \(a_2\) vacía el segundo a la atmósfera.</p>
   <div class="eq">\[\begin{aligned}S_1\dot h_1&=K_0a_0\sqrt p-K_1a_1\sqrt{|h_1-h_2|}\,\operatorname{sign}(h_1-h_2)\\ S_2\dot h_2&=K_1a_1\sqrt{|h_1-h_2|}\,\operatorname{sign}(h_1-h_2)-K_2a_2\sqrt{h_2}\end{aligned}\]</div>
   <p>Se separa en dos casos, \(h_1>h_2\) y \(h_1\lt h_2\), y después se linealiza (siguiente bloque grande).</p>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 1</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="vTh6FbaZ61s" data-title="Modelo dinámico de un tanque simple: función de transferencia"><a href="https://www.youtube.com/watch?v=vTh6FbaZ61s" target="_blank" rel="noopener">Modelo dinámico de un tanque simple: función de transferencia (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec ter" id="termicos">
@@ -215,10 +221,6 @@
   <h3>Tanque con calefactor y caudal</h3>
   <div class="eq">\[\rho Vc_p\frac{dT_0}{dt}=\rho c_pF_iT_i-\rho c_pF_oT_0-UA\,(T_0-T_\infty)+q_h\]</div>
   <p>Si además cambia el nivel, el miembro izquierdo pasa a \(\rho c_pS\big(T_0\dot h+h\dot T_0\big)\). Si hay reacción química, se suma \(q_r=r\,V\,\Delta H\) con \(r=Ke^{-E/RT}C_A\) y \(\dot C_A=-r\). Si el calentador lo gobierna un PID, \(q_h=K_{q}V_h\) con \(V_h=K_pe+K_i\!\int e\,dt+K_d\dot e\) y \(e=T_{ref}-T_0\).</p>
-  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
-    <div class="yt" data-id="vTh6FbaZ61s" data-title="Modelo dinámico de un tanque simple: función de transferencia"><a href="https://www.youtube.com/watch?v=vTh6FbaZ61s" target="_blank" rel="noopener">Modelo dinámico de un tanque simple: función de transferencia (YouTube)</a></div>
-    <div class="yt" data-id="c--qa3nfmZM" data-title="Linealización de un tanque de mezclado y simulación comparada con el modelo original (ode45, Matlab)"><a href="https://www.youtube.com/watch?v=c--qa3nfmZM" target="_blank" rel="noopener">Linealización de un tanque de mezclado y simulación comparada con el modelo original (ode45, Matlab) (YouTube)</a></div>
-  </div></div>
 </section>
 
 <section class="sec" id="linealizacion">
@@ -236,6 +238,9 @@
     <div class="eq wide"><span class="lab">Primera ecuación linealizada</span>\[S_1\Delta\dot h_1+\frac{K_1a_{10}}{2\sqrt{h_{10}-h_{20}}}(\Delta h_1-\Delta h_2)-K_0\sqrt p\,\Delta a_0+K_1\sqrt{h_{10}-h_{20}}\,\Delta a_1=0\]</div>
   </div>
   <p>Con Laplace y las dos ecuaciones agrupadas queda \([L]\,\Delta H(s)=[J]\,\Delta A(s)\), de donde \(\Delta H(s)=[L]^{-1}[J]\,\Delta A(s)=[G(s)]\,\Delta A(s)\).</p>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 1</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="c--qa3nfmZM" data-title="Linealización de un tanque y simulación comparada con el modelo original (Matlab, ode45)"><a href="https://www.youtube.com/watch?v=c--qa3nfmZM" target="_blank" rel="noopener">Linealización de un tanque y simulación comparada con el modelo original (Matlab, ode45) (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec" id="equivalencias">
@@ -294,9 +299,8 @@
   <p>Aquí \(\omega_n=1/\tau\) en la forma de la tabla. Con \(\xi\) bajo la respuesta oscila y se pasa del valor final; con \(\xi\ge1\) deja de oscilar y se vuelve más lenta. Fíjate en que cambiar \(K\) solo escala la curva: no cambia su forma ni su rapidez.</p>
   <div class="sim" data-sim="orden"></div>
   <p>Los casos hidráulico (\(S\dot h=F_i-Ka\sqrt h\)) y térmico (\(\rho c_pV\dot T_0=\rho c_pF(T_i-T_0)\)) parecen de primer orden pero el primero no es lineal: hay que linealizarlo antes de hablar de \(\tau\).</p>
-  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+  <div class="vids"><h3>Vídeos para reforzar · Tema 1</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
     <div class="yt" data-id="YhJF1v5cEfw" data-title="Sistemas de segundo orden: explicación completa"><a href="https://www.youtube.com/watch?v=YhJF1v5cEfw" target="_blank" rel="noopener">Sistemas de segundo orden: explicación completa (YouTube)</a></div>
-    <div class="yt" data-id="9lLRefbit54" data-title="Respuesta en el tiempo de los sistemas de segundo orden"><a href="https://www.youtube.com/watch?v=9lLRefbit54" target="_blank" rel="noopener">Respuesta en el tiempo de los sistemas de segundo orden (YouTube)</a></div>
   </div></div>
 </section>
 

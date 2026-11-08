@@ -43,9 +43,9 @@ para k = 0 hasta N-1:
     w1[k+1] = w1[k] + h * w2[k]
     w2[k+1] = w2[k] + (h/M) * ( -K*w1[k] - B*w2[k] )</pre>
   <div class="trap"><b class="t">Trampa</b><p>Las dos actualizaciones usan los valores del paso <b>anterior</b> (<code>w1[k]</code>, <code>w2[k]</code>). Si actualizas <code>w1</code> y luego usas el <code>w1[k+1]</code> nuevo en la segunda línea, ya no es Euler. Además, en Matlab los vectores empiezan en 1: el \(w(0)\) de la teoría es <code>w(1)</code>.</p></div>
-  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+  <div class="vids"><h3>Vídeos para reforzar · Tema 10</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
     <div class="yt" data-id="oGukxV8tD24" data-title="Método de Euler para resolver ecuaciones diferenciales de valor inicial"><a href="https://www.youtube.com/watch?v=oGukxV8tD24" target="_blank" rel="noopener">Método de Euler para resolver ecuaciones diferenciales de valor inicial (YouTube)</a></div>
-    <div class="yt" data-id="v97dj56NAU0" data-title="Método de Euler para resolver un sistema de ecuaciones diferenciales"><a href="https://www.youtube.com/watch?v=v97dj56NAU0" target="_blank" rel="noopener">Método de Euler para resolver un sistema de ecuaciones diferenciales (YouTube)</a></div>
+    <div class="yt" data-id="v97dj56NAU0" data-title="Método de Euler para un sistema de ecuaciones diferenciales"><a href="https://www.youtube.com/watch?v=v97dj56NAU0" target="_blank" rel="noopener">Método de Euler para un sistema de ecuaciones diferenciales (YouTube)</a></div>
   </div></div>
 </section>
 
@@ -76,7 +76,7 @@ para k = 0 hasta N-1:
   <p>Marca y desmarca métodos, mueve \(h\) y cambia la fricción. Con \(B=0\) el sistema oscila sin amortiguarse y Euler se dispara, porque en cada paso amplifica la amplitud. Fíjate en el error al final: al dividir \(h\) a la mitad, Euler baja a la mitad, RK2 a la cuarta parte y RK4 a la dieciseisava.</p>
   <div class="sim" data-sim="num"></div>
   <p>Con Euler y \(h=0{,}1\) el error en \(t=10\) es unas diez veces mayor que la propia solución: hace falta un \(h\) muy pequeño. RK4 con \(h=0{,}1\) ya tiene un error del orden de \(10^{-6}\). A cambio, RK4 cuesta cuatro evaluaciones de \(f\) por paso.</p>
-  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+  <div class="vids"><h3>Vídeos para reforzar · Tema 10</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
     <div class="yt" data-id="bSeXOZmp-qw" data-title="Interpretación gráfica del método de Runge-Kutta de orden 4"><a href="https://www.youtube.com/watch?v=bSeXOZmp-qw" target="_blank" rel="noopener">Interpretación gráfica del método de Runge-Kutta de orden 4 (YouTube)</a></div>
     <div class="yt" data-id="XNIWRHGqMlA" data-title="Runge-Kutta de cuarto orden con un sistema de dos ecuaciones"><a href="https://www.youtube.com/watch?v=XNIWRHGqMlA" target="_blank" rel="noopener">Runge-Kutta de cuarto orden con un sistema de dos ecuaciones (YouTube)</a></div>
   </div></div>
@@ -109,6 +109,9 @@ para k = 1 hasta N-1:
   <div class="trap"><b class="t">Trampa</b><p>En masa-muelle-fricción con fuerza externa, \(f\) es un vector (posición y velocidad) y la fuerza \(F(t)\) se evalúa en el <b>tiempo de cada paso</b>: \(F(t(k))\) y \(F(t(k-1))\). Olvidar el segundo término es el fallo habitual.</p></div>
   <h3>Predictor-corrector</h3>
   <p>En un método implícito \(w(k+1)\) aparece a los dos lados. Se puede resolver la ecuación con Newton o usar un <b>predictor-corrector</b>: un método explícito (predictor) da una primera estimación de \(w(k+1)\), con ella se calcula \(f(w(k+1),t(k+1))\) y el método implícito (corrector) da el valor final. Un ejemplo habitual es Adams de cuarto orden: el predictor es Adams-Bashforth de 4 pasos y el corrector Adams-Moulton, con los tres primeros valores calculados con RK4.</p>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 10</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="4IOFaHPyi_0" data-title="Método de Adams-Bashforth-Moulton para resolver una ecuación diferencial"><a href="https://www.youtube.com/watch?v=4IOFaHPyi_0" target="_blank" rel="noopener">Método de Adams-Bashforth-Moulton para resolver una ecuación diferencial (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec" id="paso-variable">
@@ -151,6 +154,10 @@ para k = 1 hasta N-1:
     <div class="card"><h3>Ejemplo físico</h3><p>Un circuito o un sistema térmico con una constante de tiempo de milisegundos acoplada a otra de minutos, o una suspensión con una masa pequeña unida a otra muy grande (\(M_1=10\), \(M_2=1000\)). Hay que simular minutos con un paso que respete los milisegundos.</p></div>
   </div>
   <div class="trap"><b class="t">Trampa</b><p>Dentro del límite \(h\lt2/|\lambda|\) la solución numérica es estable pero puede ser poco precisa: estabilidad y exactitud son cosas distintas. Y en un sistema con varios polos, el límite lo pone el más rápido.</p></div>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 11</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="nTpDLEm5M_g" data-title="Estabilidad de métodos numéricos"><a href="https://www.youtube.com/watch?v=nTpDLEm5M_g" target="_blank" rel="noopener">Estabilidad de métodos numéricos (YouTube)</a></div>
+    <div class="yt" data-id="wWivLWUecS4" data-title="Estabilidad del método de Euler en EDOs"><a href="https://www.youtube.com/watch?v=wWivLWUecS4" target="_blank" rel="noopener">Estabilidad del método de Euler en EDOs (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec ctl" id="plantilla">
