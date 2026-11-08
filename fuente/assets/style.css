@@ -298,3 +298,16 @@ pre.code { margin: 12px 0; padding: 14px 16px; background: var(--surface-2); bor
 .sim-plot .p3 { stroke: var(--c-ctl); fill: var(--c-ctl); } .sim-plot .pk { stroke: var(--fg); fill: var(--fg); }
 .sim-plot path.pl, .sim-plot line.pl { fill: none; } .sim-plot .bar { opacity: .75; }
 @media (prefers-reduced-motion: no-preference) { .sim .btn { transition: background .15s; } }
+
+/* vídeos */
+.vids { margin: 18px 0 6px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.vids h3 { margin: 0 0 4px; }
+.vid-note { margin: 0 0 10px; font-size: .86rem; color: var(--muted); }
+.vid-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.yt { display: grid; gap: 6px; min-width: 0; }
+.yt-btn { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: 12px; min-height: 120px; padding: 14px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); color: var(--fg); font-weight: 600; line-height: 1.3; }
+.yt-btn:hover, .yt-btn:focus-visible { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 2px; }
+.yt-play { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--bg); font-size: 1.1rem; }
+.yt-ti { min-width: 0; overflow-wrap: anywhere; }
+.yt-open { font-size: .84rem; }
+.yt iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 10px; background: #000; }

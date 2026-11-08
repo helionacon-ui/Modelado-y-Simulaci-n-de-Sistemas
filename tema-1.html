@@ -215,6 +215,10 @@
   <h3>Tanque con calefactor y caudal</h3>
   <div class="eq">\[\rho Vc_p\frac{dT_0}{dt}=\rho c_pF_iT_i-\rho c_pF_oT_0-UA\,(T_0-T_\infty)+q_h\]</div>
   <p>Si además cambia el nivel, el miembro izquierdo pasa a \(\rho c_pS\big(T_0\dot h+h\dot T_0\big)\). Si hay reacción química, se suma \(q_r=r\,V\,\Delta H\) con \(r=Ke^{-E/RT}C_A\) y \(\dot C_A=-r\). Si el calentador lo gobierna un PID, \(q_h=K_{q}V_h\) con \(V_h=K_pe+K_i\!\int e\,dt+K_d\dot e\) y \(e=T_{ref}-T_0\).</p>
+  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="vTh6FbaZ61s" data-title="Modelo dinámico de un tanque simple: función de transferencia"><a href="https://www.youtube.com/watch?v=vTh6FbaZ61s" target="_blank" rel="noopener">Modelo dinámico de un tanque simple: función de transferencia (YouTube)</a></div>
+    <div class="yt" data-id="c--qa3nfmZM" data-title="Linealización de un tanque de mezclado y simulación comparada con el modelo original (ode45, Matlab)"><a href="https://www.youtube.com/watch?v=c--qa3nfmZM" target="_blank" rel="noopener">Linealización de un tanque de mezclado y simulación comparada con el modelo original (ode45, Matlab) (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec" id="linealizacion">
@@ -290,6 +294,10 @@
   <p>Aquí \(\omega_n=1/\tau\) en la forma de la tabla. Con \(\xi\) bajo la respuesta oscila y se pasa del valor final; con \(\xi\ge1\) deja de oscilar y se vuelve más lenta. Fíjate en que cambiar \(K\) solo escala la curva: no cambia su forma ni su rapidez.</p>
   <div class="sim" data-sim="orden"></div>
   <p>Los casos hidráulico (\(S\dot h=F_i-Ka\sqrt h\)) y térmico (\(\rho c_pV\dot T_0=\rho c_pF(T_i-T_0)\)) parecen de primer orden pero el primero no es lineal: hay que linealizarlo antes de hablar de \(\tau\).</p>
+  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="YhJF1v5cEfw" data-title="Sistemas de segundo orden: explicación completa"><a href="https://www.youtube.com/watch?v=YhJF1v5cEfw" target="_blank" rel="noopener">Sistemas de segundo orden: explicación completa (YouTube)</a></div>
+    <div class="yt" data-id="9lLRefbit54" data-title="Respuesta en el tiempo de los sistemas de segundo orden"><a href="https://www.youtube.com/watch?v=9lLRefbit54" target="_blank" rel="noopener">Respuesta en el tiempo de los sistemas de segundo orden (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec ctl" id="reguladores">

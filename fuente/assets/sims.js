@@ -344,6 +344,24 @@
     });
   }
 
+
+  /* ---------- vídeos de YouTube bajo demanda ---------- */
+  function initVideos() {
+    var v = document.querySelectorAll('.yt[data-id]');
+    for (var i = 0; i < v.length; i++) (function (el) {
+      var id = el.getAttribute('data-id'), t = el.getAttribute('data-title') || 'Vídeo';
+      var url = 'https://www.youtube.com/watch?v=' + id;
+      el.innerHTML = '<button type="button" class="yt-btn" aria-label="Reproducir: ' + t.replace(/"/g, '') + '"><span class="yt-play" aria-hidden="true">▶</span><span class="yt-ti">' + t + '</span></button><a class="yt-open" href="' + url + '" target="_blank" rel="noopener">Abrir en YouTube</a>';
+      el.querySelector('button').addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0'; f.title = t; f.loading = 'lazy'; f.allowFullscreen = true;
+        f.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen');
+        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        el.className = 'yt yt-on'; el.insertBefore(f, el.firstChild); el.querySelector('button').remove();
+      });
+    })(v[i]);
+  }
+
   var SIMS = { num: simNum, stiff: simStiff, orden: simOrden, tanque: simTanque, error: simError, ident: simIdent, pid: simPid };
   function init() {
     var els = document.querySelectorAll('[data-sim]');
@@ -352,5 +370,6 @@
       if (f && !els[i].hasChildNodes()) { try { f(els[i]); } catch (e) { els[i].textContent = 'No se pudo cargar el simulador.'; } }
     }
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  function all() { init(); initVideos(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', all); else all();
 })();

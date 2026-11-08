@@ -107,4 +107,30 @@ for x in xs: b += f'<circle cx="{x}" cy="{cx(x):.1f}" r="4" fill="var(--accent)"
 b += txt(105, 244, "pasos largos", "s-tx2") + txt(251, 244, "pasos cortos", "s-tx2") + txt(240, 262, "(la solución cambia deprisa)", "s-tx2") + txt(480, 244, "otra vez pasos largos", "s-tx2")
 b += txt(330, 40, "Con paso variable, h se adapta a lo que hace la solución", "s-tx")
 w("paso-variable", b, 272, "Puntos calculados por un método de paso variable: más densos donde la solución cambia deprisa")
+
+# 8. portada: del sistema real al modelo y a la simulación
+b = '<rect x="0" y="0" width="640" height="230" rx="14" style="fill:var(--surface-2)"/>'
+# bloque 1: sistema físico (depósito + motor)
+b += '<rect x="34" y="62" width="74" height="92" class="s-box" style="fill:none"/><rect x="36" y="100" width="70" height="52" class="s-water"/><path d="M36 100 H106" class="s-acc"/>'
+b += '<path d="M108 146 H134" class="s-ln"/><path d="M134 138 L146 154 M146 138 L134 154 M134 138 V154 M146 138 V154" class="s-ln"/>'
+b += arrow("M70 40 V60", True) + '<circle cx="86" cy="190" r="15" class="s-box"/>' + txt(86, 195, "M", "s-it") + '<path d="M101 190 H122 M122 182 V198" class="s-ln"/>'
+b += txt(88, 24, "sistema real", "s-tx") + txt(88, 222, "depósito · motor", "s-tx2")
+# flecha 1
+b += arrow("M168 112 H222", True) + txt(195, 100, "modelar", "s-tx2")
+# bloque 2: ecuaciones
+b += box(228, 70, 150, 84, "", True) + txt(303, 104, "S·ḣ = fᵢ − K·a·√h", "s-it") + txt(303, 128, "G(s) = K / (τs + 1)", "s-it") + txt(303, 24, "modelo matemático", "s-tx") + txt(303, 222, "ecuaciones · transferencia", "s-tx2")
+# flecha 2
+b += arrow("M386 112 H436", True) + txt(411, 100, "simular", "s-tx2")
+# bloque 3: gráfica con datos y modelo
+b += '<path d="M452 60 V176 H620" class="s-ln"/>'
+import math
+pts = " ".join(f"{'M' if i == 0 else 'L'}{x:.1f} {176 - 100 * (1 - math.exp(-(x - 452) / 45)):.1f}" for i, x in enumerate(range(452, 616, 4)))
+b += f'<path d="{pts}" class="s-acc"/>'
+import random
+random.seed(5)
+for x in range(460, 616, 12):
+    b += f'<circle cx="{x}" cy="{176 - 100 * (1 - math.exp(-(x - 452) / 45)) + random.uniform(-5, 5):.1f}" r="2.6" fill="var(--fg)" opacity=".75"/>'
+b += txt(536, 24, "simulación y datos", "s-tx") + txt(536, 222, "método numérico · identificación", "s-tx2")
+w("portada", b, 240, "De un sistema real, como un depósito con motor, a su modelo matemático y a la simulación comparada con datos medidos")
+
 print("ok")

@@ -43,6 +43,10 @@ para k = 0 hasta N-1:
     w1[k+1] = w1[k] + h * w2[k]
     w2[k+1] = w2[k] + (h/M) * ( -K*w1[k] - B*w2[k] )</pre>
   <div class="trap"><b class="t">Trampa</b><p>Las dos actualizaciones usan los valores del paso <b>anterior</b> (<code>w1[k]</code>, <code>w2[k]</code>). Si actualizas <code>w1</code> y luego usas el <code>w1[k+1]</code> nuevo en la segunda línea, ya no es Euler. Además, en Matlab los vectores empiezan en 1: el \(w(0)\) de la teoría es <code>w(1)</code>.</p></div>
+  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="oGukxV8tD24" data-title="Método de Euler para resolver ecuaciones diferenciales de valor inicial"><a href="https://www.youtube.com/watch?v=oGukxV8tD24" target="_blank" rel="noopener">Método de Euler para resolver ecuaciones diferenciales de valor inicial (YouTube)</a></div>
+    <div class="yt" data-id="v97dj56NAU0" data-title="Método de Euler para resolver un sistema de ecuaciones diferenciales"><a href="https://www.youtube.com/watch?v=v97dj56NAU0" target="_blank" rel="noopener">Método de Euler para resolver un sistema de ecuaciones diferenciales (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec" id="rk">
@@ -72,6 +76,10 @@ para k = 0 hasta N-1:
   <p>Marca y desmarca métodos, mueve \(h\) y cambia la fricción. Con \(B=0\) el sistema oscila sin amortiguarse y Euler se dispara, porque en cada paso amplifica la amplitud. Fíjate en el error al final: al dividir \(h\) a la mitad, Euler baja a la mitad, RK2 a la cuarta parte y RK4 a la dieciseisava.</p>
   <div class="sim" data-sim="num"></div>
   <p>Con Euler y \(h=0{,}1\) el error en \(t=10\) es unas diez veces mayor que la propia solución: hace falta un \(h\) muy pequeño. RK4 con \(h=0{,}1\) ya tiene un error del orden de \(10^{-6}\). A cambio, RK4 cuesta cuatro evaluaciones de \(f\) por paso.</p>
+  <div class="vids"><h3>Vídeos para reforzar</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Úsalos para ver otra explicación y contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="bSeXOZmp-qw" data-title="Interpretación gráfica del método de Runge-Kutta de orden 4"><a href="https://www.youtube.com/watch?v=bSeXOZmp-qw" target="_blank" rel="noopener">Interpretación gráfica del método de Runge-Kutta de orden 4 (YouTube)</a></div>
+    <div class="yt" data-id="XNIWRHGqMlA" data-title="Runge-Kutta de cuarto orden con un sistema de dos ecuaciones"><a href="https://www.youtube.com/watch?v=XNIWRHGqMlA" target="_blank" rel="noopener">Runge-Kutta de cuarto orden con un sistema de dos ecuaciones (YouTube)</a></div>
+  </div></div>
 </section>
 
 <section class="sec" id="multipaso">
