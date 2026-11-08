@@ -33,7 +33,14 @@ SUBS = {  # entradas del menú que apuntan a un apartado
     "index.html": [("#cero", "Empieza aquí desde cero")],
     "empezar.html": [("#prioridades", "Prioridades"), ("#progreso", "Tu progreso")],
 }
-KICK = {"index.html": "Portada"}
+COLOR = {"index.html": 0, "empezar.html": 0, "tema-1-2.html": 1, "tema-3-5.html": 2, "tema-6-8.html": 3, "tema-9-11.html": 4,
+         "tema-12-13.html": 5, "practicas.html": 6, "problemas.html": 7, "examenes.html": 7, "autoevaluacion.html": 7,
+         "formulario.html": 8, "glosario.html": 8, "plan.html": 8, "guia-completa.html": 0}
+
+
+def tc(fn):
+    return f' style="--tc:var(--c{COLOR.get(fn, 0)})"'
+
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800'
@@ -59,9 +66,9 @@ def sidebar(current, body):
             parts.append(f'<div class="grp">{grp}</div>')
             last = grp
         cur = ' aria-current="page" class="cur"' if fn == current else ""
-        parts.append(f'<a href="{fn}"{cur}>{label}</a>')
+        parts.append(f'<a href="{fn}"{cur}{tc(fn)}>{label}</a>')
         for anchor, sub in SUBS.get(fn, []):
-            parts.append(f'<a class="sub" href="{fn}{anchor}">{sub}</a>')
+            parts.append(f'<a class="sub" href="{fn}{anchor}"{tc(fn)}>{sub}</a>')
     parts.append(f'<div class="grp">Todo junto</div><a href="guia-completa.html"{" aria-current=page class=cur" if current == "guia-completa.html" else ""}>Guía completa en una página</a>')
     toc = "".join(f'<a href="#{i}">{t}</a>' for i, t in toc_for(body))
     return (f'<nav class="side" id="side" aria-label="Índice"><div class="pg">{"".join(parts)}</div>'
@@ -69,7 +76,7 @@ def sidebar(current, body):
 
 
 def pages_grid():
-    cards = "".join(f'<a href="{fn}"><small>{grp}</small>{label}</a>' for fn, label, grp, _ in PAGES if fn != "index.html")
+    cards = "".join(f'<a href="{fn}"{tc(fn)}><small>{grp}</small>{label}</a>' for fn, label, grp, _ in PAGES if fn != "index.html")
     cards += '<a href="guia-completa.html"><small>Todo junto</small>Guía completa en una sola página</a>'
     return f'<div class="pages">{cards}</div>'
 
@@ -120,7 +127,7 @@ def shell_body(current, body, pg=True):
             f'<a class="hub" href="{HUB_URL}">← <span class="full">Todas las guías </span>GIEyA</a>'
             f'<div class="brand">{SITE_NAME} <span>· guía no oficial</span></div>'
             f'<button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div>'
-            f'{hero}<div class="layout">{sidebar(current, rest)}<main id="top">{rest}{foot}'
+            f'{hero}<div class="layout">{sidebar(current, rest)}<main id="top"{tc(current)}>{rest}{foot}'
             f'<footer>Guía no oficial de la UPCT (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div>'
             f'<button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button>')
 

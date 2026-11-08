@@ -397,3 +397,27 @@ details.nom td:first-child { white-space: nowrap; }
 @media (max-width: 520px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media print { .top, .side, .totop, .srch-card, .pager { display: none; } .layout { display: block; } }
 .eyebrow { font: 600 0.75rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+
+/* ===== un tono por bloque, todos dentro de la gama ámbar–naranja–óxido ===== */
+:root {
+  --c0: #b45309; --c1: #b45309; --c2: #c2410c; --c3: #a16207; --c4: #9a3412; --c5: #78350f; --c6: #d97706; --c7: #ea580c; --c8: #92400e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --c0: #f59e0b; --c1: #f59e0b; --c2: #fb923c; --c3: #facc15; --c4: #f97316; --c5: #d6a05c; --c6: #fbbf24; --c7: #fdba74; --c8: #fcd34d; }
+}
+:root[data-theme="dark"] { --c0: #f59e0b; --c1: #f59e0b; --c2: #fb923c; --c3: #facc15; --c4: #f97316; --c5: #d6a05c; --c6: #fbbf24; --c7: #fdba74; --c8: #fcd34d; }
+.sec.mec, .sec.ele, .sec.flu, .sec.ter, .sec.ctl { --dot: var(--tc, var(--accent)); }
+.tag.mec, .tag.ele, .tag.flu, .tag.ter, .tag.ctl { color: var(--muted); }
+.sec > h2 .dot { background: var(--dot, var(--tc, var(--accent))); }
+.kicker { color: var(--tc, var(--accent)); }
+.side .pg a { border-left-color: color-mix(in srgb, var(--tc, var(--line)) 35%, transparent); }
+.side .pg a.cur { border-left-color: var(--tc, var(--accent)); background: color-mix(in srgb, var(--tc, var(--accent)) 14%, var(--surface)); }
+.pages a { border-left-color: var(--tc, var(--accent)); }
+.pages a:hover, .pager a:hover, .map a:hover { border-color: var(--tc, var(--accent)); }
+.map a { border-top-color: var(--tc, var(--accent)); } .map a b { color: var(--tc, var(--accent)); }
+.tbl-wrap th { background: color-mix(in srgb, var(--tc, var(--accent)) 13%, var(--surface)); }
+.box.key, pre.code, .sim { border-left-color: var(--tc, var(--accent)); }
+.sim { border-top-color: var(--tc, var(--accent)); }
+.zero { background: color-mix(in srgb, var(--tc, var(--accent)) 14%, var(--surface)); }
+details.nom { border-color: color-mix(in srgb, var(--tc, var(--accent)) 60%, var(--line)); }
+.gc-page { border-top-color: var(--tc, var(--accent)); }
