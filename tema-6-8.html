@@ -1,0 +1,58 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>T6–8 Diseñar y programar el simulador · Modelado y Simulación</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Todas las guías </span>GIEyA</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><div class="pg"><div class="grp">Empezar</div><a href="index.html">Portada</a><a class="sub" href="index.html#cero">Empieza aquí desde cero</a><a href="empezar.html">Cómo es el examen</a><a class="sub" href="empezar.html#prioridades">Prioridades</a><a class="sub" href="empezar.html#progreso">Tu progreso</a><div class="grp">Unidades</div><a href="tema-1-2.html">T1–2 Modelado de sistemas</a><a href="tema-3-5.html">T3–5 Identificación</a><a href="tema-6-8.html" aria-current="page" class="cur">T6–8 Simulador, Simulink y Matlab</a><a href="tema-9-11.html">T9–11 Métodos numéricos</a><a href="tema-12-13.html">T12–13 Predicción y error</a><div class="grp">Prácticas</div><a href="practicas.html">Prácticas del curso</a><div class="grp">Practicar</div><a href="problemas.html">Problemas resueltos</a><a href="examenes.html">Qué se pregunta en el examen</a><a href="autoevaluacion.html">Autoevaluación</a><div class="grp">Repasar</div><a href="formulario.html">Formulario por unidad</a><a href="glosario.html">Glosario</a><a href="plan.html">Plan de estudio</a><div class="grp">Todo junto</div><a href="guia-completa.html">Guía completa en una página</a></div><h4>En esta página</h4><div class="toc"><a href="#diseno">Qué tiene un simulador</a><a href="#matlab">Del pseudocódigo a Matlab</a><a href="#herramientas">Matlab y Simulink: lo que se usa</a></div></nav><main id="top"><div class="srch-card gs"><label class="srch-lab" for="gsrch">Buscar en toda la guía</label><input type="search" id="gsrch" placeholder="Por ejemplo: Euler, ARX, linealización, rigidez…" autocomplete="off" spellcheck="false"><div id="gsrch-out" class="gs-out" hidden></div></div><header>
+  <div class="kicker">Unidad 3 · Temas 6, 7 y 8</div>
+  <h1>Diseñar y programar el simulador</h1>
+  <p class="lead">De las ecuaciones del modelo a un programa que las resuelve paso a paso: qué tiene que tener un simulador, cómo se monta en Simulink y cómo se escribe en Matlab.</p>
+  <div class="tags"><span class="tag">T6 diseño</span><span class="tag">T7 Simulink</span><span class="tag">T8 Matlab</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Resumen propio y general: las prácticas concretas del curso están en la página de <a href="practicas.html">Prácticas</a>.</p>
+</header>
+
+<section class="sec" id="diseno">
+  <h2><span class="dot"></span>Qué tiene un simulador</h2>
+  <div class="box key">
+    <p>Un simulador es un <b>bucle en el tiempo</b> que, en cada paso \(h\), calcula las derivadas del modelo con el estado actual y avanza el estado con un método numérico.</p>
+    <p>Hacen falta cinco cosas: <b>parámetros</b> del modelo, <b>variables de estado</b> con su <b>condición inicial</b> (una por cada una), <b>entradas</b> en función del tiempo, el <b>método de integración</b> con su paso \(h\), y qué <b>salidas</b> guardar para dibujarlas.</p>
+  </div>
+  <figure>
+    <svg viewBox="0 0 640 235" role="img" aria-labelledby="simuladort"><title id="simuladort">Bucle de un simulador: entrada, controlador, derivadas, integrador y realimentación del estado</title><rect x="20" y="90" width="110" height="56" rx="8" class="s-box"/><text x="75.0" y="123.0" text-anchor="middle" class="s-tx">Entrada u(t)</text><rect x="170" y="90" width="130" height="56" rx="8" class="s-acc" style="fill:var(--accent-soft)"/><text x="235.0" y="123.0" text-anchor="middle" class="s-tx">Controlador</text><rect x="340" y="90" width="130" height="56" rx="8" class="s-box"/><text x="405.0" y="123.0" text-anchor="middle" class="s-tx">Derivadas f(x,u)</text><rect x="510" y="90" width="110" height="56" rx="8" class="s-box"/><text x="565.0" y="123.0" text-anchor="middle" class="s-tx">Integrador</text><path d="M130 118 H168" class="s-thin" marker-end="url(#ah)"/><path d="M300 118 H338" class="s-thin" marker-end="url(#ah)"/><path d="M470 118 H508" class="s-thin" marker-end="url(#aha)"/><path d="M565 146 V200 H235 V148" class="s-thin" marker-end="url(#ah)" fill="none"/><text x="400" y="218" text-anchor="middle" class="s-tx2">estado x(k+1) = x(k) + h·(pendiente)</text><path d="M565 90 V50" class="s-thin" marker-end="url(#ah)"/><text x="565" y="40" text-anchor="middle" class="s-tx2">guardar salidas y(k)</text><text x="75" y="76" text-anchor="middle" class="s-tx2">t = t + h</text><text x="235" y="76" text-anchor="middle" class="s-tx2">cada paso o cada Tc</text></svg>
+    <figcaption>Estructura de cualquier simulador. Si hay controlador, es un bloque más dentro del bucle: analógico en cada paso, digital solo cada \(T_c=nh\).</figcaption>
+  </figure>
+  <p>El orden de cada paso es siempre el mismo: leer la entrada en \(t_k\), calcular el control si toca, evaluar las derivadas, avanzar el estado, guardar y avanzar el tiempo. La plantilla en pseudocódigo para el examen está en <a href="tema-9-11.html#plantilla">Métodos numéricos</a>.</p>
+</section>
+
+<section class="sec ctl" id="matlab">
+  <h2><span class="dot"></span>Del pseudocódigo a Matlab</h2>
+  <p>Ejemplo mínimo: un sistema de primer orden \(\tau\dot y+y=Ku\) con \(K=2\), \(\tau=0{,}5\) s y escalón \(u=1\), simulado con Euler.</p>
+<pre class="code">K = 2; tau = 0.5; h = 0.01; N = 200;   % 2 s de simulación
+u = 1;
+y = zeros(1, N+1);                      % y(1) es y(0)
+for k = 1:N
+    dy     = (-y(k) + K*u) / tau;       % derivada con el estado actual
+    y(k+1) = y(k) + h*dy;               % paso de Euler
+end
+t = (0:N)*h;  plot(t, y)</pre>
+  <p>Con estos datos Euler da \(y(2)=1{,}9648\) y la solución exacta \(K(1-e^{-t/\tau})\) vale \(1{,}9634\). Con \(h=0{,}1\) Euler da \(1{,}9769\): el error crece con el paso. La misma ecuación con <code>ode45</code> se escribe con una función anónima:</p>
+<pre class="code">f = @(t, y) (-y + K*u) / tau;
+[t, y] = ode45(f, [0 2], 0);</pre>
+  <div class="box trap"><h4>Trampa de índices</h4><p>En Matlab los vectores empiezan en 1: no existe <code>y(0)</code>. El \(y(0)\) de la teoría es <code>y(1)</code>, y por eso <code>y</code> tiene <code>N+1</code> posiciones.</p></div>
+  <p class="vid-note">Los números de este ejemplo se han comprobado con Python; el código Matlab no se ha podido ejecutar aquí (no hay Matlab ni Octave en el entorno de trabajo).</p>
+</section>
+
+<section class="sec" id="herramientas">
+  <h2><span class="dot"></span>Matlab y Simulink: lo que se usa</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Para</th><th>Herramienta</th></tr></thead>
+    <tbody>
+      <tr><td>Guardar señales de una simulación</td><td>Bloque <code>To Workspace</code> (formato array) con el periodo de muestreo ajustado; el reloj de la simulación da los tiempos</td></tr>
+      <tr><td>Crear el conjunto de datos de identificación</td><td><code>dato = iddata(y,u,0.01)</code></td></tr>
+      <tr><td>Estimar un ARX</td><td><code>arx(dato,[na nb nk])</code>, con <code>nk=1</code> si hay un retardo de una muestra; Matlab llama \(z\) al operador \(q\)</td></tr>
+      <tr><td>Recta de regresión</td><td><code>polyfit</code> y <code>polyval</code></td></tr>
+      <tr><td>Solver en Simulink</td><td>Configuración del modelo → Solver: variable (<code>ode45</code>) o fijo (<code>ode1</code> es Euler)</td></tr>
+      <tr><td>Paso usado por el solver</td><td><code>plot(diff(tout))</code></td></tr>
+    </tbody></table></div>
+  <div class="trap"><b class="t">Trampa de índices</b><p>En Matlab los vectores empiezan en 1 y no existe <code>y(0)</code>, <code>y(-1)</code>. El término \(w(0)\) de la teoría es <code>w(1)</code>; los valores anteriores a ese se tratan aparte, con ceros, o se empieza el bucle más tarde.</p></div>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 7 · Simulink</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="DCvJlVI_GE0" data-title="Introducción a Simulink para modelado, simulación y pruebas"><a href="https://www.youtube.com/watch?v=DCvJlVI_GE0" target="_blank" rel="noopener">Introducción a Simulink para modelado, simulación y pruebas (YouTube)</a></div>
+    <div class="yt" data-id="Q34hhC7AVL4" data-title="Simulación de sistemas dinámicos en Simulink: circuito RC"><a href="https://www.youtube.com/watch?v=Q34hhC7AVL4" target="_blank" rel="noopener">Simulación de sistemas dinámicos en Simulink: circuito RC (YouTube)</a></div>
+  </div></div>
+</section>
+<nav class="pager" aria-label="Páginas"><a href="tema-3-5.html"><small>← Anterior</small>T3–5 Identificación</a><a class="nx" href="tema-9-11.html"><small>Siguiente →</small>T9–11 Métodos numéricos</a></nav><footer>Guía no oficial de la UPCT (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

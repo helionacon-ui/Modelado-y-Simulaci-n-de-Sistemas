@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Identificación de sistemas</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Hub </span>GIEIA-UPCT</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><h4>Guía</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="tema-1.html">Tema 1 · Modelado de sistemas</a></li><li><a href="identificacion.html" aria-current="page">UD 2 · Identificación</a></li><li><a href="problemas.html">Problemas</a></li><li><a href="metodos-numericos.html">UD 4 · Métodos numéricos</a></li><li><a href="error.html">Predicción y análisis del error</a></li><li><a href="examenes.html">Qué se pregunta en el examen</a></li><li><a href="practicas.html">Prácticas</a></li></ul><h4>En esta página</h4><div class="toc"><a href="#esencial">Lo esencial</a><a href="#escalon">Modelos paramétricos con escalón</a><a href="#reto">Reto: identificar con los datos</a><a href="#impulso">Respuesta al impulso y operador de retardo</a><a href="#perturbaciones">Modelo con perturbaciones</a><a href="#prediccion">Predictor</a><a href="#minimos">Estimación por mínimos cuadrados</a><a href="#trampas">Trampas típicas</a><a href="#autoeval">Autoevaluación</a></div><h4>Próximamente</h4><ul><li><span class="soon">Formulario</span></li><li><span class="soon">Glosario</span></li></ul></nav><main><header>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>T3–5 Identificación de sistemas · Modelado y Simulación</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"><link rel="stylesheet" href="assets/style.css"><script>try{var t=localStorage.getItem("msg-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head"/></marker><marker id="aha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="s-head-a"/></marker></defs></svg><div class="top"><div class="top-in"><button class="icon-btn menu-btn" id="menu-btn" aria-controls="side" aria-expanded="false" aria-label="Abrir índice">☰</button><a class="hub" href="https://helionacon-ui.github.io/GIEIA-UPCT/">← <span class="full">Todas las guías </span>GIEyA</a><div class="brand">Modelado y Simulación <span>· guía no oficial</span></div><button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar tema">☾</button></div></div><div class="layout"><nav class="side" id="side" aria-label="Índice"><div class="pg"><div class="grp">Empezar</div><a href="index.html">Portada</a><a class="sub" href="index.html#cero">Empieza aquí desde cero</a><a href="empezar.html">Cómo es el examen</a><a class="sub" href="empezar.html#prioridades">Prioridades</a><a class="sub" href="empezar.html#progreso">Tu progreso</a><div class="grp">Unidades</div><a href="tema-1-2.html">T1–2 Modelado de sistemas</a><a href="tema-3-5.html" aria-current="page" class="cur">T3–5 Identificación</a><a href="tema-6-8.html">T6–8 Simulador, Simulink y Matlab</a><a href="tema-9-11.html">T9–11 Métodos numéricos</a><a href="tema-12-13.html">T12–13 Predicción y error</a><div class="grp">Prácticas</div><a href="practicas.html">Prácticas del curso</a><div class="grp">Practicar</div><a href="problemas.html">Problemas resueltos</a><a href="examenes.html">Qué se pregunta en el examen</a><a href="autoevaluacion.html">Autoevaluación</a><div class="grp">Repasar</div><a href="formulario.html">Formulario por unidad</a><a href="glosario.html">Glosario</a><a href="plan.html">Plan de estudio</a><div class="grp">Todo junto</div><a href="guia-completa.html">Guía completa en una página</a></div><h4>En esta página</h4><div class="toc"><a href="#esencial">Lo esencial</a><a href="#escalon">Modelos paramétricos con escalón</a><a href="#reto">Reto: identificar con los datos</a><a href="#impulso">Respuesta al impulso y operador de retardo</a><a href="#perturbaciones">Modelo con perturbaciones</a><a href="#prediccion">Predictor</a><a href="#minimos">Estimación por mínimos cuadrados</a><a href="#trampas">Trampas típicas</a></div></nav><main id="top"><div class="srch-card gs"><label class="srch-lab" for="gsrch">Buscar en toda la guía</label><input type="search" id="gsrch" placeholder="Por ejemplo: Euler, ARX, linealización, rigidez…" autocomplete="off" spellcheck="false"><div id="gsrch-out" class="gs-out" hidden></div></div><header>
   <div class="kicker">UD 2 · Identificación</div>
   <h1>De los datos al modelo</h1>
   <p class="lead">Cuando no se conocen las ecuaciones del sistema, se hace un experimento y se ajusta un modelo a los datos. Esta página cubre los modelos de escalón, los modelos de respuesta al impulso, la familia FIR, ARX, ARMAX y OE, y la estimación por mínimos cuadrados.</p>
@@ -8,6 +8,9 @@
   </div>
   <p class="notice">Guía no oficial de la UPCT. Reescrita a partir de apuntes de un curso anterior, sin copiar el material. Los ejercicios son recreados y sus cálculos están comprobados con código. El temario de este curso puede diferir.</p>
 </header>
+<details class="nom"><summary>Nomenclatura de las unidades 2 (temas 3 a 5) <span class="src">10 símbolos</span></summary>
+<div class="tbl-wrap"><table><thead><tr><th>Símbolo</th><th>Qué significa</th><th>Unidades · nota</th></tr></thead><tbody><tr><td>\(u,\ y\)</td><td>Entrada y salida medidas</td><td>según el sistema</td></tr><tr><td>\(\hat y\)</td><td>Salida predicha por el modelo</td><td>la de \(y\)</td></tr><tr><td>\(K,\ \tau,\ T\)</td><td>Ganancia, constante de tiempo y retardo del modelo de primer orden</td><td>— · s · s</td></tr><tr><td>\(t_{28},\ t_{63}\)</td><td>Instantes en que la salida alcanza el 28 % y el 63 % del valor final</td><td>s</td></tr><tr><td>\(q\)</td><td>Operador de retardo: \(q^{-1}y(t)=y(t-1)\)</td><td>Matlab lo escribe con \(z\)</td></tr><tr><td>\(A,\ B\)</td><td>Polinomios en \(q^{-1}\) del modelo ARX</td><td>coeficientes \(a_i,\ b_i\)</td></tr><tr><td>\(\theta\)</td><td>Vector de parámetros a estimar</td><td>—</td></tr><tr><td>\(\Phi\)</td><td>Matriz de regresores (los datos pasados)</td><td>una fila por muestra</td></tr><tr><td>\(\mathbf Y\)</td><td>Vector de salidas medidas</td><td>—</td></tr><tr><td>\(n_b,\ n_a\)</td><td>Número de términos de \(B\) y de \(A\)</td><td>órdenes del modelo</td></tr></tbody></table></div></details>
+
 
 <section class="sec" id="esencial">
   <h2><span class="dot"></span>Lo esencial</h2>
@@ -175,58 +178,5 @@
   <div class="trap"><b class="t">Establecimiento</b><p>\(t_s\approx4/\sigma\) es una aproximación. La curva real puede entrar en la banda del 2 % un poco después.</p></div>
 </section>
 
-<section class="sec" id="autoeval">
-  <h2><span class="dot"></span>Autoevaluación</h2>
-  <p>Seis ejercicios recreados. Resuelve primero y luego pulsa una opción.</p>
-  <div class="score" id="score" aria-live="polite"></div>
 
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Primer orden con retardo</em></div>
-    <p>Al aplicar un escalón \(\Delta u=2\) en \(t=0\), la salida pasa de 0 a 6. Se lee \(t_{28}=2{,}33\) s y \(t_{63}=5{,}00\) s. ¿Valores de \(K\), \(\tau\) y \(T\)?</p>
-    <div class="opts"><button class="opt" data-k="a">\(K=3\), \(\tau=4\) s, \(T=1\) s</button><button class="opt" data-k="b">\(K=6\), \(\tau=4\) s, \(T=1\) s</button><button class="opt" data-k="c">\(K=3\), \(\tau=5\) s, \(T=0\)</button><button class="opt" data-k="d">\(K=3\), \(\tau=2{,}67\) s, \(T=2{,}33\) s</button></div>
-    <div class="expl" hidden><p>\(K=\Delta y/\Delta u=6/2=3\). Luego \(\tau=1{,}5\,(5-2{,}33)=4\) s y \(T=t_{63}-\tau=1\) s. El 6 olvida dividir entre \(\Delta u\); el 5 y el 0 confunden \(t_{63}\) con \(\tau\).</p></div>
-  </div>
-
-  <div class="q" data-correct="b">
-    <div class="qh">Recreada · <em>Segundo orden</em></div>
-    <p>Una respuesta al escalón unitario tiene \(M_p=16{,}3\,\%\) y \(t_p=0{,}8\) s. ¿Cuánto valen \(\xi\) y \(\omega_n\)?</p>
-    <div class="opts"><button class="opt" data-k="a">\(\xi=0{,}16\), \(\omega_n=3{,}93\) rad/s</button><button class="opt" data-k="b">\(\xi=0{,}5\), \(\omega_n=4{,}53\) rad/s</button><button class="opt" data-k="c">\(\xi=0{,}5\), \(\omega_n=3{,}93\) rad/s</button><button class="opt" data-k="d">\(\xi=0{,}8\), \(\omega_n=4{,}53\) rad/s</button></div>
-    <div class="expl" hidden><p>\(\xi=-\ln0{,}163/\sqrt{\pi^2+\ln^20{,}163}=0{,}5\). \(\omega_d=\pi/0{,}8=3{,}93\) rad/s y \(\omega_n=\omega_d/\sqrt{1-0{,}25}=4{,}53\) rad/s. El 3,93 de la opción c es \(\omega_d\), no \(\omega_n\).</p></div>
-  </div>
-
-  <div class="q" data-correct="c">
-    <div class="qh">Recreada · <em>Predicción FIR</em></div>
-    <p>Un FIR es \(y(k)=(3q^{-1}+5q^{-2})\,u(k)+e(k)\) con sistema causal. Entradas \(u(0),u(1),u(2),u(3)=1,3,5,7\). ¿Cuánto vale \(\hat y(3)\)?</p>
-    <div class="opts"><button class="opt" data-k="a">46</button><button class="opt" data-k="b">14</button><button class="opt" data-k="c">30</button><button class="opt" data-k="d">15</button></div>
-    <div class="expl" hidden><p>\(\hat y(3)=3u(2)+5u(1)=3\cdot5+5\cdot3=30\). Los valores previos son \(\hat y(0)=0\), \(\hat y(1)=3\), \(\hat y(2)=14\). El 46 usa \(u(3)\) y \(u(2)\), sin retardo.</p></div>
-  </div>
-
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Mínimos cuadrados</em></div>
-    <p>Para un FIR con \(n_b=2\) salen \(\Phi^T\Phi=\begin{pmatrix}6&3\\3&2\end{pmatrix}\) y \(\Phi^T\mathbf Y=\begin{pmatrix}17\\9\end{pmatrix}\). ¿Cuánto vale \(\hat\theta=(b_1,b_2)^T\)?</p>
-    <div class="opts"><button class="opt" data-k="a">\((7/3,\ 1)\)</button><button class="opt" data-k="b">\((1,\ 7/3)\)</button><button class="opt" data-k="c">\((17/6,\ 9/2)\)</button><button class="opt" data-k="d">\((3,\ 1)\)</button></div>
-    <div class="expl" hidden><p>\(\det=12-9=3\). \(\hat\theta=\tfrac13\begin{pmatrix}2&-3\\-3&6\end{pmatrix}\begin{pmatrix}17\\9\end{pmatrix}=\tfrac13\begin{pmatrix}7\\3\end{pmatrix}\). El orden de \(b_1,b_2\) sigue el del regresor.</p></div>
-  </div>
-
-  <div class="q" data-correct="d">
-    <div class="qh">Recreada · <em>Qué modelo se resuelve directamente</em></div>
-    <p>¿En cuál de estos modelos <b>no</b> se puede aplicar la fórmula \(\hat\theta=[\Phi^T\Phi]^{-1}\Phi^T\mathbf Y\)?</p>
-    <div class="opts"><button class="opt" data-k="a">FIR</button><button class="opt" data-k="b">ARX</button><button class="opt" data-k="c">Una recta \(y=ax+b\) ajustada a puntos</button><button class="opt" data-k="d">OE</button></div>
-    <div class="expl" hidden><p>En OE el regresor contiene \(-\hat y(k-1),\dots\), que dependen de \(\theta\): regresión pseudolineal. FIR, ARX y la recta son lineales en los parámetros.</p></div>
-  </div>
-
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Predictor ARX</em></div>
-    <p>Un ARX tiene \(A(q)=1-0{,}5q^{-1}\) y \(B(q)=2q^{-1}\). Se mide \(y(0)=1\) y \(u(0)=3\). ¿Cuánto vale \(\hat y(1|0)\)?</p>
-    <div class="opts"><button class="opt" data-k="a">6,5</button><button class="opt" data-k="b">5,5</button><button class="opt" data-k="c">7</button><button class="opt" data-k="d">3,5</button></div>
-    <div class="expl" hidden><p>\(\hat y=B\,u+(1-A)\,y=2u(0)+0{,}5\,y(0)=6+0{,}5=6{,}5\). Con \(a_1=-0{,}5\) el término \(-a_1y(0)\) suma. Un 5,5 viene de equivocar el signo.</p></div>
-  </div>
-
-  <button class="reset" id="reset-q" type="button">Reiniciar</button>
-</section>
-
-<div class="pager">
-  <a href="tema-1.html"><small>Anterior</small>Tema 1 · Modelado de sistemas</a>
-  <a class="next" href="problemas.html"><small>Siguiente</small>Problemas</a>
-</div>
-<footer>Guía no oficial de la UPCT. Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>
+<nav class="pager" aria-label="Páginas"><a href="tema-1-2.html"><small>← Anterior</small>T1–2 Modelado de sistemas</a><a class="nx" href="tema-6-8.html"><small>Siguiente →</small>T6–8 Simulador, Simulink y Matlab</a></nav><footer>Guía no oficial de la UPCT (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

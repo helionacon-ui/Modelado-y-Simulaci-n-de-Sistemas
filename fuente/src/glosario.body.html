@@ -1,0 +1,72 @@
+<header>
+  <div class="kicker">Repasar · vocabulario</div>
+  <h1>Glosario</h1>
+  <p class="lead">Los términos que aparecen en la guía y en los enunciados, explicados en una frase, por unidad.</p>
+  <div class="tags"><span class="tag">ordenado por unidad</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Definiciones propias, escritas para entender el examen, no para citar.</p>
+</header>
+
+<section class="sec mec" id="g-ud1">
+  <h2><span class="dot"></span>Unidad 1 · Modelado</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Término</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>Variable de estado</td><td>Cantidad cuya derivada aparece en las ecuaciones (posición, velocidad, altura, temperatura). Cada una necesita su condición inicial.</td></tr>
+      <tr><td>Linealización</td><td>Sustituir el modelo por su aproximación de primer orden alrededor de un punto de trabajo; las variables pasan a ser desviaciones \(\Delta x\).</td></tr>
+      <tr><td>Punto de trabajo (equilibrio)</td><td>Valores de todas las variables donde las derivadas son cero.</td></tr>
+      <tr><td>Función de transferencia</td><td>Cociente salida/entrada en el dominio de Laplace, con condiciones iniciales nulas.</td></tr>
+      <tr><td>Constante de tiempo \(\tau\)</td><td>Lo rápido que responde un sistema de primer orden; a \(t=\tau\) alcanza el 63 % del valor final.</td></tr>
+      <tr><td>Ganancia \(K\)</td><td>Cociente entre el cambio de la salida y el de la entrada en régimen estacionario.</td></tr>
+      <tr><td>Factor de amortiguamiento \(\xi\)</td><td>En segundo orden, indica si oscila (\(\xi\lt1\)) o no.</td></tr>
+      <tr><td>Analogía eléctrica</td><td>Correspondencia entre variables y elementos de dominios distintos (por ejemplo masa e inductancia o muelle y condensador).</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec" id="g-ud2">
+  <h2><span class="dot"></span>Unidad 2 · Identificación</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Término</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>Caja negra</td><td>Modelo obtenido solo de datos de entrada y salida, sin usar las leyes físicas.</td></tr>
+      <tr><td>Modelo paramétrico</td><td>Modelo con un número fijo de parámetros a estimar (ARX, ARMAX, OE).</td></tr>
+      <tr><td>FIR</td><td>Modelo de respuesta finita al impulso: la salida es una suma ponderada de entradas pasadas.</td></tr>
+      <tr><td>ARX</td><td>Modelo que usa entradas y <b>salidas reales</b> pasadas para predecir.</td></tr>
+      <tr><td>OE (error de salida)</td><td>Modelo que realimenta sus propias predicciones; no usa las salidas medidas.</td></tr>
+      <tr><td>Predictor</td><td>Fórmula que da la estimación \(\hat y\) de la salida a partir de lo conocido.</td></tr>
+      <tr><td>Regresor \(\Phi\)</td><td>Matriz con los datos pasados con los que se estima \(\theta\).</td></tr>
+      <tr><td>Mínimos cuadrados</td><td>Elegir \(\theta\) que hace mínima la suma de los errores al cuadrado.</td></tr>
+      <tr><td>Operador de retardo \(q\)</td><td>\(q^{-1}y(t)=y(t-1)\). Matlab lo escribe con \(z\).</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec ctl" id="g-ud3">
+  <h2><span class="dot"></span>Unidades 3 y 4 · Simulación y métodos numéricos</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Término</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>Paso \(h\)</td><td>Intervalo de tiempo entre dos cálculos consecutivos de la simulación.</td></tr>
+      <tr><td>Método de un paso</td><td>Calcula \(w(k+1)\) usando solo \(w(k)\) (Euler, Runge-Kutta).</td></tr>
+      <tr><td>Método multipaso</td><td>Usa varios valores anteriores (Adams); necesita valores de arranque.</td></tr>
+      <tr><td>Orden de un método</td><td>Cómo baja el error al reducir \(h\); con orden 2, partir \(h\) a la mitad divide el error entre cuatro.</td></tr>
+      <tr><td>Predictor-corrector</td><td>Un método explícito da una primera estimación y otro implícito la corrige.</td></tr>
+      <tr><td>Paso variable</td><td>El solver cambia \(h\) según el error estimado en cada paso.</td></tr>
+      <tr><td>Ecuación rígida</td><td>Tiene dinámicas muy rápidas y muy lentas a la vez; obliga a un paso minúsculo en los métodos explícitos.</td></tr>
+      <tr><td>Control analógico / digital</td><td>En una simulación, el analógico se calcula en cada paso y el digital solo cada periodo de control \(T_c=nh\).</td></tr>
+      <tr><td>Solver</td><td>El método de integración que usa Simulink o Matlab (<code>ode45</code>, <code>ode1</code>…).</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="sec flu" id="g-ud5">
+  <h2><span class="dot"></span>Unidad 5 · Análisis del error</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Término</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>Error del modelo</td><td>Diferencia entre la salida medida y la predicha.</td></tr>
+      <tr><td>Media, varianza, desviación típica</td><td>Resúmenes del tamaño y la dispersión del error.</td></tr>
+      <tr><td>RMS</td><td>Raíz del valor medio de los cuadrados del error.</td></tr>
+      <tr><td>Autocorrelación \(R(r)\)</td><td>Relación entre el error ahora y \(r\) muestras después; nula salvo en \(r=0\) si el error es ruido blanco.</td></tr>
+      <tr><td>Ruido blanco</td><td>Señal sin memoria: media cero, correlación nula y espectro plano.</td></tr>
+      <tr><td>Histograma / densidad</td><td>Forma en que se reparten los valores del error; para ruido gaussiano, una campana.</td></tr>
+      <tr><td>Espectro</td><td>Cuánta energía tiene el error a cada frecuencia; un pico indica una componente periódica sin modelar.</td></tr>
+    </tbody></table></div>
+</section>

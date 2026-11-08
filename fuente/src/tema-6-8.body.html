@@ -1,0 +1,40 @@
+<header>
+  <div class="kicker">Unidad 3 · Temas 6, 7 y 8</div>
+  <h1>Diseñar y programar el simulador</h1>
+  <p class="lead">De las ecuaciones del modelo a un programa que las resuelve paso a paso: qué tiene que tener un simulador, cómo se monta en Simulink y cómo se escribe en Matlab.</p>
+  <div class="tags"><span class="tag">T6 diseño</span><span class="tag">T7 Simulink</span><span class="tag">T8 Matlab</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Resumen propio y general: las prácticas concretas del curso están en la página de <a href="practicas.html">Prácticas</a>.</p>
+</header>
+
+<section class="sec" id="diseno">
+  <h2><span class="dot"></span>Qué tiene un simulador</h2>
+  <div class="box key">
+    <p>Un simulador es un <b>bucle en el tiempo</b> que, en cada paso \(h\), calcula las derivadas del modelo con el estado actual y avanza el estado con un método numérico.</p>
+    <p>Hacen falta cinco cosas: <b>parámetros</b> del modelo, <b>variables de estado</b> con su <b>condición inicial</b> (una por cada una), <b>entradas</b> en función del tiempo, el <b>método de integración</b> con su paso \(h\), y qué <b>salidas</b> guardar para dibujarlas.</p>
+  </div>
+  <figure>
+    {{svg:simulador}}
+    <figcaption>Estructura de cualquier simulador. Si hay controlador, es un bloque más dentro del bucle: analógico en cada paso, digital solo cada \(T_c=nh\).</figcaption>
+  </figure>
+  <p>El orden de cada paso es siempre el mismo: leer la entrada en \(t_k\), calcular el control si toca, evaluar las derivadas, avanzar el estado, guardar y avanzar el tiempo. La plantilla en pseudocódigo para el examen está en <a href="tema-9-11.html#plantilla">Métodos numéricos</a>.</p>
+</section>
+
+<section class="sec ctl" id="matlab">
+  <h2><span class="dot"></span>Del pseudocódigo a Matlab</h2>
+  <p>Ejemplo mínimo: un sistema de primer orden \(\tau\dot y+y=Ku\) con \(K=2\), \(\tau=0{,}5\) s y escalón \(u=1\), simulado con Euler.</p>
+<pre class="code">K = 2; tau = 0.5; h = 0.01; N = 200;   % 2 s de simulación
+u = 1;
+y = zeros(1, N+1);                      % y(1) es y(0)
+for k = 1:N
+    dy     = (-y(k) + K*u) / tau;       % derivada con el estado actual
+    y(k+1) = y(k) + h*dy;               % paso de Euler
+end
+t = (0:N)*h;  plot(t, y)</pre>
+  <p>Con estos datos Euler da \(y(2)=1{,}9648\) y la solución exacta \(K(1-e^{-t/\tau})\) vale \(1{,}9634\). Con \(h=0{,}1\) Euler da \(1{,}9769\): el error crece con el paso. La misma ecuación con <code>ode45</code> se escribe con una función anónima:</p>
+<pre class="code">f = @(t, y) (-y + K*u) / tau;
+[t, y] = ode45(f, [0 2], 0);</pre>
+  <div class="box trap"><h4>Trampa de índices</h4><p>En Matlab los vectores empiezan en 1: no existe <code>y(0)</code>. El \(y(0)\) de la teoría es <code>y(1)</code>, y por eso <code>y</code> tiene <code>N+1</code> posiciones.</p></div>
+  <p class="vid-note">Los números de este ejemplo se han comprobado con Python; el código Matlab no se ha podido ejecutar aquí (no hay Matlab ni Octave en el entorno de trabajo).</p>
+</section>
+
+{{herramientas}}

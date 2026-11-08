@@ -8,6 +8,9 @@
   </div>
   <p class="notice">Guía no oficial de la UPCT. Reescrita y reorganizada a partir de apuntes de clase, sin copiar el material. Los ejercicios de la parte final están recreados y sus cálculos comprobados con código.</p>
 </header>
+<details class="nom"><summary>Nomenclatura de las unidades 1 y 2 <span class="src">12 símbolos</span></summary>
+<div class="tbl-wrap"><table><thead><tr><th>Símbolo</th><th>Qué significa</th><th>Unidades · nota</th></tr></thead><tbody><tr><td>\(M,\ m\)</td><td>Masa</td><td>kg</td></tr><tr><td>\(I\)</td><td>Momento de inercia</td><td>kg·m²</td></tr><tr><td>\(K\)</td><td>Constante del muelle (o ganancia en una función de transferencia)</td><td>N/m · según contexto</td></tr><tr><td>\(B\)</td><td>Coeficiente de fricción viscosa</td><td>N·s/m o N·m·s/rad</td></tr><tr><td>\(S\)</td><td>Sección de un depósito</td><td>m²</td></tr><tr><td>\(a\)</td><td>Apertura de una válvula</td><td>adimensional, entre 0 y 1</td></tr><tr><td>\(h\)</td><td>Altura de líquido</td><td>m</td></tr><tr><td>\(\tau\)</td><td>Constante de tiempo</td><td>s</td></tr><tr><td>\(\xi\)</td><td>Factor de amortiguamiento</td><td>adimensional</td></tr><tr><td>\(K_i,\ K_b\)</td><td>Constantes de par y de fuerza contraelectromotriz del motor</td><td>N·m/A · V·s/rad</td></tr><tr><td>\(G(s)\)</td><td>Función de transferencia</td><td>salida/entrada</td></tr><tr><td>\(\Delta x\)</td><td>Desviación respecto al punto de trabajo</td><td>la de \(x\)</td></tr></tbody></table></div></details>
+
 
 <figure>
   <svg viewBox="0 0 640 235" role="img" aria-labelledby="f1t">
@@ -343,57 +346,4 @@
   <div class="trap"><b class="t">Resistencia radial</b><p>Para un tubo que conduce hacia fuera la resistencia lleva \(\ln(r_2/r_1)\), no \(L/(K_tA)\).</p></div>
 </section>
 
-<section class="sec" id="autoeval">
-  <h2><span class="dot"></span>Autoevaluación</h2>
-  <p>Seis ejercicios recreados con el estilo del tema. Resuelve primero y luego pulsa una opción.</p>
-  <div class="score" id="score" aria-live="polite"></div>
 
-  <div class="q" data-correct="b">
-    <div class="qh">Recreada · <em>Motor de continua</em></div>
-    <p>Un motor con inductancia despreciable tiene \(R=2\ \Omega\), \(I=0{,}01\ \mathrm{kg\,m^2}\), \(B=0{,}002\ \mathrm{N\,m\,s/rad}\). En vacío a \(V_N=24\) V gira a \(300\) rad/s y con el rotor parado da \(T_N=1{,}2\) N·m. ¿Cuánto vale \(\tau\) de \(\Omega/V\)?</p>
-    <div class="opts"><button class="opt" data-k="a">5,0 s</button><button class="opt" data-k="b">1,67 s</button><button class="opt" data-k="c">0,83 s</button><button class="opt" data-k="d">0,012 s</button></div>
-    <div class="expl" hidden><p>\(K_b=24/300=0{,}08\), \(K_i=R\,T_N/V_N=2\cdot1{,}2/24=0{,}1\). Luego \(BR+K_iK_b=0{,}004+0{,}008=0{,}012\) y \(\tau=IR/0{,}012=0{,}02/0{,}012=1{,}67\) s. La ganancia es \(K=0{,}1/0{,}012=8{,}33\) rad/(s·V). Los 5 s salen de olvidar \(K_iK_b\).</p></div>
-  </div>
-
-  <div class="q" data-correct="c">
-    <div class="qh">Recreada · <em>Linealización</em></div>
-    <p>Un depósito de \(S=0{,}5\ \mathrm{m^2}\) cumple \(S\dot h=Q_i-Ka\sqrt h\) con \(Ka=0{,}02\ \mathrm{m^{5/2}/s}\). Se linealiza en torno a \(Q_{i0}=0{,}04\ \mathrm{m^3/s}\). ¿Constante de tiempo del modelo lineal?</p>
-    <div class="opts"><button class="opt" data-k="a">25 s</button><button class="opt" data-k="b">50 s</button><button class="opt" data-k="c">100 s</button><button class="opt" data-k="d">200 s</button></div>
-    <div class="expl" hidden><p>Equilibrio: \(h_0=(Q_{i0}/Ka)^2=4\) m. La derivada de \(Ka\sqrt h\) es \(Ka/(2\sqrt{h_0})=0{,}005\ \mathrm{m^2/s}\). Entonces \(G=\dfrac{200}{100s+1}\): \(\tau=S/0{,}005=100\) s y la ganancia es 200 s/m². Los 50 s aparecen si se olvida el 2 de la derivada.</p></div>
-  </div>
-
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Segundo orden eléctrico</em></div>
-    <p>Un RLC en serie con salida en el condensador tiene \(R=100\ \Omega\), \(L=100\) mH y \(C=10\ \mu\)F. ¿Cuánto valen \(\xi\) y \(\omega_n\)?</p>
-    <div class="opts"><button class="opt" data-k="a">\(\xi=0{,}5\), \(\omega_n=1000\) rad/s</button><button class="opt" data-k="b">\(\xi=2\), \(\omega_n=1000\) rad/s</button><button class="opt" data-k="c">\(\xi=0{,}5\), \(\omega_n=31{,}6\) rad/s</button><button class="opt" data-k="d">\(\xi=0{,}05\), \(\omega_n=1000\) rad/s</button></div>
-    <div class="expl" hidden><p>\(\omega_n=1/\sqrt{LC}=1/\sqrt{0{,}1\cdot10^{-5}}=1000\) rad/s y \(\xi=\frac R2\sqrt{C/L}=50\cdot0{,}01=0{,}5\): subamortiguado.</p></div>
-  </div>
-
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Resistencias térmicas</em></div>
-    <p>Pared de \(L=0{,}2\) m, \(K_t=0{,}8\ \mathrm{W/(m\,K)}\), \(A=1\ \mathrm{m^2}\). Convección \(h_1=10\) y \(h_2=25\ \mathrm{W/(m^2K)}\), con fluidos a \(20\,^\circ\)C y \(-5\,^\circ\)C. ¿Calor transmitido?</p>
-    <div class="opts"><button class="opt" data-k="a">64 W</button><button class="opt" data-k="b">71 W</button><button class="opt" data-k="c">100 W</button><button class="opt" data-k="d">250 W</button></div>
-    <div class="expl" hidden><p>\(R_1=0{,}1\), \(R_2=0{,}25\), \(R_3=0{,}04\) K/W, suman \(0{,}39\). \(q=25/0{,}39=64{,}1\) W. Con 71 W olvidas \(R_3\), con 100 W solo cuentas la conducción y con 250 W solo \(R_1\).</p></div>
-  </div>
-
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Operacional</em></div>
-    <p>Un amplificador inversor ideal lleva \(Z_i=R\) y \(Z_f=C\). ¿Qué relación cumple?</p>
-    <div class="opts"><button class="opt" data-k="a">\(v_o=-\dfrac1{RC}\displaystyle\int v_i\,dt\)</button><button class="opt" data-k="b">\(v_o=-RC\,\dfrac{dv_i}{dt}\)</button><button class="opt" data-k="c">\(v_o=+\dfrac1{RC}\displaystyle\int v_i\,dt\)</button><button class="opt" data-k="d">\(v_o=-\dfrac RC\,v_i\)</button></div>
-    <div class="expl" hidden><p>\(V_o/V_i=-Z_f/Z_i=-\dfrac{1/(Cs)}{R}=-\dfrac{1}{RCs}\): integrador con signo menos. El derivador es el caso contrario, \(Z_i=C\) y \(Z_f=R\).</p></div>
-  </div>
-
-  <div class="q" data-correct="a">
-    <div class="qh">Recreada · <em>Segundo orden mecánico</em></div>
-    <p>Un sistema masa-muelle-amortiguador con \(m=2\) kg, \(B=8\) N·s/m y \(K=50\) N/m. ¿Valor de \(\xi\)?</p>
-    <div class="opts"><button class="opt" data-k="a">0,4</button><button class="opt" data-k="b">0,8</button><button class="opt" data-k="c">1,25</button><button class="opt" data-k="d">0,16</button></div>
-    <div class="expl" hidden><p>\(\xi=\dfrac{B}{2\sqrt{Km}}=\dfrac8{2\cdot10}=0{,}4\), con \(\omega_n=\sqrt{K/m}=5\) rad/s. El 0,8 sale de olvidar el 2.</p></div>
-  </div>
-
-  <button class="reset" id="reset-q" type="button">Reiniciar</button>
-</section>
-
-<div class="pager">
-  <a href="index.html"><small>Anterior</small>Inicio</a>
-  <a class="next" href="identificacion.html"><small>Siguiente</small>UD 2 · Identificación</a>
-</div>

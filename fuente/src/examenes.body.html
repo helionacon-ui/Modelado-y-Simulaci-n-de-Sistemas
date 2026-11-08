@@ -35,7 +35,7 @@
   <p>El método es el de la <a href="problemas.html#metodo">página de problemas</a>: entradas y salidas, sistema de referencia, despiece, ecuaciones, linealizar y Laplace. Si cada depósito se linealiza como un sistema de primer orden que descarga en el siguiente, con \(N\) depósitos iguales la función de transferencia entre caudal de salida y de entrada es el producto de \(N\) factores iguales: una potencia \(N\) del mismo denominador. Comprueba que tu linealización lo cumple.</p>
   <p>Con un controlador, el lazo cerrado sale de \(G_{lc}=\dfrac{G_cG_p}{1+G_cG_pH}\); si el actuador es «\(G(s)=1\)», no añade dinámica.</p>
   <ul class="plan">
-    <li><a href="tema-1.html">Tema 1 · Modelado de sistemas</a><span class="pill ok">teoría</span><p>Leyes de conservación, motor, depósitos, linealización, equivalencias.</p></li>
+    <li><a href="tema-1-2.html">Tema 1 · Modelado de sistemas</a><span class="pill ok">teoría</span><p>Leyes de conservación, motor, depósitos, linealización, equivalencias.</p></li>
     <li><a href="problemas.html">Problemas</a><span class="pill ok">práctica</span><p>Cuatro problemas resueltos con método fijo.</p></li>
   </ul>
 </section>
@@ -54,7 +54,7 @@
       <tr><td>Sistema propulsado con motor de reacción y acelerómetro mecánico</td><td>Diagrama de bloques y pseudocódigo; PID por computador con actuador \(G(s)=1\)</td></tr>
       <tr><td>Globo aerostático con calentamiento por resistencia y pérdidas de calor</td><td>PID analógico y control por computador</td></tr>
     </tbody></table></div>
-  <p>La plantilla para todos está en la <a href="metodos-numericos.html#plantilla">página de métodos numéricos</a>: ecuaciones con variables de estado, condiciones iniciales, bucle temporal, y el control analógico (en cada paso) o discreto (cada \(T_c=nh\)).</p>
+  <p>La plantilla para todos está en la <a href="tema-9-11.html#plantilla">página de métodos numéricos</a>: ecuaciones con variables de estado, condiciones iniciales, bucle temporal, y el control analógico (en cada paso) o discreto (cada \(T_c=nh\)).</p>
   <div class="trap"><b class="t">Qué hay que dejar escrito</b><p>Cada variable de estado con su condición inicial, qué es \(h\), cómo se calcula cada derivada, y dónde actúa el controlador. Si hay cambios de consigna o de apertura a lo largo del tiempo, se escriben con un <code>si</code> sobre \(t\).</p></div>
 </section>
 
@@ -63,15 +63,15 @@
   <div class="tbl-wrap"><table>
     <thead><tr><th>Tipo de cuestión</th><th>Qué hay que saber hacer</th><th>Dónde</th></tr></thead>
     <tbody>
-      <tr><td>Proponer un modelo a partir de un step-test o de una gráfica entrada-salida</td><td>Decidir el orden (primer orden, segundo orden, integrador, retardo), leer ganancia y constante de tiempo y justificar la elección</td><td><a href="identificacion.html">Identificación</a></td></tr>
-      <tr><td>Circuito eléctrico equivalente de un sistema mecánico o de un péndulo</td><td>Aplicar la analogía entre variables y elementos</td><td><a href="tema-1.html">Tema 1</a></td></tr>
-      <tr><td>Estimar la salida de un modelo (ARX, ARMAX, OE) con unos datos</td><td>Usar el modelo de predicción con los valores correctos realimentados</td><td><a href="error.html#prediccion">Predicción</a></td></tr>
-      <tr><td>Probabilidad de \(|e-\mu_e|\le\sigma_e\), o de \(e>0\), o primeros términos de la autocorrelación del error</td><td>Calcular la predicción, el error y contar o promediar</td><td><a href="error.html#ejemplo-oe">Ejemplos resueltos</a></td></tr>
-      <tr><td>Deducir Adams-Bashforth de dos pasos y aplicarlo a masa-muelle-fricción con fuerza externa</td><td>Interpolar \(f\) con una recta, integrar y escribir el pseudocódigo</td><td><a href="metodos-numericos.html#multipaso">Multipaso</a></td></tr>
-      <tr><td>Runge-Kutta: principios y ejemplo; pseudocódigo RK2 de un péndulo con fricción</td><td>Explicar la idea y escribir RK2 para un sistema de dos ecuaciones</td><td><a href="metodos-numericos.html#rk">Runge-Kutta</a></td></tr>
-      <tr><td>Ecuaciones rígidas: ejemplo físico, o paso máximo para \(y'=-10y\)</td><td>Explicar la rigidez y calcular \(h\lt2/|\lambda|\)</td><td><a href="metodos-numericos.html#rigidez">Rigidez</a></td></tr>
-      <tr><td>Herramientas para analizar el resultado de una simulación</td><td>Enumerar media, varianza, densidad, autocorrelación y espectro, y lo esperado con un modelo fiel</td><td><a href="error.html#estimadores">Análisis del error</a></td></tr>
-      <tr><td>Condiciones iniciales necesarias para simular</td><td>Una por cada variable de estado</td><td><a href="metodos-numericos.html#trampas">Trampas</a></td></tr>
+      <tr><td>Proponer un modelo a partir de un step-test o de una gráfica entrada-salida</td><td>Decidir el orden (primer orden, segundo orden, integrador, retardo), leer ganancia y constante de tiempo y justificar la elección</td><td><a href="tema-3-5.html">Identificación</a></td></tr>
+      <tr><td>Circuito eléctrico equivalente de un sistema mecánico o de un péndulo</td><td>Aplicar la analogía entre variables y elementos</td><td><a href="tema-1-2.html">Tema 1</a></td></tr>
+      <tr><td>Estimar la salida de un modelo (ARX, ARMAX, OE) con unos datos</td><td>Usar el modelo de predicción con los valores correctos realimentados</td><td><a href="tema-12-13.html#prediccion">Predicción</a></td></tr>
+      <tr><td>Probabilidad de \(|e-\mu_e|\le\sigma_e\), o de \(e>0\), o primeros términos de la autocorrelación del error</td><td>Calcular la predicción, el error y contar o promediar</td><td><a href="tema-12-13.html#ejemplo-oe">Ejemplos resueltos</a></td></tr>
+      <tr><td>Deducir Adams-Bashforth de dos pasos y aplicarlo a masa-muelle-fricción con fuerza externa</td><td>Interpolar \(f\) con una recta, integrar y escribir el pseudocódigo</td><td><a href="tema-9-11.html#multipaso">Multipaso</a></td></tr>
+      <tr><td>Runge-Kutta: principios y ejemplo; pseudocódigo RK2 de un péndulo con fricción</td><td>Explicar la idea y escribir RK2 para un sistema de dos ecuaciones</td><td><a href="tema-9-11.html#rk">Runge-Kutta</a></td></tr>
+      <tr><td>Ecuaciones rígidas: ejemplo físico, o paso máximo para \(y'=-10y\)</td><td>Explicar la rigidez y calcular \(h\lt2/|\lambda|\)</td><td><a href="tema-9-11.html#rigidez">Rigidez</a></td></tr>
+      <tr><td>Herramientas para analizar el resultado de una simulación</td><td>Enumerar media, varianza, densidad, autocorrelación y espectro, y lo esperado con un modelo fiel</td><td><a href="tema-12-13.html#estimadores">Análisis del error</a></td></tr>
+      <tr><td>Condiciones iniciales necesarias para simular</td><td>Una por cada variable de estado</td><td><a href="tema-9-11.html#trampas">Trampas</a></td></tr>
     </tbody></table></div>
   <p>Las convocatorias más antiguas del material (con otro formato) añaden: calcular las tres primeras aproximaciones de Euler con \(h=0{,}1\) y comentar la elección del método; control del error en métodos de un paso y estimación del tamaño de paso óptimo; y deducir un método de integración a partir de un polinomio interpolador.</p>
 </section>
@@ -85,8 +85,3 @@
     <li><b>Teoría.</b> Sabe deducir Adams-Bashforth de dos pasos y la fórmula de RK2, y explica la rigidez con \(h\lt2/|\lambda|\).</li>
   </ol>
 </section>
-
-<div class="pager">
-  <a href="error.html"><small>Anterior</small>Análisis del error y predicción</a>
-  <a class="next" href="practicas.html"><small>Siguiente</small>Prácticas</a>
-</div>

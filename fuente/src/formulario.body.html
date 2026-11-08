@@ -1,0 +1,68 @@
+<header>
+  <div class="kicker">Repasar · todo en una página</div>
+  <h1>Formulario por unidad</h1>
+  <p class="lead">Las fórmulas que más se usan en problemas y cuestiones, con lo que te piden y cómo se resuelve. Cada una se explica en la página de su unidad.</p>
+  <div class="tags"><span class="tag">5 unidades</span><span class="tag">recetas incluidas</span></div>
+  <p class="notice">Guía no oficial de la UPCT. Resumen propio. Comprueba en clase qué fórmulas te dan en el examen: no se conoce.</p>
+</header>
+
+<section class="sec mec" id="f-ud1">
+  <h2><span class="dot"></span>Unidad 1 · Modelado</h2>
+  <div class="eq"><span class="lab">Masa y giro con fricción</span>\[M\ddot x=\sum F,\qquad I\ddot\theta=T-B\dot\theta\]</div>
+  <div class="eq"><span class="lab">Muelle y amortiguador</span>\[F=-K(x_1-x_2),\qquad F=-B(\dot x_1-\dot x_2)\]</div>
+  <div class="eq"><span class="lab">Depósito con válvula</span>\[S\,\dot h=Q_{ent}-K\,a\sqrt{h}\]</div>
+  <div class="eq"><span class="lab">Balance térmico</span>\[\sum q_i=M\,c_p\frac{dT}{dt}\]</div>
+  <div class="eq key"><span class="lab">Motor de continua</span>\[\frac{\Omega(s)}{V(s)}=\frac{K}{\tau s+1},\quad K=\frac{K_i}{BR+K_iK_b},\quad \tau=\frac{IR}{BR+K_iK_b}\]</div>
+  <div class="eq key"><span class="lab">Linealización</span>\[\frac{\partial F}{\partial x_1}\Big|_{\vec x_0}\Delta x_1+\cdots+\frac{\partial F}{\partial x_n}\Big|_{\vec x_0}\Delta x_n=0\]</div>
+  <div class="eq"><span class="lab">Primer orden</span>\[G(s)=\frac{K}{\tau s+1}\]</div>
+  <div class="eq"><span class="lab">Segundo orden</span>\[G(s)=\frac{K}{\tau^2s^2+2\xi\tau s+1},\qquad \omega_n=\frac1\tau\]</div>
+  <div class="eq"><span class="lab">Amplificador inversor</span>\[\frac{V_o}{V_i}=-\frac{Z_f}{Z_i}\]</div>
+  <div class="eq"><span class="lab">Lazo cerrado</span>\[G_{lc}=\frac{G_cG_p}{1+G_cG_pH}\]</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Te piden</th><th>Haces</th></tr>
+    <tr><td>Modelo de un sistema físico</td><td>Entradas y salidas, sistema de referencia, despiece, una ecuación por masa, depósito o nudo, linealizar y Laplace (<a href="problemas.html#metodo">método</a>)</td></tr>
+    <tr><td>Función de transferencia de \(N\) depósitos iguales</td><td>Producto de \(N\) factores iguales de primer orden</td></tr>
+    <tr><td>Circuito eléctrico equivalente</td><td>Analogía entre variables y elementos (<a href="tema-1-2.html#equivalencias">equivalencias</a>)</td></tr>
+  </table></div>
+</section>
+
+<section class="sec" id="f-ud2">
+  <h2><span class="dot"></span>Unidad 2 · Identificación</h2>
+  <div class="eq key"><span class="lab">Primer orden con retardo (por la gráfica)</span>\[K=\frac{\Delta y}{\Delta u},\qquad \tau=1{,}5\,(t_{63}-t_{28}),\qquad T=t_{63}-\tau\]</div>
+  <div class="eq"><span class="lab">Predictor ARX</span>\[\hat y=B\,u+(1-A)\,y\]</div>
+  <div class="eq key"><span class="lab">Mínimos cuadrados</span>\[\hat\theta=(\Phi^T\Phi)^{-1}\Phi^T\mathbf Y\]</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Te piden</th><th>Haces</th></tr>
+    <tr><td>Modelo a partir de un escalón</td><td>Lee \(\Delta y\), \(\Delta u\), \(t_{28}\) y \(t_{63}\) y aplica las fórmulas; decide primer o segundo orden por la forma</td></tr>
+    <tr><td>Estimar los parámetros de un FIR o ARX</td><td>Monta \(\Phi\) y \(\mathbf Y\) con los datos, calcula \(\Phi^T\Phi\) y su inversa 2×2</td></tr>
+    <tr><td>Predecir con unos datos</td><td>Usa la fórmula del predictor con las salidas <b>reales</b> (ARX) o las <b>predichas</b> (OE)</td></tr>
+  </table></div>
+</section>
+
+<section class="sec ctl" id="f-ud4">
+  <h2><span class="dot"></span>Unidad 4 · Métodos numéricos</h2>
+  <div class="eq key"><span class="lab">Euler</span>\[w_{k+1}=w_k+h\,f(t_k,w_k)\]</div>
+  <div class="eq"><span class="lab">Runge-Kutta de orden 2 (punto medio)</span>\[w_{k+1}=w_k+h\,f\Big(t_k+\tfrac h2,\ w_k+\tfrac h2 f(t_k,w_k)\Big)\]</div>
+  <div class="eq"><span class="lab">Runge-Kutta de orden 4</span>\[\begin{aligned}k_1&=f(t_k,w_k),\quad k_2=f\big(t_k+\tfrac h2,w_k+\tfrac h2k_1\big)\\ k_3&=f\big(t_k+\tfrac h2,w_k+\tfrac h2k_2\big),\quad k_4=f(t_k+h,w_k+hk_3)\\ w_{k+1}&=w_k+\tfrac h6\,(k_1+2k_2+2k_3+k_4)\end{aligned}\]</div>
+  <div class="eq"><span class="lab">Adams-Bashforth de dos pasos</span>\[w_{k+1}=w_k+\frac h2\big(3f_k-f_{k-1}\big)\]</div>
+  <div class="eq key"><span class="lab">Estabilidad de Euler en \(y'=\lambda y\)</span>\[|1+h\lambda|\lt1\;\Rightarrow\;h\lt\frac{2}{|\lambda|}\quad(\lambda\lt0)\]</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Te piden</th><th>Haces</th></tr>
+    <tr><td>Pseudocódigo de simulación</td><td>Variables de estado con condición inicial, bucle temporal, derivadas, controlador (analógico en cada paso, digital cada \(T_c=nh\)) (<a href="tema-9-11.html#plantilla">plantilla</a>)</td></tr>
+    <tr><td>Paso máximo para que no diverja</td><td>\(h\lt2/|\lambda|\) con el polo más rápido; ejemplo \(y'=-10y\Rightarrow h\lt0{,}2\)</td></tr>
+    <tr><td>Deducir Adams-Bashforth de dos pasos</td><td>Interpola \(f\) con la recta por \(f_{k-1}\) y \(f_k\), integra de \(t_k\) a \(t_{k+1}\)</td></tr>
+  </table></div>
+</section>
+
+<section class="sec flu" id="f-ud5">
+  <h2><span class="dot"></span>Unidad 5 · Análisis del error</h2>
+  <div class="eq"><span class="lab">Error y media</span>\[e(k)=y(k)-\hat y(k),\qquad \bar e=\frac1N\sum e(k)\]</div>
+  <div class="eq"><span class="lab">Desviación típica</span>\[\sigma_e=\sqrt{\frac1{N-1}\sum\big(e(k)-\bar e\big)^2}\quad\text{(o con }N\text{ en el denominador, según el enunciado)}\]</div>
+  <div class="eq key"><span class="lab">Autocorrelación</span>\[\hat R(r)=\frac1{N-r}\sum_k e(k)\,e(k+r),\qquad \hat R(0)=\mathrm{RMS}^2\]</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Te piden</th><th>Haces</th></tr>
+    <tr><td>Probabilidad de \(|e-\bar e|\le\sigma_e\)</td><td>Calcula predicción y error, cuenta cuántas muestras caen dentro y divide por \(N\); un error gaussiano daría el 68 %</td></tr>
+    <tr><td>¿Es bueno el modelo?</td><td>El error debe ser ruido blanco: media cercana a 0, campana, \(\hat R(r)\approx0\) para \(r\ne0\), espectro plano</td></tr>
+  </table></div>
+  <div class="box trap"><h4>1/N o 1/(N−1)</h4><p>Los apuntes y la práctica 4 no usan la misma fórmula de la varianza. Con pocos datos cambia el resultado; usa la que diga el enunciado y, si no la dice, escribe cuál has usado.</p></div>
+</section>

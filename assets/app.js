@@ -109,4 +109,48 @@
       paint();
     });
   }
+
+  // progreso por temas (Cómo es el examen)
+  var pr = document.getElementById('prog');
+  if (pr) {
+    var boxes = Array.prototype.slice.call(pr.querySelectorAll('input[data-p]'));
+    var saved = {}; try { saved = JSON.parse(store('msg-prog') || '{}') || {}; } catch (e) { saved = {}; }
+    var fill = document.getElementById('prog-fill'), ptxt = document.getElementById('prog-txt');
+    var upd = function () {
+      var n = boxes.filter(function (b) { return b.checked; }).length;
+      if (fill) fill.style.width = (100 * n / boxes.length) + '%';
+      if (ptxt) ptxt.textContent = n + ' de ' + boxes.length + ' temas marcados';
+    };
+    boxes.forEach(function (b) {
+      b.checked = !!saved[b.getAttribute('data-p')];
+      b.addEventListener('change', function () { saved[b.getAttribute('data-p')] = b.checked; store('msg-prog', JSON.stringify(saved)); upd(); });
+    });
+    upd();
+  }
+
+  // buscador de toda la guía
+  var gq = document.getElementById('gsrch'), gout = document.getElementById('gsrch-out');
+  if (gq && gout) {
+    var norm = function (t) { return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); };
+    var loaded = false;
+    var load = function (cb) {
+      if (loaded || window.MSG_INDEX) { loaded = true; cb(); return; }
+      var sc = document.createElement('script'); sc.src = 'assets/search-index.js';
+      sc.onload = function () { loaded = true; cb(); }; sc.onerror = function () { gout.hidden = false; gout.textContent = 'No se pudo cargar el índice de búsqueda.'; };
+      document.head.appendChild(sc);
+    };
+    var esc = function (t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var run = function () {
+      var words = norm(gq.value).split(/\s+/).filter(Boolean);
+      if (!words.length) { gout.hidden = true; gout.innerHTML = ''; return; }
+      var hits = [];
+      for (var i = 0; i < window.MSG_INDEX.length && hits.length < 30; i++) {
+        var e = window.MSG_INDEX[i], k = norm(e[0] + ' ' + e[2] + ' ' + e[1].replace(/[#-]/g, ' '));
+        if (words.every(function (w) { return k.indexOf(w) >= 0; })) hits.push(e);
+      }
+      gout.hidden = false;
+      gout.innerHTML = hits.length ? hits.map(function (e) { return '<a href="' + e[1] + '">' + esc(e[0]) + '<small>' + esc(e[2]) + '</small></a>'; }).join('') : '<p class="sim-msg">Sin resultados.</p>';
+    };
+    gq.addEventListener('input', function () { load(run); });
+  }
 })();

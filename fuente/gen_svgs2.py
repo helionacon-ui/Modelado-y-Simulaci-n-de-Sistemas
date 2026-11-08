@@ -134,3 +134,15 @@ b += txt(536, 24, "simulación y datos", "s-tx") + txt(536, 222, "método numér
 w("portada", b, 240, "De un sistema real, como un depósito con motor, a su modelo matemático y a la simulación comparada con datos medidos")
 
 print("ok")
+
+# 9. simulador: estructura del bucle
+b = box(20, 90, 110, 56, "Entrada u(t)")
+b += box(170, 90, 130, 56, "Controlador", True)
+b += box(340, 90, 130, 56, "Derivadas f(x,u)")
+b += box(510, 90, 110, 56, "Integrador")
+b += arrow("M130 118 H168") + arrow("M300 118 H338") + arrow("M470 118 H508", True)
+b += '<path d="M565 146 V200 H235 V148" class="s-thin" marker-end="url(#ah)" fill="none"/>'
+b += txt(400, 218, "estado x(k+1) = x(k) + h·(pendiente)", "s-tx2")
+b += '<path d="M565 90 V50" class="s-thin" marker-end="url(#ah)"/>' + txt(565, 40, "guardar salidas y(k)", "s-tx2")
+b += txt(75, 76, "t = t + h", "s-tx2") + txt(235, 76, "cada paso o cada Tc", "s-tx2")
+w("simulador", b, 235, "Bucle de un simulador: entrada, controlador, derivadas, integrador y realimentación del estado")

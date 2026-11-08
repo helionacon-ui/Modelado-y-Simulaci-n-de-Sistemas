@@ -22,7 +22,7 @@
   <h2><span class="dot"></span>Práctica 1 · Identificar un motor de primer orden</h2>
   <ol class="steps">
     <li><b>Experimentos.</b> Escalones de entrada de 10 a 100 en saltos de 10, con dos repeticiones de cada uno.</li>
-    <li><b>Parámetros.</b> En cada experimento se mide la ganancia \(K\) y la constante de tiempo \(\tau\) (ver el método del 63 % en la <a href="identificacion.html">página de identificación</a>).</li>
+    <li><b>Parámetros.</b> En cada experimento se mide la ganancia \(K\) y la constante de tiempo \(\tau\) (ver el método del 63 % en la <a href="tema-3-5.html">página de identificación</a>).</li>
     <li><b>Regresión.</b> Se representan \(K\) y \(\tau\) en función del escalón, con su recta de regresión. Si el motor fuera lineal, serían constantes y la recta saldría plana; la pendiente mide cuánto se desvía.</li>
     <li><b>Modelo medio.</b> Se toman los valores medios y se simula la función de transferencia con una entrada por tramos (25, −95, 90, 45 y −45 durante 20 s cada tramo), comparando en una misma gráfica el motor y el modelo.</li>
     <li><b>Error de predicción.</b> Se representa el error en función de la tensión de entrada y se ajusta con una recta.</li>
@@ -109,30 +109,8 @@ para k = 3 : length(y)
     psi = [ -y(k-1) ; -y(k-2) ; u(k-1) ];   % vector de regresión
     yest(k) = theta' * psi;
 fin</pre>
-  <p>Para ARMAX hay que añadir al regresor los errores anteriores \(\varepsilon(k-i)=y(k-i)-\hat y(k-i)\), y para OE las predicciones anteriores en lugar de las salidas medidas. Todo está explicado en la página de <a href="error.html#prediccion">predicción y análisis del error</a>.</p>
+  <p>Para ARMAX hay que añadir al regresor los errores anteriores \(\varepsilon(k-i)=y(k-i)-\hat y(k-i)\), y para OE las predicciones anteriores en lugar de las salidas medidas. Todo está explicado en la página de <a href="tema-12-13.html#prediccion">predicción y análisis del error</a>.</p>
   <div class="trap"><b class="t">Trampa</b><p>Al armar el regresor ARX los términos de salida llevan <b>signo menos</b> y los parámetros son los de \(A(z)\) tal como salen de Matlab. Si copias \(A(z)=1-1{,}852z^{-1}+0{,}8519z^{-2}\), \(\theta=(-1{,}852,\ 0{,}8519,\ b_1)\): el signo ya está dentro del parámetro.</p></div>
 </section>
 
-<section class="sec" id="herramientas">
-  <h2><span class="dot"></span>Matlab y Simulink: lo que se usa</h2>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Para</th><th>Herramienta</th></tr></thead>
-    <tbody>
-      <tr><td>Guardar señales de una simulación</td><td>Bloque <code>To Workspace</code> (formato array) con el periodo de muestreo ajustado; el reloj de la simulación da los tiempos</td></tr>
-      <tr><td>Crear el conjunto de datos de identificación</td><td><code>dato = iddata(y,u,0.01)</code></td></tr>
-      <tr><td>Estimar un ARX</td><td><code>arx(dato,[na nb nk])</code>, con <code>nk=1</code> si hay un retardo de una muestra; Matlab llama \(z\) al operador \(q\)</td></tr>
-      <tr><td>Recta de regresión</td><td><code>polyfit</code> y <code>polyval</code></td></tr>
-      <tr><td>Solver en Simulink</td><td>Configuración del modelo → Solver: variable (<code>ode45</code>) o fijo (<code>ode1</code> es Euler)</td></tr>
-      <tr><td>Paso usado por el solver</td><td><code>plot(diff(tout))</code></td></tr>
-    </tbody></table></div>
-  <div class="trap"><b class="t">Trampa de índices</b><p>En Matlab los vectores empiezan en 1 y no existe <code>y(0)</code>, <code>y(-1)</code>. El término \(w(0)\) de la teoría es <code>w(1)</code>; los valores anteriores a ese se tratan aparte, con ceros, o se empieza el bucle más tarde.</p></div>
-  <div class="vids"><h3>Vídeos para reforzar · Tema 7 · Simulink</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
-    <div class="yt" data-id="DCvJlVI_GE0" data-title="Introducción a Simulink para modelado, simulación y pruebas"><a href="https://www.youtube.com/watch?v=DCvJlVI_GE0" target="_blank" rel="noopener">Introducción a Simulink para modelado, simulación y pruebas (YouTube)</a></div>
-    <div class="yt" data-id="Q34hhC7AVL4" data-title="Simulación de sistemas dinámicos en Simulink: circuito RC"><a href="https://www.youtube.com/watch?v=Q34hhC7AVL4" target="_blank" rel="noopener">Simulación de sistemas dinámicos en Simulink: circuito RC (YouTube)</a></div>
-  </div></div>
-</section>
 
-<div class="pager">
-  <a href="examenes.html"><small>Anterior</small>Qué se pregunta en el examen</a>
-  <a class="next" href="index.html#plan"><small>Siguiente</small>Plan de la guía</a>
-</div>

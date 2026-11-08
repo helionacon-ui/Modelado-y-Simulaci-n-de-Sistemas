@@ -1,58 +1,64 @@
-<header>
-  <div class="kicker">Guía no oficial de la UPCT · Grado en Ingeniería Electrónica Industrial y Automática</div>
-  <h1>Modelado y Simulación de Sistemas</h1>
-  <p class="lead">Una guía para aprobar la asignatura: un tema por página, fórmulas aparte de la explicación, trampas de examen y ejercicios con corrección.</p>
-  <figure class="hero">
-    {{svg:portada}}
-    <figcaption>La asignatura en una imagen: se parte de un sistema físico, se modela con ecuaciones y se simula y se contrasta con datos medidos.</figcaption>
-  </figure>
-  <div class="tags">
-    <span class="tag">3.º curso · 2.º cuatrimestre</span><span class="tag">6 ECTS</span><span class="tag">obligatoria</span><span class="tag">castellano</span>
+<header class="hero">
+  <div class="hero-in">
+    <div class="hero-txt">
+      <div class="eyebrow">Guía no oficial de la UPCT · GIEyA · 3.º curso</div>
+      <p class="fecha">Proyecto iniciado el <time datetime="2026-11-07">7 de noviembre de 2026</time> · Última actualización: <time datetime="2026-11-08">8 de noviembre de 2026</time></p>
+      <h1>Modelado y <span>Simulación</span> de Sistemas</h1>
+      <p class="sub">Guía para aprobar</p>
+      <div class="stats">
+        <div><b>13</b><span>temas del programa</span></div>
+        <div><b>7</b><span>simuladores interactivos</span></div>
+        <div><b>18</b><span>vídeos por tema</span></div>
+        <div><b>18</b><span>preguntas de autoevaluación</span></div>
+      </div>
+      <div class="cta"><a class="btn pri" href="#cero">Empieza desde cero</a><a class="btn" href="empezar.html">Cómo es el examen</a><a class="btn" href="problemas.html">Problemas</a><a class="btn" href="autoevaluacion.html">Autoevaluación</a><a class="btn" href="formulario.html">Formulario</a></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      {{svg:portada}}
+      <p class="art-cap">Se parte de un sistema físico, se modela con ecuaciones y se simula y contrasta con datos medidos.</p>
+    </div>
   </div>
-  <p class="notice">Versión ampliada con el material del aula virtual del curso 2025-2026 (apuntes, prácticas y exámenes de 2023 a 2026). Falta el formulario resumen y el glosario.</p>
 </header>
 
-<section class="sec" id="evaluacion">
-  <h2><span class="dot"></span>Cómo se evalúa</h2>
-  <p>No hay test: el examen escrito mezcla problemas y cuestiones teórico-prácticas. Por eso esta guía trae problemas con método fijo en lugar de banco de preguntas y simulador de test.</p>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Parte</th><th>Qué se evalúa</th><th>Peso</th></tr></thead>
-    <tbody>
-      <tr><td>Examen escrito</td><td>Resolución de problemas y cuestiones teórico-prácticas</td><td>80 %</td></tr>
-      <tr><td>Prácticas</td><td>Memoria de las prácticas propuestas</td><td>20 %</td></tr>
-    </tbody></table></div>
-  <ul>
-    <li>Hay que sacar al menos el <b>50 %</b> de la nota máxima del examen.</li>
-    <li>El informe de prácticas tiene que tener evaluación positiva.</li>
-  </ul>
-  <div class="card" style="max-width:560px">
-    <h3>Calculadora de nota</h3>
-    <p>Pon tus notas sobre 10. Se asume que «positiva» en prácticas significa 5 o más.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px">
-      <label for="n-exam" style="display:grid;gap:4px;font-weight:600">Examen<input id="n-exam" type="number" min="0" max="10" step="0.1" value="5.5" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--fg)"></label>
-      <label for="n-prac" style="display:grid;gap:4px;font-weight:600">Prácticas<input id="n-prac" type="number" min="0" max="10" step="0.1" value="8" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--fg)"></label>
-    </div>
-    <p id="calc-out" aria-live="polite" style="margin:0;font-weight:600"></p>
+<div class="srch-card gs"><label class="srch-lab" for="gsrch">Buscar en toda la guía</label><input type="search" id="gsrch" placeholder="Por ejemplo: Euler, ARX, linealización, rigidez…" autocomplete="off" spellcheck="false"><div id="gsrch-out" class="gs-out" hidden></div></div>
+
+<section class="sec" id="paginas">
+  <h2><span class="dot"></span>Páginas de la guía</h2>
+  {{pages-grid}}
+  <div class="notice">Hecha con el material del aula virtual del curso 2025-2026 (apuntes, prácticas y exámenes de 2023 a 2026), reescrito y resumido. No sustituye a la guía docente ni al criterio del profesorado.</div>
+</section>
+
+<section class="sec" id="cero">
+  <h2><span class="dot"></span>Empieza aquí si partes de cero</h2>
+  <div class="zero">
+    <p class="ft">La asignatura en un párrafo</p>
+    <p>Un <b>sistema</b> (un motor, un depósito, un circuito) obedece leyes físicas. En <b>Modelado y Simulación</b> aprendes a cuatro cosas: <b>escribir esas leyes como ecuaciones</b> (unidad 1), <b>sacar el modelo de datos medidos</b> cuando no te fías de la teoría o no la conoces (unidad 2), <b>hacer que el ordenador resuelva las ecuaciones paso a paso</b> (unidades 3 y 4) y <b>medir cuánto te puedes fiar</b> del resultado (unidad 5). El examen lo refleja: un problema de modelado, un problema de pseudocódigo de simulación y cuatro cuestiones.</p>
   </div>
+  <p>El camino, en orden. Cada unidad usa lo de la anterior:</p>
+  <div class="map">
+    <a href="tema-1-2.html"><b>1–2</b>Modelar el sistema</a><span>→</span>
+    <a href="tema-3-5.html"><b>3–5</b>Identificar con datos</a><span>→</span>
+    <a href="tema-6-8.html"><b>6–8</b>Diseñar el simulador</a><span>→</span>
+    <a href="tema-9-11.html"><b>9–11</b>Métodos numéricos</a><span>→</span>
+    <a href="tema-12-13.html"><b>12–13</b>Analizar el error</a>
+  </div>
+  <div class="grid2">
+    <div class="box"><h4>Lo que necesitas saber de antes</h4>
+      <ul>
+        <li><b>Ecuaciones diferenciales</b> de primer y segundo orden y su solución a un escalón.</li>
+        <li><b>Transformada de Laplace</b> y función de transferencia \(G(s)\), de Ingeniería de Control.</li>
+        <li><b>Matrices</b>: producto, traspuesta e inversa de una matriz 2×2 (para mínimos cuadrados).</li>
+        <li><b>Programar un bucle</b> en cualquier lenguaje; en las prácticas se usa Matlab y Simulink.</li>
+      </ul>
+    </div>
+    <div class="box"><h4>Cómo usar esta guía</h4>
+      <ol>
+        <li>Lee <a href="empezar.html">cómo es el examen</a> y fíjate en lo que más puntúa.</li>
+        <li>Recorre las unidades 1 a 5 en orden; cada una termina con trampas típicas.</li>
+        <li>Haz los <a href="problemas.html">problemas</a> sin mirar la solución.</li>
+        <li>Comprueba con la <a href="autoevaluacion.html">autoevaluación</a> y deja a mano el <a href="formulario.html">formulario</a>.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="box trap"><h4>Qué no se sabe</h4><p>El formato exacto del examen de este curso y los criterios de corrección no están publicados. Lo que dice esta guía sobre el examen sale de los enunciados de 2023 a 2026 que hay en el aula virtual; contrasta con lo que diga el profesorado.</p></div>
 </section>
-
-<section class="sec" id="plan">
-  <h2><span class="dot"></span>Plan de la guía</h2>
-  <p>El programa oficial son 13 temas en cinco unidades. Esto es lo que hay y lo que falta.</p>
-  <ul class="plan">
-    <li><a href="tema-1.html">UD 1 · Modelado de sistemas</a><span class="pill ok">disponible</span><p>Leyes de conservación, sistemas mecánicos, eléctricos, de fluidos y térmicos, motor de continua, linealización, equivalencias, primer y segundo orden, amplificadores operacionales.</p></li>
-    <li><a href="identificacion.html">UD 2 · Identificación (temas 3 a 5)</a><span class="pill ok">disponible</span><p>Modelos de escalón y de respuesta al impulso, FIR, ARX, ARMAX y OE, predictor y mínimos cuadrados, con ejemplos resueltos.</p></li>
-    <li><a href="error.html">Predicción y análisis del error</a><span class="pill ok">disponible</span><p>Cómo predecir con cada modelo, estimadores del error, probabilidad dentro de una desviación y autocorrelación, con dos ejemplos de examen resueltos.</p></li>
-    <li><a href="metodos-numericos.html">UD 4 · Métodos numéricos (temas 9 a 11)</a><span class="pill ok">disponible</span><p>Euler, Runge-Kutta, Adams-Bashforth, paso variable, rigidez y plantilla de pseudocódigo con PID analógico y digital.</p></li>
-    <li><a href="problemas.html">Problemas</a><span class="pill ok">disponible</span><p>Cuatro problemas con método fijo y resolución comprobada: acelerómetro, depósitos, cono e identificación ARX.</p></li>
-    <li><a href="examenes.html">Qué se pregunta en el examen</a><span class="pill ok">disponible</span><p>Estructura de los exámenes de 2023 a 2026, tipos de problema y de cuestión que se repiten y dónde está cada uno.</p></li>
-    <li><a href="practicas.html">UD 3 · Prácticas</a><span class="pill ok">disponible</span><p>Las cuatro prácticas del curso: motor de primer orden, tanque linealizado, fluido caliente con PID y modelos no paramétricos.</p></li>
-    <li><span style="font:700 1.05rem var(--font-display)">UD 5 · Análisis de resultados (temas 12 y 13)</span><span class="pill">parcial</span><p>Los estimadores del error están en la página de predicción. Falta material sobre la parte estadística más avanzada: no se inventa contenido.</p></li>
-  </ul>
-  <div class="trap"><b class="t">Aviso</b><p>Se ha usado el material del curso 2025-2026 y apuntes de cursos anteriores para el modelado. El formato exacto del examen de este curso no se conoce: contrasta con lo que diga el profesorado.</p></div>
-</section>
-
-<div class="pager">
-  <span></span>
-  <a class="next" href="tema-1.html"><small>Siguiente</small>Tema 1 · Modelado de sistemas</a>
-</div>

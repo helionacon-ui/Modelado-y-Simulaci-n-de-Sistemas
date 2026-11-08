@@ -1,0 +1,18 @@
+<section class="sec" id="herramientas">
+  <h2><span class="dot"></span>Matlab y Simulink: lo que se usa</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Para</th><th>Herramienta</th></tr></thead>
+    <tbody>
+      <tr><td>Guardar señales de una simulación</td><td>Bloque <code>To Workspace</code> (formato array) con el periodo de muestreo ajustado; el reloj de la simulación da los tiempos</td></tr>
+      <tr><td>Crear el conjunto de datos de identificación</td><td><code>dato = iddata(y,u,0.01)</code></td></tr>
+      <tr><td>Estimar un ARX</td><td><code>arx(dato,[na nb nk])</code>, con <code>nk=1</code> si hay un retardo de una muestra; Matlab llama \(z\) al operador \(q\)</td></tr>
+      <tr><td>Recta de regresión</td><td><code>polyfit</code> y <code>polyval</code></td></tr>
+      <tr><td>Solver en Simulink</td><td>Configuración del modelo → Solver: variable (<code>ode45</code>) o fijo (<code>ode1</code> es Euler)</td></tr>
+      <tr><td>Paso usado por el solver</td><td><code>plot(diff(tout))</code></td></tr>
+    </tbody></table></div>
+  <div class="trap"><b class="t">Trampa de índices</b><p>En Matlab los vectores empiezan en 1 y no existe <code>y(0)</code>, <code>y(-1)</code>. El término \(w(0)\) de la teoría es <code>w(1)</code>; los valores anteriores a ese se tratan aparte, con ceros, o se empieza el bucle más tarde.</p></div>
+  <div class="vids"><h3>Vídeos para reforzar · Tema 7 · Simulink</h3><p class="vid-note">Vídeos de terceros, no son de la asignatura ni los ha revisado el profesorado. Elegidos por coincidir con el tema del programa; contrasta siempre con los apuntes.</p><div class="vid-grid">
+    <div class="yt" data-id="DCvJlVI_GE0" data-title="Introducción a Simulink para modelado, simulación y pruebas"><a href="https://www.youtube.com/watch?v=DCvJlVI_GE0" target="_blank" rel="noopener">Introducción a Simulink para modelado, simulación y pruebas (YouTube)</a></div>
+    <div class="yt" data-id="Q34hhC7AVL4" data-title="Simulación de sistemas dinámicos en Simulink: circuito RC"><a href="https://www.youtube.com/watch?v=Q34hhC7AVL4" target="_blank" rel="noopener">Simulación de sistemas dinámicos en Simulink: circuito RC (YouTube)</a></div>
+  </div></div>
+</section>

@@ -1,0 +1,68 @@
+<header>
+  <div class="kicker">Empezar · el examen y cómo estudiar</div>
+  <h1>Cómo es el examen y cómo estudiar</h1>
+  <p class="lead">Qué se evalúa, cuánto pesa cada parte, qué conviene estudiar primero y una lista para ir marcando lo que llevas.</p>
+  <div class="tags"><span class="tag">80 % examen</span><span class="tag">20 % prácticas</span><span class="tag">sin test</span></div>
+</header>
+
+<section class="sec" id="examen">
+  <h2><span class="dot"></span>Cómo es el examen</h2>
+  <p>No hay test: el examen escrito mezcla problemas y cuestiones teórico-prácticas. Por eso esta guía trae problemas con método fijo en lugar de banco de preguntas o simulador de test.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Parte</th><th>Qué se evalúa</th><th>Peso</th></tr></thead>
+    <tbody>
+      <tr><td>Examen escrito</td><td>Resolución de problemas y cuestiones teórico-prácticas</td><td>80 %</td></tr>
+      <tr><td>Prácticas</td><td>Memoria de las prácticas propuestas</td><td>20 %</td></tr>
+    </tbody></table></div>
+  <ul>
+    <li>Hay que sacar al menos el <b>50 %</b> de la nota máxima del examen.</li>
+    <li>El informe de prácticas tiene que tener evaluación positiva.</li>
+    <li>En las convocatorias de 2023 a 2026 el examen son <b>dos problemas de 3 puntos</b> (modelado y pseudocódigo de simulación) y <b>cuatro cuestiones de 1 punto</b>. El detalle está en <a href="examenes.html">Qué se pregunta en el examen</a>.</li>
+  </ul>
+  <div class="card" style="max-width:560px">
+    <h3>Calculadora de nota</h3>
+    <p>Pon tus notas sobre 10. Se asume que «positiva» en prácticas significa 5 o más.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px">
+      <label for="n-exam" style="display:grid;gap:4px;font-weight:600">Examen<input id="n-exam" type="number" min="0" max="10" step="0.1" value="5.5" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--fg)"></label>
+      <label for="n-prac" style="display:grid;gap:4px;font-weight:600">Prácticas<input id="n-prac" type="number" min="0" max="10" step="0.1" value="8" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--fg)"></label>
+    </div>
+    <p id="calc-out" aria-live="polite" style="margin:0;font-weight:600"></p>
+  </div>
+</section>
+
+<section class="sec" id="prioridades">
+  <h2><span class="dot"></span>Prioridades</h2>
+  <p>El orden sale de cuántos puntos reparten esos tipos de pregunta en los enunciados de 2023 a 2026 (resumidos en la <a href="examenes.html">página del examen</a>). Es una orientación, no un dato oficial.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>#</th><th>Qué estudiar</th><th>Por qué</th><th>Dónde</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Modelado: depósitos, motor de continua, linealización, función de transferencia</td><td>El Problema 1 son 3 puntos y casi siempre es de esto</td><td><a href="tema-1-2.html">T1–2</a> · <a href="problemas.html">Problemas</a></td></tr>
+      <tr><td>2</td><td>Pseudocódigo de simulación con PID analógico y digital</td><td>El Problema 2 son otros 3 puntos</td><td><a href="tema-9-11.html#plantilla">T9–11</a></td></tr>
+      <tr><td>3</td><td>Euler, Runge-Kutta 2, Adams-Bashforth de dos pasos y rigidez</td><td>Salen como cuestión y como base del Problema 2</td><td><a href="tema-9-11.html">T9–11</a></td></tr>
+      <tr><td>4</td><td>Identificación: escalón, ARX, mínimos cuadrados, predicción</td><td>Una cuestión por convocatoria, con datos para calcular</td><td><a href="tema-3-5.html">T3–5</a></td></tr>
+      <tr><td>5</td><td>Análisis del error: media, desviación, probabilidad, autocorrelación</td><td>Cuestión de cálculo mecánico si te sabes el proceso</td><td><a href="tema-12-13.html">T12–13</a></td></tr>
+    </tbody></table></div>
+  <div class="trap"><b class="t">Qué no se sabe</b><p>Si este curso habrá parciales o solo examen final, y el reparto interno de puntos. La guía docente solo fija el 80 % y el 20 %.</p></div>
+</section>
+
+<section class="sec" id="progreso">
+  <h2><span class="dot"></span>Tu progreso</h2>
+  <p>Marca los temas que ya dominas. Se guarda solo en este navegador.</p>
+  <div class="prog-bar" aria-hidden="true"><span id="prog-fill"></span></div>
+  <p class="prog-txt" id="prog-txt" aria-live="polite"></p>
+  <ul class="prog" id="prog">
+    <li><label><input type="checkbox" data-p="t1"> <b>T1</b> Modelado de sistemas</label></li>
+    <li><label><input type="checkbox" data-p="t2"> <b>T2</b> Modelos matemáticos y linealización</label></li>
+    <li><label><input type="checkbox" data-p="t3"> <b>T3</b> Identificación de caja negra</label></li>
+    <li><label><input type="checkbox" data-p="t4"> <b>T4</b> Identificación de parámetros</label></li>
+    <li><label><input type="checkbox" data-p="t5"> <b>T5</b> Aspectos prácticos de la identificación</label></li>
+    <li><label><input type="checkbox" data-p="t6"> <b>T6</b> Diseño del simulador</label></li>
+    <li><label><input type="checkbox" data-p="t7"> <b>T7</b> Simulink</label></li>
+    <li><label><input type="checkbox" data-p="t8"> <b>T8</b> Matlab</label></li>
+    <li><label><input type="checkbox" data-p="t9"> <b>T9</b> Integración numérica</label></li>
+    <li><label><input type="checkbox" data-p="t10"> <b>T10</b> Métodos para ecuaciones diferenciales</label></li>
+    <li><label><input type="checkbox" data-p="t11"> <b>T11</b> Problemática de los métodos numéricos</label></li>
+    <li><label><input type="checkbox" data-p="t12"> <b>T12</b> Estadísticos básicos</label></li>
+    <li><label><input type="checkbox" data-p="t13"> <b>T13</b> Análisis del error</label></li>
+  </ul>
+</section>
