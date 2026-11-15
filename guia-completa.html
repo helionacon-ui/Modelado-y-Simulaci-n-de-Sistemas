@@ -99,7 +99,7 @@ details>summary{line-height:1.7;padding-block:.5em}
     <span class="tag">Apuntes de teoría · 33 folios</span>
     <span class="tag mec">mecánico</span><span class="tag ele">eléctrico</span><span class="tag flu">fluidos</span><span class="tag ter">térmico</span><span class="tag ctl">amplificadores</span>
   </div>
-  <p class="notice">Guía no oficial de la UPCT. Reescrita y reorganizada a partir de apuntes de clase, sin copiar el material. Los ejercicios de la parte final están recreados y sus cálculos comprobados con código.</p>
+  <p class="notice">Guía no oficial. Reescrita y reorganizada a partir de apuntes de clase, sin copiar el material. Los ejercicios de la parte final están recreados y sus cálculos comprobados con código.</p>
 </header>
 <details class="nom"><summary>Nomenclatura de las unidades 1 y 2 <span class="src">12 símbolos</span></summary>
 <div class="tbl-wrap"><table><thead><tr><th>Símbolo</th><th>Qué significa</th><th>Unidades · nota</th></tr></thead><tbody><tr><td>\(M,\ m\)</td><td>Masa</td><td>kg</td></tr><tr><td>\(I\)</td><td>Momento de inercia</td><td>kg·m²</td></tr><tr><td>\(K\)</td><td>Constante del muelle (o ganancia en una función de transferencia)</td><td>N/m · según contexto</td></tr><tr><td>\(B\)</td><td>Coeficiente de fricción viscosa</td><td>N·s/m o N·m·s/rad</td></tr><tr><td>\(S\)</td><td>Sección de un depósito</td><td>m²</td></tr><tr><td>\(a\)</td><td>Apertura de una válvula</td><td>adimensional, entre 0 y 1</td></tr><tr><td>\(h\)</td><td>Altura de líquido</td><td>m</td></tr><tr><td>\(\tau\)</td><td>Constante de tiempo</td><td>s</td></tr><tr><td>\(\xi\)</td><td>Factor de amortiguamiento</td><td>adimensional</td></tr><tr><td>\(K_i,\ K_b\)</td><td>Constantes de par y de fuerza contraelectromotriz del motor</td><td>N·m/A · V·s/rad</td></tr><tr><td>\(G(s)\)</td><td>Función de transferencia</td><td>salida/entrada</td></tr><tr><td>\(\Delta x\)</td><td>Desviación respecto al punto de trabajo</td><td>la de \(x\)</td></tr></tbody></table></div></details>
@@ -448,7 +448,7 @@ details>summary{line-height:1.7;padding-block:.5em}
     <span class="tag">Apuntes de clase · 2025</span>
     <span class="tag ctl">caja gris</span><span class="tag">caja negra</span><span class="tag">mínimos cuadrados</span>
   </div>
-  <p class="notice">Guía no oficial de la UPCT. Reescrita a partir de apuntes de un curso anterior, sin copiar el material. Los ejercicios son recreados y sus cálculos están comprobados con código. El temario de este curso puede diferir.</p>
+  <p class="notice">Guía no oficial. Reescrita a partir de apuntes de un curso anterior, sin copiar el material. Los ejercicios son recreados y sus cálculos están comprobados con código. El temario de este curso puede diferir.</p>
 </header>
 <details class="nom"><summary>Nomenclatura de la unidad 2 (temas 3 a 5) <span class="src">10 símbolos</span></summary>
 <div class="tbl-wrap"><table><thead><tr><th>Símbolo</th><th>Qué significa</th><th>Unidades · nota</th></tr></thead><tbody><tr><td>\(u,\ y\)</td><td>Entrada y salida medidas</td><td>según el sistema</td></tr><tr><td>\(\hat y\)</td><td>Salida predicha por el modelo</td><td>la de \(y\)</td></tr><tr><td>\(K,\ \tau,\ T\)</td><td>Ganancia, constante de tiempo y retardo del modelo de primer orden</td><td>— · s · s</td></tr><tr><td>\(t_{28},\ t_{63}\)</td><td>Instantes en que la salida alcanza el 28 % y el 63 % del valor final</td><td>s</td></tr><tr><td>\(q\)</td><td>Operador de retardo: \(q^{-1}y(t)=y(t-1)\)</td><td>Matlab lo escribe con \(z\)</td></tr><tr><td>\(A,\ B\)</td><td>Polinomios en \(q^{-1}\) del modelo ARX</td><td>coeficientes \(a_i,\ b_i\)</td></tr><tr><td>\(\theta\)</td><td>Vector de parámetros a estimar</td><td>—</td></tr><tr><td>\(\Phi\)</td><td>Matriz de regresores (los datos pasados)</td><td>una fila por muestra</td></tr><tr><td>\(\mathbf Y\)</td><td>Vector de salidas medidas</td><td>—</td></tr><tr><td>\(n_b,\ n_a\)</td><td>Número de términos de \(B\) y de \(A\)</td><td>órdenes del modelo</td></tr></tbody></table></div></details>
@@ -626,7 +626,7 @@ details>summary{line-height:1.7;padding-block:.5em}
   <h1>Diseñar y programar el simulador</h1>
   <p class="lead">De las ecuaciones del modelo a un programa que las resuelve paso a paso: qué tiene que tener un simulador, cómo se monta en Simulink y cómo se escribe en Matlab.</p>
   <div class="tags"><span class="tag">T6 diseño</span><span class="tag">T7 Simulink</span><span class="tag">T8 Matlab</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Resumen propio y general: las prácticas concretas del curso están en la página de <a href="practicas.html">Prácticas</a>.</p>
+  <p class="notice">Guía no oficial. Resumen propio y general: las prácticas concretas del curso están en la página de <a href="practicas.html">Prácticas</a>.</p>
 </header>
 
 <section class="sec" id="diseno">
@@ -732,7 +732,7 @@ end</pre>
   <h1>Métodos numéricos para simular</h1>
   <p class="lead">Cómo convertir un modelo en un programa: Euler, Runge-Kutta, Adams-Bashforth, paso variable y rigidez. Es la parte que más se pregunta como pseudocódigo en el examen.</p>
   <div class="tags"><span class="tag ctl">simulación</span><span class="tag">pseudocódigo</span><span class="tag">examen: todos los años</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Resumida y reescrita a partir de los apuntes del aula virtual del curso 2025-2026. Los errores de la tabla de orden se calcularon con código.</p>
+  <p class="notice">Guía no oficial. Resumida y reescrita a partir de los apuntes del aula virtual del curso 2025-2026. Los errores de la tabla de orden se calcularon con código.</p>
 </header>
 <details class="nom"><summary>Nomenclatura de la unidad 4 (temas 9 a 11) <span class="src">8 símbolos</span></summary>
 <div class="tbl-wrap"><table><thead><tr><th>Símbolo</th><th>Qué significa</th><th>Unidades · nota</th></tr></thead><tbody><tr><td>\(h\)</td><td>Paso de integración</td><td>s</td></tr><tr><td>\(t_k=t_0+kh\)</td><td>Instante del paso \(k\)</td><td>s</td></tr><tr><td>\(w_k\)</td><td>Aproximación numérica de \(y(t_k)\)</td><td>la de \(y\)</td></tr><tr><td>\(f(t,y)\)</td><td>Derivada: \(y'=f(t,y)\)</td><td>—</td></tr><tr><td>\(k_1,\dots,k_4\)</td><td>Pendientes intermedias de Runge-Kutta</td><td>—</td></tr><tr><td>\(\lambda\)</td><td>Autovalor (polo) del sistema</td><td>1/s</td></tr><tr><td>\(T_c=nh\)</td><td>Periodo de control digital: \(n\) pasos de simulación</td><td>s</td></tr><tr><td>\(\alpha\)</td><td>Condición inicial: \(y(t_0)=\alpha\)</td><td>la de \(y\)</td></tr></tbody></table></div></details>
@@ -949,7 +949,7 @@ para k = 0 hasta N-1:
   <h1>Predicción y análisis del error</h1>
   <p class="lead">Cómo comprobar si un modelo identificado es bueno: calcular lo que predice, restar a lo medido y estudiar el error. En el examen sale en una cuestión casi todos los años.</p>
   <div class="tags"><span class="tag ctl">identificación</span><span class="tag">cálculo con datos</span><span class="tag">examen: todos los años</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Los dos ejemplos resueltos usan datos de enunciados de convocatorias anteriores y se han comprobado con código.</p>
+  <p class="notice">Guía no oficial. Los dos ejemplos resueltos usan datos de enunciados de convocatorias anteriores y se han comprobado con código.</p>
 </header>
 <details class="nom"><summary>Nomenclatura de la unidad 5 (temas 12 y 13) <span class="src">6 símbolos</span></summary>
 <div class="tbl-wrap"><table><thead><tr><th>Símbolo</th><th>Qué significa</th><th>Unidades · nota</th></tr></thead><tbody><tr><td>\(e(k)\)</td><td>Error del modelo: \(y(k)-\hat y(k)\)</td><td>la de \(y\)</td></tr><tr><td>\(N\)</td><td>Número de muestras</td><td>—</td></tr><tr><td>\(\bar e\)</td><td>Media del error</td><td>la de \(e\)</td></tr><tr><td>\(\sigma_e\)</td><td>Desviación típica del error</td><td>la de \(e\)</td></tr><tr><td>\(\hat R(r)\)</td><td>Autocorrelación estimada con desfase \(r\)</td><td>la de \(e^2\)</td></tr><tr><td>\(\mathrm{RMS}\)</td><td>Raíz del valor medio cuadrático</td><td>la de \(e\)</td></tr></tbody></table></div></details>
@@ -1103,7 +1103,7 @@ para k = 0 hasta N-1:
   <h1>Prácticas</h1>
   <p class="lead">Qué se hace en cada una de las cuatro prácticas, las ideas que hay que llevar claras y cómo se calcula en Matlab. La memoria de prácticas pesa un 20 % de la nota.</p>
   <div class="tags"><span class="tag">4 prácticas</span><span class="tag">Matlab · Simulink</span><span class="tag">20 % de la nota</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Resume los guiones del curso 2025-2026 con palabras propias. Las cifras de la práctica 2 se han calculado con código a partir de los datos del guion.</p>
+  <p class="notice">Guía no oficial. Resume los guiones del curso 2025-2026 con palabras propias. Las cifras de la práctica 2 se han calculado con código a partir de los datos del guion.</p>
 </header>
 
 <section class="sec" id="resumen">
@@ -1219,7 +1219,7 @@ fin</pre>
   <h1>Problemas con método fijo</h1>
   <p class="lead">El examen es de problemas, así que aquí se practica el proceso entero: de los datos a la función de transferencia, con la comprobación del resultado.</p>
   <div class="tags"><span class="tag">4 problemas</span><span class="tag mec">mecánico</span><span class="tag flu">fluidos</span><span class="tag ctl">identificación</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Los enunciados están recreados con el estilo de los problemas de clase y los resultados numéricos se han comprobado con código. Intenta cada problema antes de abrir la resolución.</p>
+  <p class="notice">Guía no oficial. Los enunciados están recreados con el estilo de los problemas de clase y los resultados numéricos se han comprobado con código. Intenta cada problema antes de abrir la resolución.</p>
 </header>
 
 <section class="sec" id="metodo">
@@ -1333,7 +1333,7 @@ fin</pre>
   <h1>Qué se pregunta en el examen</h1>
   <p class="lead">Un repaso de los enunciados de las convocatorias de 2023 a 2026: la estructura, los tipos de pregunta que se repiten y dónde está cada uno en la guía.</p>
   <div class="tags"><span class="tag">2023 · 2026</span><span class="tag">problemas + cuestiones</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Resumen propio de los enunciados publicados en el aula virtual. No se copian los enunciados ni se inventan las soluciones oficiales; cuando algo no se conoce, se dice.</p>
+  <p class="notice">Guía no oficial. Resumen propio de los enunciados publicados en el aula virtual. No se copian los enunciados ni se inventan las soluciones oficiales; cuando algo no se conoce, se dice.</p>
 </header>
 
 <section class="sec" id="estructura">
@@ -1420,7 +1420,7 @@ fin</pre>
   <h1>Exámenes de 2026 resueltos</h1>
   <p class="lead">Los enunciados de junio, mayo y abril de 2026 resueltos paso a paso, con las hipótesis explícitas y los cálculos comprobados con código. Intenta cada uno antes de abrir la solución.</p>
   <div class="tags"><span class="tag">junio 2026</span><span class="tag">mayo 2026</span><span class="tag">abril 2026</span><span class="tag">solución propia</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Son <b>soluciones propias, no oficiales</b>: las figuras de los enunciados dejan detalles abiertos y, donde ocurre, la solución dice qué se ha supuesto. Los enunciados están resumidos, no copiados. Compara siempre con lo que enseñe el profesorado.</p>
+  <p class="notice">Guía no oficial. Son <b>soluciones propias, no oficiales</b>: las figuras de los enunciados dejan detalles abiertos y, donde ocurre, la solución dice qué se ha supuesto. Los enunciados están resumidos, no copiados. Compara siempre con lo que enseñe el profesorado.</p>
 </header>
 
 <section class="sec" id="como">
@@ -1637,7 +1637,7 @@ para k = 0 hasta N-1:
   <h1>Simulacro de examen</h1>
   <p class="lead">Un examen completo con la misma forma que los de 2023 a 2026: dos problemas de 3 puntos y cuatro cuestiones de 1 punto. Resuélvelo en una hora y media sin mirar y luego corrige con las soluciones.</p>
   <div class="tags"><span class="tag">10 puntos</span><span class="tag">2 problemas</span><span class="tag">4 cuestiones</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Es un examen inventado por mí con la estructura que muestran los enunciados de años anteriores. No sale del aula virtual y no sabemos si el de este curso será igual. Todos los números de las soluciones están comprobados con código.</p>
+  <p class="notice">Guía no oficial. Es un examen inventado por mí con la estructura que muestran los enunciados de años anteriores. No sale del aula virtual y no sabemos si el de este curso será igual. Todos los números de las soluciones están comprobados con código.</p>
 </header>
 
 <section class="sec mec" id="p1">
@@ -1719,7 +1719,7 @@ para k = 0 hasta N-1:
   <h1>Ejercicios complementarios</h1>
   <p class="lead">Dieciséis ejercicios cortos, de un solo cálculo, para practicar lo básico de cada unidad. Todas las soluciones se han calculado con código.</p>
   <div class="tags"><span class="tag">16 ejercicios</span><span class="tag">con solución</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Ejercicios propios, no del examen. Resuélvelos en papel antes de abrir cada solución.</p>
+  <p class="notice">Guía no oficial. Ejercicios propios, no del examen. Resuélvelos en papel antes de abrir cada solución.</p>
 </header>
 <section class="sec" id="lista">
   <h2><span class="dot"></span>Ejercicios por unidad</h2>
@@ -1761,7 +1761,7 @@ para k = 0 hasta N-1:
   <h1>Demostraciones tipo examen</h1>
   <p class="lead">Las deducciones que más se piden o que más ayudan a entender los métodos, escritas paso a paso y cortas. Si las sabes hacer, no hace falta memorizar las fórmulas.</p>
   <div class="tags"><span class="tag">10 demostraciones</span><span class="tag">UD 1, 2 y 4</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Deducciones propias a partir de resultados estándar. La de Adams-Bashforth de dos pasos aparece en los exámenes; el resto sirven para entender.</p>
+  <p class="notice">Guía no oficial. Deducciones propias a partir de resultados estándar. La de Adams-Bashforth de dos pasos aparece en los exámenes; el resto sirven para entender.</p>
 </header>
 
 <section class="sec ctl" id="d-numericos">
@@ -1827,7 +1827,7 @@ para k = 0 hasta N-1:
   <h1>Autoevaluación</h1>
   <p class="lead">Veinticuatro preguntas de test con corrección inmediata, un generador de ejercicios con corrección, fichas de repaso y seis preguntas abiertas con respuesta desplegable. Resuelve primero en papel y comprueba después.</p>
   <div class="tags"><span class="tag">24 de test</span><span class="tag">generador</span><span class="tag">fichas</span><span class="tag">6 abiertas</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Preguntas recreadas por mí con el estilo de los exámenes; sus cálculos están comprobados con código. No son preguntas reales del examen.</p>
+  <p class="notice">Guía no oficial. Preguntas recreadas por mí con el estilo de los exámenes; sus cálculos están comprobados con código. No son preguntas reales del examen.</p>
 </header>
 
 <section class="sec mec" id="test-ud1">
@@ -2046,7 +2046,7 @@ para k = 0 hasta N-1:
   <h1>Formulario por unidad</h1>
   <p class="lead">Las fórmulas que más se usan en problemas y cuestiones, con lo que te piden y cómo se resuelve. Cada una se explica en la página de su unidad.</p>
   <div class="tags"><span class="tag">5 unidades</span><span class="tag">recetas incluidas</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Resumen propio. Comprueba en clase qué fórmulas te dan en el examen: no se conoce.</p>
+  <p class="notice">Guía no oficial. Resumen propio. Comprueba en clase qué fórmulas te dan en el examen: no se conoce.</p>
 </header>
 
 <section class="sec mec" id="f-ud1">
@@ -2114,7 +2114,7 @@ para k = 0 hasta N-1:
   <h1>Glosario</h1>
   <p class="lead">Los términos que aparecen en la guía y en los enunciados, explicados en una frase, por unidad.</p>
   <div class="tags"><span class="tag">ordenado por unidad</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Definiciones propias, escritas para entender el examen, no para citar.</p>
+  <p class="notice">Guía no oficial. Definiciones propias, escritas para entender el examen, no para citar.</p>
 </header>
 
 <section class="sec mec" id="g-ud1">
@@ -2186,7 +2186,7 @@ para k = 0 hasta N-1:
   <h1>Plan de estudio</h1>
   <p class="lead">Una propuesta para repartir el estudio en cuatro semanas, según lo que más puntúa. Ajusta los ritmos a las fechas reales de tu convocatoria.</p>
   <div class="tags"><span class="tag">4 semanas</span><span class="tag">propuesta propia</span></div>
-  <p class="notice">Guía no oficial de la UPCT. Las fechas de examen no se conocen y no se inventan: el plan va por semanas, no por días del calendario.</p>
+  <p class="notice">Guía no oficial. Las fechas de examen no se conocen y no se inventan: el plan va por semanas, no por días del calendario.</p>
 </header>
 
 <section class="sec" id="semanas">
@@ -2200,4 +2200,4 @@ para k = 0 hasta N-1:
   <p>Las prácticas (20 % de la nota) y su informe se preparan aparte: repasa la página de <a href="practicas.html">Prácticas</a> mientras las haces, no al final.</p>
   <div class="box trap"><h4>Si te queda poco tiempo</h4><p>Prioriza por puntos: modelado y pseudocódigo (6 de 10), y haz el resto por orden de la tabla de <a href="empezar.html#prioridades">prioridades</a>. Plantea siempre el método completo (variables, ecuaciones, condiciones iniciales), aunque no te dé tiempo a los números.</p></div>
 </section>
-</div><footer>Guía no oficial de la UPCT (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>
+</div><footer>Guía no oficial (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

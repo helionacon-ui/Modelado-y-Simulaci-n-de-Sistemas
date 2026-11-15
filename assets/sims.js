@@ -1,4 +1,4 @@
-/* Simuladores interactivos · Guía no oficial de Modelado y Simulación (UPCT). Sin dependencias. */
+/* Simuladores interactivos · Guía no oficial de Modelado y Simulación. Sin dependencias. */
 (function () {
   'use strict';
   var uid = 0;
