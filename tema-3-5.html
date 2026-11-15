@@ -151,6 +151,52 @@
   <p>Si se apilan los regresores por filas en \(\Phi\) y las salidas en \(\mathbf Y\), anular la derivada da las ecuaciones normales y su solución:</p>
   <div class="eq key">\[\big[\Phi^T\Phi\big]\hat\theta=\Phi^T\mathbf Y\;\Rightarrow\;\hat\theta_N=\big[\Phi^T\Phi\big]^{-1}\Phi^T\mathbf Y\]</div>
   <p>Solo se aplica a los modelos de regresión lineal (FIR y ARX).</p>
+  <h3 id="t35-fir-paso">Mínimos cuadrados con un ejemplo FIR, paso a paso</h3>
+  <p>Con un modelo FIR, la salida es una combinación lineal de entradas pasadas, y por eso el ajuste es un problema de mínimos cuadrados. La figura resuelve el mismo ejemplo que aparece justo debajo, en el orden de cálculo de las ecuaciones normales.</p>
+  <div class="sim" style="padding:14px">
+  <p style="margin:0 0 6px"><b>Figura interactiva</b> · modelo FIR con n_b = 2 y datos u = (1, 1, 2, 3), y = (2, 3, 4, 5)</p>
+  <div id="fir-paso" style="font-family:system-ui,sans-serif"><input id="fir-paso-s" type="range" min="0" max="6" step="1" value="0" style="width:100%"><div id="fir-paso-l" style="font-size:13px;color:#56635e;margin:4px 0">paso de la resolución (0 = problema): 0</div><canvas id="fir-paso-c" width="640" height="260" style="width:100%;max-width:640px;height:auto;display:block"></canvas><div id="fir-paso-t" style="font-size:15px;line-height:1.5;margin-top:8px;min-height:110px"></div></div>
+  <p style="font-size:13px;margin:6px 0 0">Puntos negros: datos medidos. Puntos azules: predicciones del modelo ajustado. Segmentos rojos: residuos, cuya suma de cuadrados es mínima.</p>
+  </div>
+  <div class="trap"><b class="t">Trampas típicas</b><ul><li>Olvidar que u(0) y u(−1) valen 0 en la primera fila de Φ, y construir Φ con una fila menos.</li><li>Escribir ΦᵀY como Φ·Y: son productos con transpuesta, y las dimensiones no coinciden.</li><li>Dar por buena la solución sin comprobar que Φᵀe = 0. Un error en la matriz se nota ahí.</li></ul></div>
+  <script>
+  (function(){
+    var T=[
+     'Datos: u(k) = 1, 1, 2, 3 e y(k) = 2, 3, 4, 5 para k = 1…4. Modelo FIR con n_b = 2: ŷ(k) = θ₁·u(k−1) + θ₂·u(k−2). Se busca θ = (θ₁, θ₂)ᵀ por mínimos cuadrados.',
+     'Regresor: φ(k) = (u(k−1), u(k−2))ᵀ. Para k = 1 hacen falta u(0) y u(−1), que valen 0 con condiciones iniciales nulas. Filas de Φ: (0, 0), (1, 0), (1, 1), (2, 1).',
+     'ΦᵀΦ = [6 3; 3 2]. Primera diagonal: 0² + 1² + 1² + 2² = 6. Segunda diagonal: 0² + 0² + 1² + 1² = 2. Cruzado: 0·0 + 1·0 + 1·1 + 2·1 = 3.',
+     'ΦᵀY = (17, 9)ᵀ con Y = (2, 3, 4, 5)ᵀ: 0·2 + 1·3 + 1·4 + 2·5 = 17 y 0·2 + 0·3 + 1·4 + 1·5 = 9.',
+     'Determinante: det(ΦᵀΦ) = 6·2 − 3·3 = 3. Como es distinto de cero, las ecuaciones normales tienen solución única: θ = (ΦᵀΦ)⁻¹ΦᵀY.',
+     'θ̂ = (1/3)·[2 −3; −3 6]·(17, 9)ᵀ = (7/3, 1)ᵀ ≈ (2,33; 1). Modelo: ŷ(k) = 2,33·u(k−1) + 1·u(k−2). Los puntos azules son las predicciones.',
+     'Comprobación: los residuos e = y − ŷ son 2; 0,67; 0,67; −0,67. Su producto con cada columna de Φ da 0 (Φᵀe = 0), que es la condición del mínimo. La suma de cuadrados es 5,33.'
+    ];
+    var cv=document.getElementById('fir-paso-c'), g=cv.getContext('2d'), sl=document.getElementById('fir-paso-s'),
+        lb=document.getElementById('fir-paso-l'), tx=document.getElementById('fir-paso-t');
+    var Yd=[2,3,4,5], Yh=[null,0,7/3,10/3,17/3], OX=70, OY=225, SX=100, SY=30;
+    function X(k){return OX+k*SX;} function Y(v){return OY-v*SY;}
+    function txt(s,x,y,col,sz,al){g.fillStyle=col;g.font=(sz||12)+'px system-ui,sans-serif';g.textAlign=al||'left';g.fillText(s,x,y);}
+    function line(x1,y1,x2,y2,col,w,dash){g.strokeStyle=col;g.lineWidth=w||1.2;g.setLineDash(dash||[]);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+    function dot(x,y,col){g.fillStyle=col;g.beginPath();g.arc(x,y,5,0,6.283);g.fill();}
+    function fmt(v){return (Math.round(v*100)/100).toString().replace('.',',');}
+    function draw(p){
+      g.clearRect(0,0,cv.width,cv.height);
+      line(OX,OY,X(5),OY,'#8a958f',1); line(OX,OY,OX,Y(6.2),'#8a958f',1);
+      for(var v=0;v<=6;v+=2){txt(String(v),OX-8,Y(v)+4,'#56635e',11,'right');}
+      for(var k=1;k<=4;k++){txt('k='+k,X(k),OY+16,'#56635e',11,'center');}
+      if(p>=5){
+        for(var i=1;i<4;i++){ line(X(i),Y(Yh[i]),X(i+1),Y(Yh[i+1]),'#3a63c4',1.2,[4,3]); }
+        for(var i=1;i<=4;i++){ dot(X(i),Y(Yh[i]),'#3a63c4'); }
+        txt('ŷ(k)',X(4)+12,Y(Yh[4])+4,'#3a63c4',11,'left');
+      }
+      if(p>=6){ for(var i=1;i<=4;i++){ line(X(i),Y(Yd[i-1]),X(i),Y(Yh[i]),'#b4232f',1.5,[3,3]); } }
+      for(var i=1;i<=4;i++){ dot(X(i),Y(Yd[i-1]),'#1e2320'); txt('y='+Yd[i-1],X(i)+9,Y(Yd[i-1])-6,'#1e2320',11,'left'); }
+      lb.textContent='paso de la resolución (0 = problema): '+p;
+      tx.innerHTML='<div>'+T[p]+'</div>';
+    }
+    sl.addEventListener('input',function(){draw(+sl.value);});
+    draw(0);
+  })();
+  </script>
   <h3>Ejemplo resuelto: modelo FIR con \(n_b=2\)</h3>
   <p>Se excita el sistema y se miden estos datos (con \(u=0\) antes de empezar, es decir, sistema causal con condiciones iniciales nulas):</p>
   <div class="tbl-wrap" style="max-width:320px"><table>
