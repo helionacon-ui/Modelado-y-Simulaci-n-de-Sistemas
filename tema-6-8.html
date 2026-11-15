@@ -128,5 +128,23 @@ end</pre>
     <div class="yt" data-id="DCvJlVI_GE0" data-title="Introducción a Simulink para modelado, simulación y pruebas"><a href="https://www.youtube.com/watch?v=DCvJlVI_GE0" target="_blank" rel="noopener">Introducción a Simulink para modelado, simulación y pruebas (YouTube)</a></div>
     <div class="yt" data-id="Q34hhC7AVL4" data-title="Simulación de sistemas dinámicos en Simulink: circuito RC"><a href="https://www.youtube.com/watch?v=Q34hhC7AVL4" target="_blank" rel="noopener">Simulación de sistemas dinámicos en Simulink: circuito RC (YouTube)</a></div>
   </div></div>
-</section>
+<!--deep--><h3 id="t06-profundiza">Desarrollo teórico a fondo · Tema 6</h3><div class="deep">
+<h4>1. Diseñar un simulador</h4>
+<div class="box key deepnote"><b>Idea clave.</b> un simulador resuelve numéricamente las ecuaciones del modelo en el tiempo. Su diseño requiere separar la parte del modelo, la del integrador y la de la interfaz.</div>
+<ol class="pasos"><li>Escribe el modelo como ecuaciones de estado.</li><li>Elige un método de integración con paso adecuado.</li><li>Separa el modelo del integrador para poder cambiar uno sin tocar el otro.</li><li>Valida con un caso con solución conocida.</li></ol>
+<details class="dem"><summary><span class="pn">∴</span>Pasos de simulación y tiempo de muestreo</summary><div class="inner"><p>El paso de integración debe ser suficientemente pequeño frente a la dinámica más rápida del sistema. Un paso grande produce resultados falsos o inestables.</p>
+<div class="box trap deepnote"><b>Cuidado.</b> Un sistema rígido (con dinámicas muy rápidas y lentas) exige métodos implícitos. Un método explícito con paso pequeño sería muy lento.</div></div></details>
+<h4>2. Programar en código</h4>
+<p>La implementación debe separar la configuración, el modelo y los resultados. Así puedes repetir la simulación con otros parámetros sin reescribir el programa.</p>
+</div><!--/deep--><!--deep--><h3 id="t07-profundiza">Desarrollo teórico a fondo · Tema 7</h3><div class="deep">
+<h4>1. Estructura de un programa de simulación</h4>
+<ul><li><b>Inicialización</b>: condiciones iniciales y parámetros.</li><li><b>Bucle temporal</b>: avanza el estado un paso, guarda resultados.</li><li><b>Post-proceso</b>: gráficas, métricas y comparación con datos.</li></ul>
+<details class="dem"><summary><span class="pn">∴</span>Ejemplo: vaciado de un depósito</summary><div class="inner"><div class="eqd">\[A\,\dot h=q_{in}-c\sqrt{h}\]</div>
+<p>Con \(q_{in}=0\), el nivel baja y el tiempo de vaciado sale de integrar la ecuación. Un simulador numérico debe reproducir ese resultado.</p></div></details>
+</div><!--/deep--><!--deep--><h3 id="t08-profundiza">Desarrollo teórico a fondo · Tema 8</h3><div class="deep">
+<h4>1. Verificación y validación</h4>
+<div class="box key deepnote"><b>Idea clave.</b> verificar comprueba que el programa resuelve bien las ecuaciones del modelo. Validar comprueba que el modelo describe bien el sistema real.</div>
+<ul><li>Verificación: comparación con soluciones analíticas.</li><li>Validación: comparación con datos experimentales.</li></ul>
+<div class="box trap deepnote"><b>Cuidado.</b> Un simulador verificado puede dar resultados erróneos si el modelo no describe el sistema real. Son dos pruebas distintas.</div>
+</div><!--/deep--></section>
 <nav class="pager" aria-label="Páginas"><a href="tema-3-5.html"><small>← Anterior</small>T3–5 Identificación</a><a class="nx" href="tema-9-11.html"><small>Siguiente →</small>T9–11 Métodos numéricos</a></nav><footer>Guía no oficial (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

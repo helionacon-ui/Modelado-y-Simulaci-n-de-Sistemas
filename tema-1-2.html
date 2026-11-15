@@ -369,7 +369,22 @@ details>summary{line-height:1.7;padding-block:.5em}
   <div class="trap"><b class="t">Motor de continua</b><p>El ensayo en vacío da \(K_b\) (par casi nulo) y el de parada da \(K_i\) (sin fuerza contraelectromotriz). Si los intercambias, \(K\) y \(\tau\) salen mal.</p></div>
   <div class="trap"><b class="t">Operacional</b><p>Un solo inversor invierte el signo; dos en cascada lo recuperan. Con \(Z_i=C\) y \(Z_f=R\) es un derivador, y al revés un integrador. Se suele confundir.</p></div>
   <div class="trap"><b class="t">Resistencia radial</b><p>Para un tubo que conduce hacia fuera la resistencia lleva \(\ln(r_2/r_1)\), no \(L/(K_tA)\).</p></div>
-</section>
+<!--deep--><h3 id="t01-profundiza">Desarrollo teórico a fondo · Tema 1</h3><div class="deep">
+<h4>1. Qué es un modelo</h4>
+<div class="box key deepnote"><b>Idea clave.</b> un modelo es una representación matemática de un sistema real, con las variables que importan y las simplificaciones que aceptamos. Todo modelo es incompleto: la pregunta es si sirve para el fin que buscamos.</div>
+<ul><li><b>Variables de estado</b>: las que describen la energía almacenada (posiciones, velocidades, temperaturas, presiones).</li><li><b>Entradas</b>: lo que actúa sobre el sistema. <b>Salidas</b>: lo que medimos.</li></ul>
+<details class="dem"><summary><span class="pn">∴</span>Modelo en espacio de estados</summary><div class="inner"><div class="eqd">\[\dot x=A\,x+B\,u\qquad y=C\,x+D\,u\]</div>
+<p>La forma de estados es la base de la simulación: con ella se integra numéricamente la evolución del sistema.</p></div></details>
+<h4>2. Sistemas mecánicos y eléctricos</h4>
+<ul><li><b>Masa-resorte-amortiguador</b>: \(m\ddot x+c\dot x+kx=F\). Es el modelo base de vibraciones.</li><li><b>Circuito RC</b>: \(RC\,\dot v_C+v_C=v_{in}\). Misma forma matemática, distinta física: por eso sirve la analogía.</li></ul>
+<div class="box trap deepnote"><b>Cuidado.</b> Dos sistemas con la misma ecuación se comportan igual, aunque sean de naturalezas distintas. Aprovecha esa analogía para reutilizar resultados.</div>
+</div><!--/deep--><!--deep--><h3 id="t02-profundiza">Desarrollo teórico a fondo · Tema 2</h3><div class="deep">
+<h4>1. Sistemas de fluidos y térmicos</h4>
+<ul><li><b>Depósito</b>: balance de masa \(\dfrac{dV}{dt}=q_{in}-q_{out}\), con \(q_{out}\) proporcional a la raíz de la altura.</li><li><b>Térmico</b>: balance de energía \(C\dot T=\dot Q_{in}-\dot Q_{out}\), con \(C\) la capacidad térmica.</li></ul>
+<div class="box trap deepnote"><b>Cuidado.</b> La relación entre caudal y altura en un depósito es no lineal. Linealizar exige un punto de operación.</div>
+<details class="dem"><summary><span class="pn">∴</span>Linealización</summary><div class="inner"><div class="eqd">\[f(x)\approx f(x_0)+\left.\frac{\partial f}{\partial x}\right|_{x_0}(x-x_0)\]</div>
+<p>Válida cerca del punto de trabajo. Fuera de él, el modelo lineal pierde precisión.</p></div></details>
+</div><!--/deep--></section>
 
 
 <nav class="pager" aria-label="Páginas"><a href="empezar.html"><small>← Anterior</small>Cómo es el examen</a><a class="nx" href="tema-3-5.html"><small>Siguiente →</small>T3–5 Identificación</a></nav><footer>Guía no oficial (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>

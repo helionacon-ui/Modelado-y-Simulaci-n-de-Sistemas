@@ -237,7 +237,31 @@ para k = 0 hasta N-1:
   <div class="trap"><b class="t">Condiciones iniciales</b><p>Una ecuación de orden 2 necesita dos condiciones iniciales (posición y velocidad). Un sistema con dos depósitos y una temperatura necesita tres. El examen pregunta por ellas de forma explícita.</p></div>
   <div class="trap"><b class="t">Paso de integración</b><p>No hay un \(h\) universal: depende de la dinámica más rápida. Si el resultado oscila y crece, prueba antes con un paso menor que con otro método.</p></div>
   <div class="trap"><b class="t">Orden del método ≠ orden del sistema</b><p>El orden del método (Euler es de orden 1) no tiene nada que ver con el orden de la ecuación diferencial (el masa-muelle es de orden 2).</p></div>
-</section>
+<!--deep--><h3 id="t09-profundiza">Desarrollo teórico a fondo · Tema 9</h3><div class="deep">
+<h4>1. Integración numérica: Euler</h4>
+<div class="box key deepnote"><b>Idea clave.</b> el método de Euler avanza la solución con la pendiente en el instante actual. Es el más sencillo, pero con error proporcional al paso.</div>
+<div class="eqd">\[x_{k+1}=x_k+h\,f(x_k,t_k)\]</div>
+<p>El error de truncamiento global es de primer orden: si se reduce el paso a la mitad, el error baja aproximadamente a la mitad.</p>
+<div class="box trap deepnote"><b>Cuidado.</b> Euler explícito puede volverse inestable si el paso es grande frente a la constante de tiempo más rápida del sistema.</div>
+<h4>2. Runge-Kutta</h4>
+<p>Runge-Kutta de cuarto orden (RK4) evalúa la pendiente en varios puntos del intervalo y combina los valores. Su error es de cuarto orden, y para la mayoría de problemas es el estándar.</p>
+<div class="eqd">\[x_{k+1}=x_k+\tfrac{h}{6}(k_1+2k_2+2k_3+k_4)\]</div>
+<details class="dem"><summary><span class="pn">∴</span>Estabilidad y paso</summary><div class="inner"><p>Para un sistema con constante de tiempo \(\tau\), Euler explícito es estable si \(h<2\tau\). Esta es la regla práctica para elegir el paso.</p></div></details>
+</div><!--/deep--><!--deep--><h3 id="t10-profundiza">Desarrollo teórico a fondo · Tema 10</h3><div class="deep">
+<h4>1. Métodos implícitos</h4>
+<p>En un método implícito, el valor en el siguiente paso aparece a ambos lados de la ecuación. Hay que resolver una ecuación en cada paso, pero el método es estable con pasos grandes.</p>
+<div class="eqd">\[x_{k+1}=x_k+h\,f(x_{k+1},t_{k+1})\quad\text{(Euler implícito)}\]</div>
+<div class="box trap deepnote"><b>Cuidado.</b> Un método implícito cuesta más por paso. Para sistemas rígidos compensa; para sistemas simples, no.</div>
+<details class="dem"><summary><span class="pn">∴</span>Errores de redondeo y truncamiento</summary><div class="inner"><ul><li><b>Truncamiento</b>: error del método, crece con el paso.</li><li><b>Redondeo</b>: error de la aritmética de la máquina, crece al reducir el paso.</li><li>Existe un paso óptimo donde los dos errores se equilibran.</li></ul></div></details>
+<h4>2. Simulación de eventos discretos</h4>
+<p>Algunos sistemas cambian solo en instantes concretos (colas, máquinas). Se simulan avanzando de evento en evento, no con un paso fijo.</p>
+</div><!--/deep--><!--deep--><h3 id="t11-profundiza">Desarrollo teórico a fondo · Tema 11</h3><div class="deep">
+<h4>1. Generación de números aleatorios</h4>
+<div class="box key deepnote"><b>Idea clave.</b> una simulación estocástica necesita números aleatorios. Un generador produce una sucesión determinista que se comporta como aleatoria; por eso se llama pseudoaleatoria.</div>
+<ul><li>Un buen generador tiene un periodo largo y pasa pruebas estadísticas de independencia y uniformidad.</li><li>Fijar la semilla permite repetir una simulación exactamente.</li></ul>
+<details class="dem"><summary><span class="pn">∴</span>Muestreo de una distribución</summary><div class="inner"><p>Con la transformada inversa, a partir de un número uniforme \(U\) se obtiene una muestra de la distribución deseada \(F\): \(X=F^{-1}(U)\). Por ejemplo, para una exponencial de media \(\mu\): \(X=-\mu\ln(1-U)\).</p>
+<div class="box trap deepnote"><b>Cuidado.</b> Cada simulación con una sola semilla da un resultado. Para estimar un valor medio con confianza, repite con varias semillas.</div></div></details>
+</div><!--/deep--></section>
 
 
 <nav class="pager" aria-label="Páginas"><a href="tema-6-8.html"><small>← Anterior</small>T6–8 Simulador, Simulink y Matlab</a><a class="nx" href="tema-12-13.html"><small>Siguiente →</small>T12–13 Predicción y error</a></nav><footer>Guía no oficial (Modelado y Simulación de Sistemas). Hecha por y para estudiantes: no sustituye a la guía docente ni al criterio del profesorado.</footer></main></div><button class="totop" id="totop" type="button" aria-label="Volver arriba">↑</button><script src="assets/app.js"></script><script src="assets/sims.js"></script></body></html>
