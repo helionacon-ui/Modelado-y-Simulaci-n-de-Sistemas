@@ -26,7 +26,7 @@ M.reg('ms-id',M.base({title:'Identificación: ajustar un modelo a un ensayo',H:5
 var SIM=['x = x0;  t = 0;','while (t < tf) {','   u = entrada(t);','   dx = f(x, u);','   x = x + h*dx;','   t = t + h;  guardar(t, x);','}'];
 M.reg('ms-sim',M.base({title:'Programar el simulador: el bucle de integración',H:600,dur:20,caps:[[6,'El simulador repite un bucle: lee la entrada, evalúa las ecuaciones del modelo y avanza el estado un paso h.'],[13,'Cada vuelta del bucle añade un punto a la gráfica. Aquí el modelo es un depósito: <i>ẋ = (u − x)/τ</i>, con τ = 2 s y paso h = 0,25 s.'],[99,'Separar modelo, entrada e integrador permite cambiar uno sin tocar los otros (por ejemplo, Euler por RK4).']]},
  function(D,t){var sp=0.22,N=Math.floor(t/ (sp*4)),ln=2+Math.floor((t/sp)%4),h=0.25,x=0,pts=[];for(var i=0;i<=Math.min(N,40);i++){pts.push([i*h,x]);var u=i*h<1?0:1;x=x+h*(u-x)/2;}
-  SIM.forEach(function(l,i){var y=100+i*28,on=i===ln||(i===5&&ln===5);if(on)D.rect(30,y-20,290,26,null,RG(C.y,.14));D.text(l,40,y,{s:15,c:on?C.y:C.w,mono:true,bold:on});});
+  SIM.forEach(function(l,i){var y=100+i*28,on=i===ln||(i===5&&ln===5);if(on)D.rect(30,y-20,290,26,null,RG(C.y,.14));D.text(l,40,y,{s:13,c:on?C.y:C.w,mono:true,bold:on});});
   var A=U.axes(D,{xr:[0,10.5],yr:[0,1.15],xt:[2,4,6,8,10],yt:[0.5,1],xd:0,yd:1,xl:'t (s)',yl:'x'},{x:350,y:110,w:250,h:200,grid:true});U.plotf(D,A,function(s){return s<1?0:1-Math.exp(-(s-1)/2);},C.mut,1.2,0.6);
   D.path(pts.map(function(p){return [A.X(p[0]),A.Y(p[1])];}),C.m,1.6);pts.forEach(function(p){D.dot(A.X(p[0]),A.Y(p[1]),3,C.m);});
   var L=pts[pts.length-1];U.readout(D,['vuelta '+(pts.length-1)+':  t = '+nf(L[0],2)+' s    x = '+nf(L[1],3),'entrada u: escalón en t = 1 s'],440);}));
